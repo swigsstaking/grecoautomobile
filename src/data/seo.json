@@ -1,0 +1,71 @@
+{
+  "site": {
+    "name": "Greco Autogroup",
+    "slug": "grecoautogroup",
+    "domain": "grecoautogroup.ch",
+    "description": "Greco Autogroup - Votre partenaire de confiance pour l'achat, la vente et le dépôt-vente de véhicules d'occasion de qualité.",
+    "logo": "/logo.png"
+  },
+  "pages": {
+    "home": {
+      "title": "Greco Autogroup | Achat & Vente Automobile",
+      "description": "Greco Autogroup - Agence spécialisée dans l'achat, la vente et le dépôt-vente de véhicules d'occasion. Découvrez notre sélection de véhicules de qualité.",
+      "keywords": ["achat automobile", "vente voiture", "dépôt vente", "voiture occasion", "Greco Autogroup"],
+      "ogTitle": "Greco Autogroup | Achat & Vente Automobile",
+      "ogDescription": "Votre partenaire de confiance pour l'achat et la vente de véhicules d'occasion de qualité.",
+      "ogImage": "/og-image.jpg",
+      "canonical": "https://grecoautogroup.ch"
+    },
+    "notre-histoire": {
+      "title": "Notre Histoire | Greco Autogroup",
+      "description": "Découvrez l'histoire de Greco Autogroup, notre passion pour l'automobile et notre engagement envers nos clients.",
+      "keywords": ["histoire", "Greco Autogroup", "passion automobile"],
+      "ogTitle": "Notre Histoire | Greco Autogroup",
+      "ogDescription": "Découvrez l'histoire et les valeurs de Greco Autogroup.",
+      "ogImage": "/og-image.jpg",
+      "canonical": "https://grecoautogroup.ch/notre-histoire"
+    },
+    "vehicules": {
+      "title": "Nos Véhicules | Greco Autogroup",
+      "description": "Parcourez notre sélection de véhicules d'occasion de qualité. Chaque véhicule est soigneusement inspecté et préparé.",
+      "keywords": ["véhicules occasion", "voitures", "achat voiture", "Greco Autogroup"],
+      "ogTitle": "Nos Véhicules | Greco Autogroup",
+      "ogDescription": "Découvrez notre sélection de véhicules d'occasion de qualité.",
+      "ogImage": "/og-image.jpg",
+      "canonical": "https://grecoautogroup.ch/vehicules"
+    },
+    "services": {
+      "title": "Nos Services | Greco Autogroup",
+      "description": "Découvrez nos services : achat de véhicules, vente automobile et dépôt-vente. Un accompagnement personnalisé pour chaque client.",
+      "keywords": ["services automobile", "achat voiture", "vente voiture", "dépôt vente"],
+      "ogTitle": "Nos Services | Greco Autogroup",
+      "ogDescription": "Achat, vente et dépôt-vente de véhicules - des services adaptés à vos besoins.",
+      "ogImage": "/og-image.jpg",
+      "canonical": "https://grecoautogroup.ch/services"
+    },
+    "contact": {
+      "title": "Contact | Greco Autogroup",
+      "description": "Contactez Greco Autogroup pour toute demande concernant l'achat, la vente ou le dépôt-vente de véhicules.",
+      "keywords": ["contact", "Greco Autogroup", "téléphone", "email"],
+      "ogTitle": "Nous Contacter | Greco Autogroup",
+      "ogDescription": "Contactez-nous pour toute demande.",
+      "ogImage": "/og-image.jpg",
+      "canonical": "https://grecoautogroup.ch/contact"
+    }
+  },
+  "global": {
+    "siteName": "Greco Autogroup",
+    "siteUrl": "https://grecoautogroup.ch",
+    "logo": "/logo.png",
+    "language": "fr",
+    "social": {
+      "facebook": "",
+      "instagram": ""
+    },
+    "contact": {
+      "phone": "",
+      "email": "",
+      "address": ""
+    }
+  }
+}

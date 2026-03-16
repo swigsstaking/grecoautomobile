@@ -17,36 +17,59 @@ const Layout = ({ children }) => {
   const isV8 = location.pathname.startsWith('/v8');
   const currentVersion = isV8 ? 'v8' : isV6 ? 'v6' : isV5 ? 'v5' : isV4 ? 'v4' : isV3 ? 'v3' : isV2 ? 'v2' : 'v1';
 
+  // Pages available per version (V5/V6/V8 = home only)
+  const versionPages = {
+    v1: ['home', 'notre-histoire', 'vehicules', 'services', 'contact'],
+    v2: ['home', 'notre-histoire', 'vehicules', 'services', 'contact'],
+    v3: ['home', 'notre-histoire', 'vehicules', 'services', 'contact'],
+    v4: ['home', 'notre-histoire', 'vehicules', 'services', 'contact'],
+    v5: ['home'],
+    v6: ['home'],
+    v8: ['home'],
+  };
+
   const getVersionPath = (base) => {
-    if (currentVersion === 'v8') return `/v8${base}`;
-    if (currentVersion === 'v6') return `/v6${base}`;
-    if (currentVersion === 'v5') return `/v5${base}`;
-    if (currentVersion === 'v4') return `/v4${base}`;
-    if (currentVersion === 'v3') return `/v3${base}`;
-    if (currentVersion === 'v2') return `/v2${base}`;
-    return base || '/';
+    const pageKey = base === '' ? 'home' : base.replace('/', '');
+    // If current version doesn't have this page, fall back to V1
+    if (!versionPages[currentVersion]?.includes(pageKey)) {
+      return base || '/';
+    }
+    if (currentVersion === 'v1') return base || '/';
+    return `/${currentVersion}${base}`;
+  };
+
+  // Build version links for a given page — only versions that have it
+  const getPageVersions = (pageKey) => {
+    const versions = {};
+    const basePath = pageKey === 'home' ? '' : `/${pageKey}`;
+    Object.keys(versionPages).forEach((v) => {
+      if (versionPages[v].includes(pageKey)) {
+        versions[v] = v === 'v1' ? (basePath || '/') : `/${v}${basePath}`;
+      }
+    });
+    return versions;
   };
 
   const navigation = [
     {
       name: 'Accueil',
       path: getVersionPath(''),
-      versions: { v1: '/', v2: '/v2', v3: '/v3', v4: '/v4', v5: '/v5', v6: '/v6', v8: '/v8' },
+      versions: getPageVersions('home'),
     },
     {
       name: 'Notre Histoire',
       path: getVersionPath('/notre-histoire'),
-      versions: { v1: '/notre-histoire', v2: '/v2/notre-histoire', v3: '/v3/notre-histoire', v4: '/v4/notre-histoire', v5: '/v5', v6: '/v6', v8: '/v8' },
+      versions: getPageVersions('notre-histoire'),
     },
     {
       name: 'Véhicules',
       path: getVersionPath('/vehicules'),
-      versions: { v1: '/vehicules', v2: '/v2/vehicules', v3: '/v3/vehicules', v4: '/v4/vehicules', v5: '/v5', v6: '/v6', v8: '/v8' },
+      versions: getPageVersions('vehicules'),
     },
     {
       name: 'Services',
       path: getVersionPath('/services'),
-      versions: { v1: '/services', v2: '/v2/services', v3: '/v3/services', v4: '/v4/services', v5: '/v5', v6: '/v6', v8: '/v8' },
+      versions: getPageVersions('services'),
       children: [
         { name: 'Achat', path: getVersionPath('/services') + '#achat' },
         { name: 'Vente', path: getVersionPath('/services') + '#vente' },
@@ -56,7 +79,7 @@ const Layout = ({ children }) => {
     {
       name: 'Contact',
       path: getVersionPath('/contact'),
-      versions: { v1: '/contact', v2: '/v2/contact', v3: '/v3/contact', v4: '/v4/contact', v5: '/v5', v6: '/v6', v8: '/v8' },
+      versions: getPageVersions('contact'),
     },
   ];
 
@@ -179,7 +202,7 @@ const Layout = ({ children }) => {
                         ))}
                         {/* Version links in dropdown */}
                         <div className="border-t border-primary-600/30 mt-1 pt-1">
-                          {['v1', 'v2', 'v3', 'v4', 'v5', 'v6', 'v8'].map((v) => (
+                          {Object.keys(item.versions).map((v) => (
                             <Link
                               key={v}
                               to={item.versions[v]}
@@ -195,23 +218,15 @@ const Layout = ({ children }) => {
                     )}
                     {!item.children && (
                       <div className="absolute top-full left-0 mt-1 bg-dark-section border border-primary-600/30 rounded-lg shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 min-w-[130px]">
-                        {[
-                          { label: 'V1', key: 'v1' },
-                          { label: 'V2', key: 'v2' },
-                          { label: 'V3', key: 'v3' },
-                          { label: 'V4', key: 'v4' },
-                          { label: 'V5', key: 'v5' },
-                          { label: 'V6', key: 'v6' },
-                          { label: 'V8', key: 'v8' },
-                        ].map((v, i, arr) => (
+                        {Object.keys(item.versions).map((v, i, arr) => (
                           <Link
-                            key={v.key}
-                            to={item.versions[v.key]}
+                            key={v}
+                            to={item.versions[v]}
                             className={`block px-4 py-2.5 text-xs uppercase tracking-wider transition-colors ${i === 0 ? 'rounded-t-lg' : ''} ${i === arr.length - 1 ? 'rounded-b-lg' : ''} ${
-                              currentVersion === v.key ? 'text-primary-300 bg-primary-500/10' : 'text-text-secondary hover:text-text-primary hover:bg-primary-500/10'
+                              currentVersion === v ? 'text-primary-300 bg-primary-500/10' : 'text-text-secondary hover:text-text-primary hover:bg-primary-500/10'
                             }`}
                           >
-                            {v.label}
+                            {v.toUpperCase()}
                           </Link>
                         ))}
                       </div>

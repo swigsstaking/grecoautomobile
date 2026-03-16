@@ -21,7 +21,7 @@ const Vehicules = () => {
   const { data: vehiculesData, isLoading } = useQuery({
     queryKey: ['vehicules', seoData.site.slug],
     queryFn: async () => {
-      const response = await fetch(`${API_URL}/public/sites/${seoData.site.slug}/products`);
+      const response = await fetch(`${API_URL}/public/vehicles?siteId=${seoData.site.slug}`);
       if (!response.ok) throw new Error('Erreur lors du chargement');
       const json = await response.json();
       return json.data || [];
@@ -48,7 +48,7 @@ const Vehicules = () => {
     if (searchTerm) {
       const term = searchTerm.toLowerCase();
       result = result.filter(v =>
-        (v.name || '').toLowerCase().includes(term) ||
+        (v.title || v.name || '').toLowerCase().includes(term) ||
         (v.brand || v.metadata?.brand || '').toLowerCase().includes(term) ||
         (v.model || v.metadata?.model || '').toLowerCase().includes(term)
       );
@@ -278,7 +278,7 @@ const VehiculeCard = ({ vehicule }) => {
 
   return (
     <Link
-      to={`/vehicules/${vehicule._id || vehicule.id}`}
+      to={`/vehicules/${vehicule.slug || vehicule._id || vehicule.id}`}
       className="group bg-dark-section border border-primary-600/20 rounded-2xl overflow-hidden hover:border-primary-500/40 transition-all duration-300"
     >
       {/* Image */}
@@ -286,7 +286,7 @@ const VehiculeCard = ({ vehicule }) => {
         {image ? (
           <img
             src={image}
-            alt={vehicule.name || `${brand} ${model}`}
+            alt={vehicule.title || vehicule.name || `${brand} ${model}`}
             className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
           />
         ) : (
@@ -301,12 +301,19 @@ const VehiculeCard = ({ vehicule }) => {
             </span>
           </div>
         )}
+        {vehicule.status === 'reserved' && (
+          <div className="absolute inset-0 bg-dark-bg/50 flex items-center justify-center">
+            <span className="bg-yellow-600 text-white px-4 py-1 rounded-full text-sm font-semibold">
+              Réservé
+            </span>
+          </div>
+        )}
       </div>
 
       {/* Info */}
       <div className="p-6">
         <h3 className="text-lg font-display font-bold text-text-primary mb-1 group-hover:text-primary-300 transition-colors">
-          {vehicule.name || `${brand} ${model}`}
+          {vehicule.title || vehicule.name || `${brand} ${model}`}
         </h3>
 
         <div className="flex flex-wrap gap-3 text-sm text-text-secondary mt-3">

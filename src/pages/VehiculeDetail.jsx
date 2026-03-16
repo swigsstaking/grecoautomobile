@@ -2,7 +2,7 @@ import { useParams, Link } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import SEOHead from '../components/SEOHead';
 import { useSiteInfo } from '../hooks/useSiteInfo';
-import { ArrowLeft, Phone, Mail, Calendar, Gauge, Fuel, Car, Cog, Palette } from 'lucide-react';
+import { ArrowLeft, Phone, Mail, Calendar, Gauge, Fuel, Car, Cog, Palette, Zap, Shield, Check } from 'lucide-react';
 import { useState } from 'react';
 import seoData from '../data/seo.json';
 import mockVehicules from '../data/mockVehicules';
@@ -17,7 +17,7 @@ const VehiculeDetail = () => {
   const { data: apiVehicule, isLoading } = useQuery({
     queryKey: ['vehicule', id],
     queryFn: async () => {
-      const response = await fetch(`${API_URL}/public/sites/${seoData.site.slug}/products/${id}`);
+      const response = await fetch(`${API_URL}/public/vehicles/${id}?siteId=${seoData.site.slug}`);
       if (!response.ok) throw new Error('Véhicule non trouvé');
       const json = await response.json();
       return json.data;
@@ -25,7 +25,7 @@ const VehiculeDetail = () => {
   });
 
   // Utiliser les données de l'API si disponibles, sinon chercher dans les données fictives
-  const vehicule = apiVehicule || mockVehicules.find(v => v._id === id);
+  const vehicule = apiVehicule || mockVehicules.find(v => v._id === id || v.slug === id);
 
   if (isLoading && !vehicule) {
     return (
@@ -62,8 +62,9 @@ const VehiculeDetail = () => {
   const mileage = vehicule.mileage || vehicule.metadata?.mileage || '';
   const fuelType = vehicule.fuelType || vehicule.metadata?.fuelType || '';
   const transmission = vehicule.transmission || vehicule.metadata?.transmission || '';
-  const color = vehicule.color || vehicule.metadata?.color || '';
+  const color = vehicule.exteriorColor || vehicule.color || vehicule.metadata?.color || '';
   const price = vehicule.price;
+  const title = vehicule.title || vehicule.name || `${brand} ${model}`;
 
   const specs = [
     { icon: Calendar, label: 'Année', value: year },
@@ -71,6 +72,9 @@ const VehiculeDetail = () => {
     { icon: Fuel, label: 'Carburant', value: fuelType },
     { icon: Cog, label: 'Transmission', value: transmission },
     { icon: Palette, label: 'Couleur', value: color },
+    { icon: Zap, label: 'Puissance', value: vehicule.power?.hp ? `${vehicule.power.hp} ch` : '' },
+    { icon: Car, label: 'Carrosserie', value: vehicule.bodyType || '' },
+    { icon: Shield, label: 'Garantie', value: vehicule.warranty || '' },
   ].filter(s => s.value);
 
   return (
@@ -97,7 +101,7 @@ const VehiculeDetail = () => {
                   <div className="aspect-[16/10] bg-dark-section rounded-2xl overflow-hidden border border-primary-600/20 mb-4">
                     <img
                       src={images[selectedImage]}
-                      alt={vehicule.name || `${brand} ${model}`}
+                      alt={title}
                       className="w-full h-full object-cover"
                     />
                   </div>
@@ -133,14 +137,19 @@ const VehiculeDetail = () => {
                   Ce véhicule a été vendu
                 </div>
               )}
+              {vehicule.status === 'reserved' && (
+                <div className="bg-yellow-500/10 border border-yellow-500/30 text-yellow-400 rounded-lg px-4 py-2 text-sm font-medium mb-4">
+                  Ce véhicule est réservé
+                </div>
+              )}
 
               <h1 className="text-3xl md:text-4xl font-display font-bold text-text-primary mb-2">
-                {vehicule.name || `${brand} ${model}`}
+                {title}
               </h1>
 
-              {(brand || model) && vehicule.name && (
+              {brand && (
                 <p className="text-text-secondary text-lg mb-6">
-                  {brand} {model}
+                  {brand} {model} {vehicule.condition ? `· ${vehicule.condition}` : ''}
                 </p>
               )}
 
@@ -173,6 +182,21 @@ const VehiculeDetail = () => {
                   <h2 className="text-xl font-display font-bold text-text-primary mb-4">Description</h2>
                   <div className="text-text-secondary leading-relaxed whitespace-pre-line">
                     {vehicule.description}
+                  </div>
+                </div>
+              )}
+
+              {/* Équipements */}
+              {vehicule.features && vehicule.features.length > 0 && (
+                <div className="mb-8">
+                  <h2 className="text-xl font-display font-bold text-text-primary mb-4">Équipements</h2>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                    {vehicule.features.map((feature, index) => (
+                      <div key={index} className="flex items-center gap-2 text-text-secondary text-sm">
+                        <Check size={16} className="text-primary-400 flex-shrink-0" />
+                        {feature}
+                      </div>
+                    ))}
                   </div>
                 </div>
               )}

@@ -1,18 +1,35 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import SEOHead from '../components/SEOHead';
 import { useSiteInfo } from '../hooks/useSiteInfo';
 import { useContact } from '../hooks/useContact';
-import { Phone, Mail, MapPin, Send, CheckCircle, AlertCircle, Clock } from 'lucide-react';
+import { Phone, Mail, MapPin, Send, CheckCircle, AlertCircle, Clock, Car } from 'lucide-react';
 
 const Contact = () => {
   const siteInfo = useSiteInfo();
   const contactMutation = useContact();
+  const [searchParams] = useSearchParams();
+
+  const vehiculeName = searchParams.get('vehicule');
+  const vehiculePrix = searchParams.get('prix');
+  const vehiculeAnnee = searchParams.get('annee');
+  const vehiculeKm = searchParams.get('km');
+
+  const buildVehicleMessage = () => {
+    if (!vehiculeName) return '';
+    let msg = `Bonjour,\n\nJe suis intéressé(e) par le véhicule suivant :\n- ${vehiculeName}`;
+    if (vehiculeAnnee) msg += ` (${vehiculeAnnee})`;
+    if (vehiculeKm && vehiculeKm !== '0') msg += `\n- Kilométrage : ${Number(vehiculeKm).toLocaleString('fr-CH')} km`;
+    if (vehiculePrix) msg += `\n- Prix affiché : CHF ${Number(vehiculePrix).toLocaleString('fr-CH')}.–`;
+    msg += '\n\nMerci de me recontacter pour plus d\'informations.\n\nCordialement,';
+    return msg;
+  };
 
   const [formData, setFormData] = useState({
     name: '',
     email: '',
     phone: '',
-    message: '',
+    message: buildVehicleMessage(),
   });
 
   const [submitted, setSubmitted] = useState(false);
@@ -22,7 +39,7 @@ const Contact = () => {
     try {
       await contactMutation.mutateAsync(formData);
       setSubmitted(true);
-      setFormData({ name: '', email: '', phone: '', message: '' });
+      setFormData({ name: '', email: '', phone: '', message: buildVehicleMessage() });
     } catch (error) {
       console.error('Erreur:', error);
     }
@@ -123,6 +140,16 @@ const Contact = () => {
             {/* Contact Form */}
             <div>
               <h2 className="section-title mb-8">Envoyez-nous un message</h2>
+
+              {vehiculeName && !submitted && (
+                <div className="flex items-center gap-3 bg-primary-500/10 border border-primary-500/30 rounded-xl p-4 mb-6">
+                  <Car className="text-primary-300 flex-shrink-0" size={20} />
+                  <div>
+                    <p className="text-text-primary text-sm font-medium">Demande pour : {vehiculeName}</p>
+                    <p className="text-text-secondary text-xs">Le message a été pré-rempli avec les détails du véhicule.</p>
+                  </div>
+                </div>
+              )}
 
               {submitted ? (
                 <div className="bg-primary-500/10 border border-primary-500/30 rounded-2xl p-8 text-center">

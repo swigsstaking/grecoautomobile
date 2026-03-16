@@ -210,7 +210,10 @@ const VehiculeDetail = () => {
                   Contactez-nous pour plus d'informations ou pour organiser un essai.
                 </p>
                 <div className="flex flex-wrap gap-3">
-                  <Link to="/contact" className="btn-primary">
+                  <Link
+                    to={`/contact?vehicule=${encodeURIComponent(title)}&prix=${price || ''}&annee=${year}&km=${mileage}`}
+                    className="btn-primary"
+                  >
                     <Mail size={18} />
                     Nous contacter
                   </Link>

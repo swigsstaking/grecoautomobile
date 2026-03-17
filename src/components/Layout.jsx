@@ -1,5 +1,5 @@
 import { Link, useLocation } from 'react-router-dom';
-import { Phone, Mail, Facebook, Instagram, Menu, X, ChevronDown, Layers } from 'lucide-react';
+import { Phone, Mail, Facebook, Instagram, Menu, X, ChevronDown } from 'lucide-react';
 import { useState } from 'react';
 import { useSiteInfo } from '../hooks/useSiteInfo';
 
@@ -9,87 +9,27 @@ const Layout = ({ children }) => {
   const siteInfo = useSiteInfo();
   const location = useLocation();
 
-  const isV2 = location.pathname.startsWith('/v2');
-  const isV3 = location.pathname.startsWith('/v3');
-  const isV4 = location.pathname.startsWith('/v4');
-  const isV5 = location.pathname.startsWith('/v5');
-  const isV6 = location.pathname.startsWith('/v6');
-  const isV8 = location.pathname.startsWith('/v8');
-  const currentVersion = isV8 ? 'v8' : isV6 ? 'v6' : isV5 ? 'v5' : isV4 ? 'v4' : isV3 ? 'v3' : isV2 ? 'v2' : 'v1';
-
-  // Pages available per version (V5/V6/V8 = home only)
-  const versionPages = {
-    v1: ['home', 'notre-histoire', 'vehicules', 'services', 'contact'],
-    v2: ['home', 'notre-histoire', 'vehicules', 'services', 'contact'],
-    v3: ['home', 'notre-histoire', 'vehicules', 'services', 'contact'],
-    v4: ['home', 'notre-histoire', 'vehicules', 'services', 'contact'],
-    v5: ['home'],
-    v6: ['home'],
-    v8: ['home'],
-  };
-
-  const getVersionPath = (base) => {
-    const pageKey = base === '' ? 'home' : base.replace('/', '');
-    // If current version doesn't have this page, fall back to V1
-    if (!versionPages[currentVersion]?.includes(pageKey)) {
-      return base || '/';
-    }
-    if (currentVersion === 'v1') return base || '/';
-    return `/${currentVersion}${base}`;
-  };
-
-  // Build version links for a given page — only versions that have it
-  const getPageVersions = (pageKey) => {
-    const versions = {};
-    const basePath = pageKey === 'home' ? '' : `/${pageKey}`;
-    Object.keys(versionPages).forEach((v) => {
-      if (versionPages[v].includes(pageKey)) {
-        versions[v] = v === 'v1' ? (basePath || '/') : `/${v}${basePath}`;
-      }
-    });
-    return versions;
-  };
-
   const navigation = [
-    {
-      name: 'Accueil',
-      path: getVersionPath(''),
-      versions: getPageVersions('home'),
-    },
-    {
-      name: 'Notre Histoire',
-      path: getVersionPath('/notre-histoire'),
-      versions: getPageVersions('notre-histoire'),
-    },
-    {
-      name: 'Véhicules',
-      path: getVersionPath('/vehicules'),
-      versions: getPageVersions('vehicules'),
-    },
+    { name: 'Accueil', path: '/' },
+    { name: 'Notre Histoire', path: '/notre-histoire' },
+    { name: 'Vehicules', path: '/vehicules' },
     {
       name: 'Services',
-      path: getVersionPath('/services'),
-      versions: getPageVersions('services'),
+      path: '/services',
       children: [
-        { name: 'Achat', path: getVersionPath('/services') + '#achat' },
-        { name: 'Vente', path: getVersionPath('/services') + '#vente' },
-        { name: 'Dépôt-vente', path: getVersionPath('/services') + '#depot-vente' },
+        { name: 'Achat', path: '/services#achat' },
+        { name: 'Vente', path: '/services#vente' },
+        { name: 'Depot-vente', path: '/services#depot-vente' },
       ],
     },
-    {
-      name: 'Contact',
-      path: getVersionPath('/contact'),
-      versions: getPageVersions('contact'),
-    },
+    { name: 'Contact', path: '/contact' },
   ];
 
   const isActive = (path) => {
     const cleanPath = path.split('#')[0];
-    if (['/', '/v2', '/v3', '/v4', '/v5', '/v6'].includes(cleanPath)) return location.pathname === cleanPath;
+    if (cleanPath === '/') return location.pathname === '/';
     return location.pathname.startsWith(cleanPath);
   };
-
-  const getCurrentVersionLabel = () => isV8 ? 'V8' : isV6 ? 'V6' : isV5 ? 'V5' : isV4 ? 'V4' : isV3 ? 'V3' : isV2 ? 'V2' : 'V1';
 
   return (
     <div className="min-h-screen flex flex-col bg-dark-bg">
@@ -113,38 +53,6 @@ const Layout = ({ children }) => {
               )}
             </div>
             <div className="flex items-center gap-3">
-              {/* Version Switcher */}
-              <div className="relative group">
-                <button className="flex items-center gap-1.5 text-primary-300 hover:text-primary-200 transition-colors text-xs font-bold uppercase tracking-wider bg-primary-600/40 px-3 py-1 rounded-md cursor-pointer">
-                  <Layers size={12} />
-                  {getCurrentVersionLabel()}
-                  <ChevronDown size={12} />
-                </button>
-                <div className="absolute top-full right-0 mt-1 bg-dark-section border border-primary-600/30 rounded-lg shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 min-w-[120px] z-50">
-                  {[
-                    { label: 'V1 - Original', path: '/', key: 'v1' },
-                    { label: 'V2 - Premium', path: '/v2', key: 'v2' },
-                    { label: 'V3 - Cinematic', path: '/v3', key: 'v3' },
-                    { label: 'V4 - Light', path: '/v4', key: 'v4' },
-                    { label: 'V5 - Garage', path: '/v5', key: 'v5' },
-                    { label: 'V6 - Garage+', path: '/v6', key: 'v6' },
-                    { label: 'V8 - Light', path: '/v8', key: 'v8' },
-                  ].map((v, i, arr) => (
-                    <Link
-                      key={v.key}
-                      to={v.path}
-                      className={`block px-4 py-2.5 text-sm transition-colors ${i === 0 ? 'rounded-t-lg' : ''} ${i === arr.length - 1 ? 'rounded-b-lg' : ''} ${
-                        currentVersion === v.key ? 'text-primary-300 bg-primary-500/10' : 'text-text-secondary hover:text-text-primary hover:bg-primary-500/10'
-                      }`}
-                    >
-                      {v.label}
-                    </Link>
-                  ))}
-                </div>
-              </div>
-
-              <div className="w-px h-4 bg-primary-600/50"></div>
-
               {siteInfo.social?.facebook && (
                 <a href={siteInfo.social.facebook} target="_blank" rel="noopener noreferrer" className="text-text-secondary hover:text-text-primary transition-colors">
                   <Facebook size={15} />
@@ -163,7 +71,7 @@ const Layout = ({ children }) => {
         <nav className="bg-dark-bg/95 backdrop-blur-md border-b border-primary-700/30">
           <div className="container-site py-4">
             <div className="flex items-center justify-between">
-              <Link to={getVersionPath('')} className="group">
+              <Link to="/" className="group">
                 <span className="text-2xl font-display font-bold text-text-primary group-hover:text-primary-300 transition-colors">
                   GRECO
                 </span>
@@ -176,19 +84,17 @@ const Layout = ({ children }) => {
               <div className="hidden lg:flex items-center gap-1">
                 {navigation.map((item) => (
                   <div key={item.name} className="relative group">
-                    <div className="flex items-center">
-                      <Link
-                        to={item.path}
-                        className={`px-4 py-2 rounded-md font-medium text-sm uppercase tracking-wider transition-all duration-200 ${
-                          isActive(item.path)
-                            ? 'text-text-primary bg-primary-500/20'
-                            : 'text-text-secondary hover:text-text-primary hover:bg-primary-500/10'
-                        }`}
-                      >
-                        {item.name}
-                        {item.children && <ChevronDown size={14} className="inline ml-1" />}
-                      </Link>
-                    </div>
+                    <Link
+                      to={item.path}
+                      className={`px-4 py-2 rounded-md font-medium text-sm uppercase tracking-wider transition-all duration-200 ${
+                        isActive(item.path)
+                          ? 'text-text-primary bg-primary-500/20'
+                          : 'text-text-secondary hover:text-text-primary hover:bg-primary-500/10'
+                      }`}
+                    >
+                      {item.name}
+                      {item.children && <ChevronDown size={14} className="inline ml-1" />}
+                    </Link>
                     {item.children && (
                       <div className="absolute top-full left-0 mt-1 bg-dark-section border border-primary-600/30 rounded-lg shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 min-w-[200px]">
                         {item.children.map((child) => (
@@ -198,35 +104,6 @@ const Layout = ({ children }) => {
                             className="block px-4 py-2.5 text-sm text-text-secondary hover:text-text-primary hover:bg-primary-500/10 first:rounded-t-lg last:rounded-b-lg transition-colors"
                           >
                             {child.name}
-                          </Link>
-                        ))}
-                        {/* Version links in dropdown */}
-                        <div className="border-t border-primary-600/30 mt-1 pt-1">
-                          {Object.keys(item.versions).map((v) => (
-                            <Link
-                              key={v}
-                              to={item.versions[v]}
-                              className={`block px-4 py-2 text-xs uppercase tracking-wider transition-colors last:rounded-b-lg ${
-                                currentVersion === v ? 'text-primary-300' : 'text-text-secondary/50 hover:text-text-secondary'
-                              }`}
-                            >
-                              {v.toUpperCase()}
-                            </Link>
-                          ))}
-                        </div>
-                      </div>
-                    )}
-                    {!item.children && (
-                      <div className="absolute top-full left-0 mt-1 bg-dark-section border border-primary-600/30 rounded-lg shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 min-w-[130px]">
-                        {Object.keys(item.versions).map((v, i, arr) => (
-                          <Link
-                            key={v}
-                            to={item.versions[v]}
-                            className={`block px-4 py-2.5 text-xs uppercase tracking-wider transition-colors ${i === 0 ? 'rounded-t-lg' : ''} ${i === arr.length - 1 ? 'rounded-b-lg' : ''} ${
-                              currentVersion === v ? 'text-primary-300 bg-primary-500/10' : 'text-text-secondary hover:text-text-primary hover:bg-primary-500/10'
-                            }`}
-                          >
-                            {v.toUpperCase()}
                           </Link>
                         ))}
                       </div>
@@ -253,30 +130,6 @@ const Layout = ({ children }) => {
             {/* Mobile Navigation */}
             {mobileMenuOpen && (
               <div className="lg:hidden mt-4 pb-4 border-t border-primary-700/30 pt-4">
-                {/* Mobile version switcher */}
-                <div className="flex gap-1 mb-4 p-1 bg-primary-700/20 rounded-xl">
-                  {[
-                    { label: 'V1', path: '/', key: 'v1' },
-                    { label: 'V2', path: '/v2', key: 'v2' },
-                    { label: 'V3', path: '/v3', key: 'v3' },
-                    { label: 'V4', path: '/v4', key: 'v4' },
-                    { label: 'V5', path: '/v5', key: 'v5' },
-                    { label: 'V6', path: '/v6', key: 'v6' },
-                    { label: 'V8', path: '/v8', key: 'v8' },
-                  ].map((v) => (
-                    <Link
-                      key={v.key}
-                      to={v.path}
-                      onClick={() => setMobileMenuOpen(false)}
-                      className={`flex-1 text-center py-2.5 rounded-lg text-sm font-bold uppercase tracking-wider transition-all ${
-                        currentVersion === v.key ? 'bg-primary-500/20 text-primary-300' : 'text-text-secondary'
-                      }`}
-                    >
-                      {v.label}
-                    </Link>
-                  ))}
-                </div>
-
                 <div className="flex flex-col gap-1">
                   {navigation.map((item) => (
                     <div key={item.name}>
@@ -341,12 +194,12 @@ const Layout = ({ children }) => {
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
             {/* Brand */}
             <div className="md:col-span-1">
-              <Link to={getVersionPath('')} className="inline-block mb-4">
+              <Link to="/" className="inline-block mb-4">
                 <span className="text-xl font-display font-bold text-text-primary">GRECO</span>
                 <span className="text-xl font-display font-light text-primary-400 ml-1">AUTOGROUP</span>
               </Link>
               <p className="text-text-secondary text-sm leading-relaxed">
-                {siteInfo.description || "Votre partenaire de confiance pour l'achat, la vente et le dépôt-vente de véhicules d'occasion."}
+                {siteInfo.description || "Votre partenaire de confiance pour l'achat, la vente et le depot-vente de vehicules d'occasion."}
               </p>
             </div>
 
@@ -368,9 +221,9 @@ const Layout = ({ children }) => {
             <div>
               <h3 className="text-sm font-semibold uppercase tracking-wider text-text-primary mb-4">Services</h3>
               <ul className="space-y-2">
-                <li><Link to={getVersionPath('/services') + '#achat'} className="text-text-secondary hover:text-primary-300 transition-colors text-sm">Achat</Link></li>
-                <li><Link to={getVersionPath('/services') + '#vente'} className="text-text-secondary hover:text-primary-300 transition-colors text-sm">Vente</Link></li>
-                <li><Link to={getVersionPath('/services') + '#depot-vente'} className="text-text-secondary hover:text-primary-300 transition-colors text-sm">Dépôt-vente</Link></li>
+                <li><Link to="/services#achat" className="text-text-secondary hover:text-primary-300 transition-colors text-sm">Achat</Link></li>
+                <li><Link to="/services#vente" className="text-text-secondary hover:text-primary-300 transition-colors text-sm">Vente</Link></li>
+                <li><Link to="/services#depot-vente" className="text-text-secondary hover:text-primary-300 transition-colors text-sm">Depot-vente</Link></li>
               </ul>
             </div>
 
@@ -415,7 +268,7 @@ const Layout = ({ children }) => {
 
           <div className="border-t border-primary-700/30 mt-10 pt-8 text-center text-text-secondary text-sm">
             <p>
-              &copy; {new Date().getFullYear()} {siteInfo.siteName || 'Greco Autogroup'}. Tous droits réservés.
+              &copy; {new Date().getFullYear()} {siteInfo.siteName || 'Greco Autogroup'}. Tous droits reserves.
               {' | '}
               <a
                 href="https://swigs.ch"
@@ -423,7 +276,7 @@ const Layout = ({ children }) => {
                 rel="noopener noreferrer"
                 className="hover:text-primary-300 transition-colors"
               >
-                Site créé par Swigs SA
+                Site cree par Swigs SA
               </a>
             </p>
           </div>

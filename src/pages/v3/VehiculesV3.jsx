@@ -16,7 +16,7 @@ const VehiculesV3 = () => {
   const { data: vehiculesData, isLoading } = useQuery({
     queryKey: ['vehicules', seoData.site.slug],
     queryFn: async () => {
-      const response = await fetch(`${API_URL}/public/sites/${seoData.site.slug}/products`);
+      const response = await fetch(`${API_URL}/public/vehicles?siteId=${seoData.site.slug}`);
       if (!response.ok) throw new Error('Erreur');
       const json = await response.json();
       return json.data || [];
@@ -34,7 +34,7 @@ const VehiculesV3 = () => {
     if (searchTerm) {
       const term = searchTerm.toLowerCase();
       result = result.filter(v =>
-        (v.name || '').toLowerCase().includes(term) ||
+        (v.title || v.name || '').toLowerCase().includes(term) ||
         (v.brand || v.metadata?.brand || '').toLowerCase().includes(term) ||
         (v.model || v.metadata?.model || '').toLowerCase().includes(term)
       );
@@ -163,14 +163,14 @@ const VehiculesV3 = () => {
                 return (
                   <Link
                     key={vehicule._id || vehicule.id}
-                    to={`/vehicules/${vehicule._id || vehicule.id}`}
+                    to={`/vehicules/${vehicule.slug || vehicule._id || vehicule.id}`}
                     className="group bg-[#0d1117] block"
                   >
                     <div className="aspect-[4/3] overflow-hidden relative">
                       {image ? (
                         <img
                           src={image}
-                          alt={vehicule.name || brand}
+                          alt={vehicule.title || vehicule.name || brand}
                           className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
                         />
                       ) : (
@@ -183,10 +183,15 @@ const VehiculesV3 = () => {
                           <span className="text-white text-xs uppercase tracking-[0.3em]">Vendu</span>
                         </div>
                       )}
+                      {vehicule.status === 'reserved' && (
+                        <div className="absolute inset-0 bg-black/40 flex items-center justify-center">
+                          <span className="text-white text-xs uppercase tracking-[0.3em]">Reserve</span>
+                        </div>
+                      )}
                     </div>
                     <div className="p-6 md:p-8">
                       <h3 className="text-lg font-display font-bold text-white group-hover:text-white/70 transition-colors mb-2">
-                        {vehicule.name || `${brand}`}
+                        {vehicule.title || vehicule.name || `${brand}`}
                       </h3>
                       <p className="text-white/30 text-sm mb-4">
                         {[year, mileage && `${typeof mileage === 'number' ? mileage.toLocaleString() : mileage} km`, fuelType].filter(Boolean).join(' · ')}

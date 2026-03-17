@@ -1,13 +1,31 @@
 import { useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import SEOHead from '../../components/SEOHead';
 import { useSiteInfo } from '../../hooks/useSiteInfo';
 import { useContact } from '../../hooks/useContact';
-import { Phone, Mail, MapPin, Send, Check, AlertCircle, Clock, ArrowRight } from 'lucide-react';
+import { Phone, Mail, MapPin, Send, Check, AlertCircle, Clock, ArrowRight, Car } from 'lucide-react';
 
 const ContactV3 = () => {
   const siteInfo = useSiteInfo();
   const contactMutation = useContact();
-  const [formData, setFormData] = useState({ name: '', email: '', phone: '', message: '' });
+  const [searchParams] = useSearchParams();
+
+  const vehiculeName = searchParams.get('vehicule');
+  const vehiculePrix = searchParams.get('prix');
+  const vehiculeAnnee = searchParams.get('annee');
+  const vehiculeKm = searchParams.get('km');
+
+  const buildVehicleMessage = () => {
+    if (!vehiculeName) return '';
+    let msg = `Bonjour,\n\nJe suis interesse(e) par le vehicule suivant :\n- ${vehiculeName}`;
+    if (vehiculeAnnee) msg += ` (${vehiculeAnnee})`;
+    if (vehiculeKm && vehiculeKm !== '0') msg += `\n- Kilometrage : ${Number(vehiculeKm).toLocaleString('fr-CH')} km`;
+    if (vehiculePrix) msg += `\n- Prix affiche : CHF ${Number(vehiculePrix).toLocaleString('fr-CH')}.-`;
+    msg += '\n\nMerci de me recontacter pour plus d\'informations.\n\nCordialement,';
+    return msg;
+  };
+
+  const [formData, setFormData] = useState({ name: '', email: '', phone: '', message: buildVehicleMessage() });
   const [submitted, setSubmitted] = useState(false);
 
   const handleSubmit = async (e) => {
@@ -15,7 +33,7 @@ const ContactV3 = () => {
     try {
       await contactMutation.mutateAsync(formData);
       setSubmitted(true);
-      setFormData({ name: '', email: '', phone: '', message: '' });
+      setFormData({ name: '', email: '', phone: '', message: buildVehicleMessage() });
     } catch (error) {
       console.error('Erreur:', error);
     }
@@ -100,6 +118,16 @@ const ContactV3 = () => {
               <h2 className="text-3xl md:text-4xl font-display font-bold text-white leading-[0.95] mb-10">
                 Envoyez-nous<br />un message
               </h2>
+
+              {vehiculeName && !submitted && (
+                <div className="flex items-center gap-3 border border-white/10 p-4 mb-8">
+                  <Car size={18} className="text-white/30 flex-shrink-0" />
+                  <div>
+                    <p className="text-white text-sm font-medium">Demande pour : {vehiculeName}</p>
+                    <p className="text-white/30 text-xs">Le message a ete pre-rempli avec les details du vehicule.</p>
+                  </div>
+                </div>
+              )}
 
               {submitted ? (
                 <div className="border border-white/10 p-12 text-center">

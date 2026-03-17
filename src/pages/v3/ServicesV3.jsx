@@ -115,7 +115,7 @@ const ServicesV3 = () => {
                   </p>
                   <div className="flex flex-wrap gap-4">
                     <Link
-                      to="/v3/contact"
+                      to="/contact"
                       className="group inline-flex items-center gap-3 px-8 py-4 bg-white text-black text-sm uppercase tracking-[0.15em] font-medium hover:bg-white/90 transition-colors"
                     >
                       Nous contacter

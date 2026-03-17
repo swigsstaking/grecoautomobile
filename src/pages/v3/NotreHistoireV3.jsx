@@ -153,14 +153,14 @@ const NotreHistoireV3 = () => {
           </h2>
           <div className="flex flex-wrap justify-center gap-6">
             <Link
-              to="/v3/contact"
+              to="/contact"
               className="group inline-flex items-center gap-3 px-8 py-4 bg-white text-black text-sm uppercase tracking-[0.15em] font-medium hover:bg-white/90 transition-colors"
             >
               Nous contacter
               <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
             </Link>
             <Link
-              to="/v3/vehicules"
+              to="/vehicules"
               className="inline-flex items-center gap-3 px-8 py-4 border border-white/20 text-white text-sm uppercase tracking-[0.15em] font-medium hover:border-white/40 transition-colors"
             >
               Voir nos véhicules

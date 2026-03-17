@@ -171,7 +171,7 @@ const HomeV3 = () => {
               </h2>
             </div>
             <Link
-              to="/v3/vehicules"
+              to="/vehicules"
               className="hidden md:inline-flex items-center gap-2 text-white/50 text-sm uppercase tracking-[0.15em] hover:text-white transition-colors"
             >
               Tout voir <ArrowRight size={14} />
@@ -217,7 +217,7 @@ const HomeV3 = () => {
         </div>
 
         <div className="max-w-[1920px] mx-auto px-6 md:px-12 lg:px-24 pb-20 md:hidden">
-          <Link to="/v3/vehicules" className="inline-flex items-center gap-2 text-white/50 text-sm uppercase tracking-[0.15em] hover:text-white transition-colors">
+          <Link to="/vehicules" className="inline-flex items-center gap-2 text-white/50 text-sm uppercase tracking-[0.15em] hover:text-white transition-colors">
             Voir tout le catalogue <ArrowRight size={14} />
           </Link>
         </div>
@@ -244,7 +244,7 @@ const HomeV3 = () => {
               transparence et un service personnalisé.
             </p>
             <Link
-              to="/v3/notre-histoire"
+              to="/notre-histoire"
               className="group inline-flex items-center gap-3 text-white text-sm uppercase tracking-[0.2em] font-medium border-b border-white/20 pb-2 hover:border-white/50 transition-colors"
             >
               Notre histoire
@@ -269,19 +269,19 @@ const HomeV3 = () => {
                 title: 'Achat',
                 desc: 'Vous souhaitez vendre votre véhicule ? Estimation gratuite, rachat immédiat, paiement sécurisé.',
                 image: 'https://images.unsplash.com/photo-1560958089-b8a1929cea89?w=800&h=600&fit=crop',
-                link: '/v3/services#achat',
+                link: '/services#achat',
               },
               {
                 title: 'Vente',
                 desc: 'Découvrez notre sélection de véhicules inspectés et garantis. Essai routier disponible.',
                 image: 'https://images.unsplash.com/photo-1549317661-bd32c8ce0aca?w=800&h=600&fit=crop',
-                link: '/v3/services#vente',
+                link: '/services#vente',
               },
               {
                 title: 'Dépôt-vente',
                 desc: 'Confiez-nous votre véhicule. Photos pro, diffusion, négociation — on gère tout.',
                 image: 'https://images.unsplash.com/photo-1568605117036-5fe5e7bab0b7?w=800&h=600&fit=crop',
-                link: '/v3/services#depot-vente',
+                link: '/services#depot-vente',
               },
             ].map((service, i) => (
               <Link
@@ -368,14 +368,14 @@ const HomeV3 = () => {
           </p>
           <div className="flex flex-wrap justify-center gap-6">
             <Link
-              to="/v3/vehicules"
+              to="/vehicules"
               className="group inline-flex items-center gap-3 px-8 py-4 bg-white text-black text-sm uppercase tracking-[0.15em] font-medium hover:bg-white/90 transition-colors"
             >
               Voir le catalogue
               <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
             </Link>
             <Link
-              to="/v3/contact"
+              to="/contact"
               className="inline-flex items-center gap-3 px-8 py-4 border border-white/20 text-white text-sm uppercase tracking-[0.15em] font-medium hover:border-white/40 transition-colors"
             >
               Nous contacter

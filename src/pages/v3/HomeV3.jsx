@@ -1,13 +1,30 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
+import { useQuery } from '@tanstack/react-query';
 import SEOHead from '../../components/SEOHead';
 import { useSiteInfo } from '../../hooks/useSiteInfo';
-import { ArrowRight, ArrowLeft, ChevronRight, Star, Play, ArrowDown } from 'lucide-react';
+import { ArrowRight, ArrowLeft, ChevronRight, Star, Play, ArrowDown, Car } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import seoData from '../../data/seo.json';
 import mockVehicules from '../../data/mockVehicules';
+
+const API_URL = import.meta.env.VITE_API_URL || 'https://swigs.online/api';
 
 const HomeV3 = () => {
   const siteInfo = useSiteInfo();
-  const featuredVehicules = mockVehicules.filter(v => v.status === 'available');
+
+  const { data: apiVehicules } = useQuery({
+    queryKey: ['vehicules-home', seoData.site.slug],
+    queryFn: async () => {
+      const response = await fetch(`${API_URL}/public/vehicles?siteId=${seoData.site.slug}`);
+      if (!response.ok) throw new Error('Erreur');
+      const json = await response.json();
+      return json.data || [];
+    },
+    staleTime: 1000 * 60 * 5,
+  });
+
+  const allVehicules = (apiVehicules && apiVehicules.length > 0) ? apiVehicules : mockVehicules;
+  const featuredVehicules = allVehicules.filter(v => v.status === 'available' || v.status !== 'sold');
 
   // Hero slides
   const heroSlides = [
@@ -187,29 +204,35 @@ const HomeV3 = () => {
         >
           {featuredVehicules.map((v) => (
             <Link
-              key={v._id}
-              to={`/vehicules/${v._id}`}
+              key={v._id || v.id}
+              to={`/vehicules/${v.slug || v._id || v.id}`}
               className="group flex-shrink-0 w-[85vw] md:w-[45vw] lg:w-[30vw] snap-start"
             >
               <div className="relative aspect-[4/3] overflow-hidden bg-[#161b22] mb-5">
-                <img
-                  src={v.images[0]}
-                  alt={v.name}
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
-                />
+                {v.images?.[0] ? (
+                  <img
+                    src={v.images[0]}
+                    alt={v.title || v.name}
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
+                  />
+                ) : (
+                  <div className="w-full h-full flex items-center justify-center">
+                    <Car size={48} className="text-white/10" />
+                  </div>
+                )}
                 <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
               </div>
               <div className="flex items-start justify-between">
                 <div>
                   <h3 className="text-white text-lg font-display font-bold group-hover:text-white/80 transition-colors">
-                    {v.name}
+                    {v.title || v.name}
                   </h3>
                   <p className="text-white/30 text-sm mt-1">
-                    {v.year} · {v.mileage.toLocaleString()} km · {v.fuelType}
+                    {v.year} · {typeof v.mileage === 'number' ? v.mileage.toLocaleString() : v.mileage} km · {v.fuelType}
                   </p>
                 </div>
                 <p className="text-white font-display font-bold text-lg">
-                  CHF {v.price.toLocaleString()}
+                  CHF {typeof v.price === 'number' ? v.price.toLocaleString() : v.price}
                 </p>
               </div>
             </Link>

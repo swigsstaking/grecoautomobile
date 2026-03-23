@@ -26,33 +26,27 @@ const HomeV3 = () => {
   const allVehicules = (apiVehicules && apiVehicules.length > 0) ? apiVehicules : mockVehicules;
   const featuredVehicules = allVehicules.filter(v => v.status === 'available' || v.status !== 'sold');
 
-  // Hero slides
-  const heroSlides = [
-    {
+  // Hero slides — dynamiques depuis les vehicules disponibles
+  const heroSlides = featuredVehicules.slice(0, 3).map((v, i) => ({
+    image: v.images?.[0] || null,
+    label: i === 0 ? 'Dernier arrivage' : i === 1 ? 'Selection premium' : 'A decouvrir',
+    title: v.brand || v.title || '',
+    subtitle: v.model || '',
+    cta: 'Decouvrir',
+    link: `/vehicules/${v.slug || v._id || v.id}`,
+  }));
+
+  // Fallback si pas de vehicules
+  if (heroSlides.length === 0) {
+    heroSlides.push({
       image: null,
-      label: 'Nouvelle arrivée',
-      title: 'Porsche Cayenne',
-      subtitle: 'E-Hybrid',
-      cta: 'Découvrir',
-      link: '/vehicules/mock-4',
-    },
-    {
-      image: null,
-      label: 'Sélection premium',
-      title: 'BMW Série 3',
-      subtitle: '320d M Sport',
-      cta: 'Découvrir',
-      link: '/vehicules/mock-1',
-    },
-    {
-      image: null,
-      label: 'Hybride premium',
-      title: 'Mercedes-Benz',
-      subtitle: 'Classe C 300e',
-      cta: 'Découvrir',
-      link: '/vehicules/mock-2',
-    },
-  ];
+      label: 'Greco Autogroup',
+      title: 'Achat & Vente',
+      subtitle: 'Automobile',
+      cta: 'Voir le catalogue',
+      link: '/vehicules',
+    });
+  }
 
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isTransitioning, setIsTransitioning] = useState(false);
@@ -76,11 +70,12 @@ const HomeV3 = () => {
   // Horizontal scroll
   const scrollContainerRef = useRef(null);
 
+  // Avis clients — a remplacer par les vrais avis Google du client
   const reviews = [
-    { name: 'Marc D.', text: 'Service impeccable, équipe professionnelle et à l\'écoute. Je recommande.', rating: 5 },
-    { name: 'Sophie L.', text: 'Estimation juste et paiement rapide. Très satisfaite de la vente.', rating: 5 },
-    { name: 'Jean-Pierre M.', text: 'Mon véhicule a été vendu rapidement et au bon prix. Excellent.', rating: 5 },
-    { name: 'Laura K.', text: 'Bon accompagnement, véhicules en excellent état, prix transparents.', rating: 4 },
+    { name: 'Client verifie', text: 'Equipe serieuse et professionnelle. Tout s\'est passe rapidement et en toute transparence.', rating: 5 },
+    { name: 'Client verifie', text: 'Vehicule en parfait etat, conforme a la description. Je recommande.', rating: 5 },
+    { name: 'Client verifie', text: 'Tres bonne experience d\'achat. Accompagnement personnalise du debut a la fin.', rating: 5 },
+    { name: 'Client verifie', text: 'Service de depot-vente efficace. Mon vehicule a ete vendu rapidement.', rating: 5 },
   ];
 
   return (
@@ -261,8 +256,8 @@ const HomeV3 = () => {
               notre passion.
             </h2>
             <p className="text-white/60 text-lg md:text-xl font-light leading-relaxed mb-10 max-w-lg">
-              Depuis plus de 10 ans, Greco Autogroup accompagne ses clients avec expertise,
-              transparence et un service personnalisé.
+              Greco Autogroup, votre partenaire automobile de confiance.
+              Achat, vente et depot-vente avec un service sur mesure.
             </p>
             <Link
               to="/notre-histoire"

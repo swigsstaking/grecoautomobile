@@ -49,13 +49,7 @@ const ContactV3 = () => {
 
       {/* ═══ HERO ═══ */}
       <section className="relative h-[50vh] min-h-[400px] flex items-end bg-black overflow-hidden">
-        <div className="absolute inset-0">
-          <img
-            src="https://images.unsplash.com/photo-1423666639041-f56000c27a9a?w=1920&h=1080&fit=crop&q=90"
-            alt=""
-            className="w-full h-full object-cover opacity-40"
-          />
-        </div>
+        <div className="absolute inset-0 bg-gradient-to-br from-[#0a1628] via-[#13274a] to-[#0d1117]"></div>
         <div className="max-w-[1920px] mx-auto px-6 md:px-12 lg:px-24 relative z-10 pb-16 md:pb-24 w-full">
           <p className="text-white/30 text-xs uppercase tracking-[0.3em] mb-4">Parlons-en</p>
           <h1 className="text-6xl md:text-8xl font-display font-bold text-white leading-[0.9]">

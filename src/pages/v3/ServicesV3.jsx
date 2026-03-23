@@ -18,7 +18,7 @@ const ServicesV3 = () => {
   const services = [
     {
       id: 'achat',
-      image: 'https://images.unsplash.com/photo-1560958089-b8a1929cea89?w=1920&h=1080&fit=crop&q=90',
+      image: null,
       title: 'Achat de véhicules',
       subtitle: 'Nous rachetons votre véhicule',
       description: 'Vous souhaitez vendre votre véhicule rapidement et au meilleur prix ? Greco Autogroup vous propose une estimation gratuite et un rachat immédiat, quelle que soit la marque ou le modèle.',
@@ -33,7 +33,7 @@ const ServicesV3 = () => {
     },
     {
       id: 'vente',
-      image: 'https://images.unsplash.com/photo-1549317661-bd32c8ce0aca?w=1920&h=1080&fit=crop&q=90',
+      image: null,
       title: 'Vente de véhicules',
       subtitle: 'Des véhicules de qualité garantis',
       description: 'Découvrez notre sélection de véhicules d\'occasion soigneusement inspectés. Chaque véhicule bénéficie d\'un contrôle technique complet et d\'une garantie.',
@@ -48,7 +48,7 @@ const ServicesV3 = () => {
     },
     {
       id: 'depot-vente',
-      image: 'https://images.unsplash.com/photo-1568605117036-5fe5e7bab0b7?w=1920&h=1080&fit=crop&q=90',
+      image: null,
       title: 'Dépôt-vente',
       subtitle: 'Nous vendons pour vous',
       description: 'Vous manquez de temps ? Confiez-nous la vente de votre véhicule. Photos professionnelles, annonces, négociation — nous gérons l\'intégralité du processus.',
@@ -69,13 +69,7 @@ const ServicesV3 = () => {
 
       {/* ═══ HERO ═══ */}
       <section className="relative h-[60vh] min-h-[450px] flex items-end bg-black overflow-hidden">
-        <div className="absolute inset-0">
-          <img
-            src="https://images.unsplash.com/photo-1486262715619-67b85e0b08d3?w=1920&h=1080&fit=crop&q=90"
-            alt=""
-            className="w-full h-full object-cover opacity-40"
-          />
-        </div>
+        <div className="absolute inset-0 bg-gradient-to-br from-[#0a1628] via-[#13274a] to-[#0d1117]"></div>
         <div className="max-w-[1920px] mx-auto px-6 md:px-12 lg:px-24 relative z-10 pb-16 md:pb-24 w-full">
           <p className="text-white/30 text-xs uppercase tracking-[0.3em] mb-4">Ce que nous proposons</p>
           <h1 className="text-6xl md:text-8xl font-display font-bold text-white leading-[0.9]">
@@ -89,11 +83,15 @@ const ServicesV3 = () => {
         <section key={service.id} id={service.id} className="scroll-mt-20">
           {/* Full bleed image */}
           <div className="relative h-[50vh] min-h-[350px] bg-black overflow-hidden">
-            <img
-              src={service.image}
-              alt={service.title}
-              className="w-full h-full object-cover opacity-60"
-            />
+            {service.image ? (
+              <img
+                src={service.image}
+                alt={service.title}
+                className="w-full h-full object-cover opacity-60"
+              />
+            ) : (
+              <div className="w-full h-full bg-gradient-to-br from-[#0a1628] via-[#162d50] to-[#0d1117]"></div>
+            )}
             <div className="absolute inset-0 bg-gradient-to-t from-[#0d1117] to-transparent"></div>
             <div className="absolute bottom-0 left-0 right-0 z-10 pb-10">
               <div className="max-w-[1920px] mx-auto px-6 md:px-12 lg:px-24">

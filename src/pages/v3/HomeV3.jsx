@@ -29,7 +29,7 @@ const HomeV3 = () => {
   // Hero slides
   const heroSlides = [
     {
-      image: 'https://images.unsplash.com/photo-1544636331-e26879cd4d9b?w=1920&h=1080&fit=crop&q=90',
+      image: null,
       label: 'Nouvelle arrivée',
       title: 'Porsche Cayenne',
       subtitle: 'E-Hybrid',
@@ -37,7 +37,7 @@ const HomeV3 = () => {
       link: '/vehicules/mock-4',
     },
     {
-      image: 'https://images.unsplash.com/photo-1555215695-3004980ad54e?w=1920&h=1080&fit=crop&q=90',
+      image: null,
       label: 'Sélection premium',
       title: 'BMW Série 3',
       subtitle: '320d M Sport',
@@ -45,7 +45,7 @@ const HomeV3 = () => {
       link: '/vehicules/mock-1',
     },
     {
-      image: 'https://images.unsplash.com/photo-1618843479313-40f8afb4b4d8?w=1920&h=1080&fit=crop&q=90',
+      image: null,
       label: 'Hybride premium',
       title: 'Mercedes-Benz',
       subtitle: 'Classe C 300e',
@@ -96,7 +96,11 @@ const HomeV3 = () => {
               i === currentSlide ? 'opacity-100 scale-100' : 'opacity-0 scale-105'
             }`}
           >
-            <img src={slide.image} alt="" className="w-full h-full object-cover" />
+            {slide.image ? (
+              <img src={slide.image} alt="" className="w-full h-full object-cover" />
+            ) : (
+              <div className="w-full h-full bg-gradient-to-br from-[#0a1628] via-[#0d1f3c] to-[#061224]"></div>
+            )}
             <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-black/30"></div>
           </div>
         ))}
@@ -248,13 +252,7 @@ const HomeV3 = () => {
 
       {/* ═══ ABOUT TEASER ═══ Full bleed image + text overlay */}
       <section className="relative min-h-[80vh] flex items-center bg-black overflow-hidden">
-        <div className="absolute inset-0">
-          <img
-            src="https://images.unsplash.com/photo-1625047509248-ec889cbff17f?w=1920&h=1080&fit=crop&q=90"
-            alt=""
-            className="w-full h-full object-cover opacity-50"
-          />
-        </div>
+        <div className="absolute inset-0 bg-gradient-to-br from-[#0a1628] via-[#13274a] to-[#0d1117]"></div>
         <div className="max-w-[1920px] mx-auto px-6 md:px-12 lg:px-24 relative z-10 py-20">
           <div className="max-w-2xl">
             <p className="text-white/30 text-xs uppercase tracking-[0.3em] mb-6">Qui sommes-nous</p>
@@ -291,19 +289,19 @@ const HomeV3 = () => {
               {
                 title: 'Achat',
                 desc: 'Vous souhaitez vendre votre véhicule ? Estimation gratuite, rachat immédiat, paiement sécurisé.',
-                image: 'https://images.unsplash.com/photo-1560958089-b8a1929cea89?w=800&h=600&fit=crop',
+                image: null,
                 link: '/services#achat',
               },
               {
                 title: 'Vente',
                 desc: 'Découvrez notre sélection de véhicules inspectés et garantis. Essai routier disponible.',
-                image: 'https://images.unsplash.com/photo-1549317661-bd32c8ce0aca?w=800&h=600&fit=crop',
+                image: null,
                 link: '/services#vente',
               },
               {
                 title: 'Dépôt-vente',
                 desc: 'Confiez-nous votre véhicule. Photos pro, diffusion, négociation — on gère tout.',
-                image: 'https://images.unsplash.com/photo-1568605117036-5fe5e7bab0b7?w=800&h=600&fit=crop',
+                image: null,
                 link: '/services#depot-vente',
               },
             ].map((service, i) => (
@@ -313,11 +311,15 @@ const HomeV3 = () => {
                 className="group bg-[#0d1117] p-0 block"
               >
                 <div className="aspect-[4/3] overflow-hidden">
-                  <img
-                    src={service.image}
-                    alt={service.title}
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
-                  />
+                  {service.image ? (
+                    <img
+                      src={service.image}
+                      alt={service.title}
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                    />
+                  ) : (
+                    <div className="w-full h-full bg-gradient-to-br from-[#0a1628] via-[#162d50] to-[#0d1117]"></div>
+                  )}
                 </div>
                 <div className="p-8 md:p-10">
                   <h3 className="text-2xl font-display font-bold text-white mb-3 group-hover:text-white/80 transition-colors">
@@ -375,13 +377,7 @@ const HomeV3 = () => {
 
       {/* ═══ CTA ═══ Cinematic final */}
       <section className="relative h-[60vh] min-h-[400px] flex items-center bg-black overflow-hidden">
-        <div className="absolute inset-0">
-          <img
-            src="https://images.unsplash.com/photo-1494976388531-d1058494cdd8?w=1920&h=800&fit=crop&q=90"
-            alt=""
-            className="w-full h-full object-cover opacity-40"
-          />
-        </div>
+        <div className="absolute inset-0 bg-gradient-to-br from-[#0a1628] via-[#13274a] to-[#061224]"></div>
         <div className="max-w-[1920px] mx-auto px-6 md:px-12 lg:px-24 relative z-10 text-center w-full">
           <h2 className="text-4xl md:text-6xl font-display font-bold text-white mb-6">
             Trouvez votre prochain véhicule

@@ -9,13 +9,7 @@ const NotreHistoireV3 = () => {
 
       {/* ═══ HERO ═══ Editorial full bleed */}
       <section className="relative h-[70vh] min-h-[500px] flex items-end bg-black overflow-hidden">
-        <div className="absolute inset-0">
-          <img
-            src="https://images.unsplash.com/photo-1487754180451-c456f719a1fc?w=1920&h=1080&fit=crop&q=90"
-            alt=""
-            className="w-full h-full object-cover opacity-50"
-          />
-        </div>
+        <div className="absolute inset-0 bg-gradient-to-br from-[#0a1628] via-[#13274a] to-[#0d1117]"></div>
         <div className="max-w-[1920px] mx-auto px-6 md:px-12 lg:px-24 relative z-10 pb-16 md:pb-24 w-full">
           <p className="text-white/30 text-xs uppercase tracking-[0.3em] mb-4">Qui sommes-nous</p>
           <h1 className="text-6xl md:text-8xl lg:text-[7rem] font-display font-bold text-white leading-[0.9]">
@@ -55,12 +49,7 @@ const NotreHistoireV3 = () => {
       </section>
 
       {/* ═══ FULL BLEED IMAGE ═══ */}
-      <section className="relative h-[50vh] min-h-[400px] bg-black">
-        <img
-          src="https://images.unsplash.com/photo-1580273916550-e323be2ae537?w=1920&h=800&fit=crop&q=90"
-          alt="Passion automobile"
-          className="w-full h-full object-cover opacity-70"
-        />
+      <section className="relative h-[50vh] min-h-[400px] bg-gradient-to-br from-[#0d1f3c] via-[#162d50] to-[#0a1628]">
       </section>
 
       {/* ═══ TIMELINE ═══ Editorial approach */}
@@ -74,21 +63,21 @@ const NotreHistoireV3 = () => {
                 period: 'Les débuts',
                 title: 'La naissance d\'une passion',
                 text: 'Greco Autogroup naît de la passion d\'un homme pour l\'automobile. Ce qui a commencé comme un hobby est rapidement devenu une vocation. Chaque véhicule raconte une histoire, et nous avons voulu être ceux qui la transmettent.',
-                image: 'https://images.unsplash.com/photo-1489824904134-891ab64532f1?w=1000&h=700&fit=crop',
+                image: null,
                 align: 'left',
               },
               {
                 period: 'La croissance',
                 title: 'Une réputation bâtie sur la confiance',
                 text: 'Grâce à un service irréprochable et des véhicules de qualité, Greco Autogroup se fait un nom. Le bouche-à-oreille fait son œuvre — les clients reviennent et nous recommandent.',
-                image: 'https://images.unsplash.com/photo-1580273916550-e323be2ae537?w=1000&h=700&fit=crop',
+                image: null,
                 align: 'right',
               },
               {
                 period: 'Aujourd\'hui',
                 title: 'Un acteur incontournable',
                 text: 'Reconnu pour notre expertise, notre fiabilité et notre engagement envers chaque client. Plus de 500 véhicules vendus et un taux de satisfaction de 98%.',
-                image: 'https://images.unsplash.com/photo-1625047509248-ec889cbff17f?w=1000&h=700&fit=crop',
+                image: null,
                 align: 'left',
               },
             ].map((item, i) => (
@@ -108,11 +97,15 @@ const NotreHistoireV3 = () => {
                   </p>
                 </div>
                 <div className="aspect-[3/2] overflow-hidden">
-                  <img
-                    src={item.image}
-                    alt={item.title}
-                    className="w-full h-full object-cover hover:scale-105 transition-transform duration-1000"
-                  />
+                  {item.image ? (
+                    <img
+                      src={item.image}
+                      alt={item.title}
+                      className="w-full h-full object-cover hover:scale-105 transition-transform duration-1000"
+                    />
+                  ) : (
+                    <div className="w-full h-full bg-gradient-to-br from-[#0a1628] via-[#162d50] to-[#0d1117]"></div>
+                  )}
                 </div>
               </div>
             ))}

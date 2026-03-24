@@ -2,7 +2,7 @@ import { useState, useEffect, useCallback, useRef } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import SEOHead from '../../components/SEOHead';
 import { useSiteInfo } from '../../hooks/useSiteInfo';
-import { ArrowRight, ArrowLeft, ChevronRight, Star, Play, ArrowDown, Car } from 'lucide-react';
+import { ArrowRight, ArrowLeft, ChevronRight, Play, ArrowDown, Car } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import seoData from '../../data/seo.json';
 import mockVehicules from '../../data/mockVehicules';
@@ -69,14 +69,6 @@ const HomeV3 = () => {
 
   // Horizontal scroll
   const scrollContainerRef = useRef(null);
-
-  // Avis clients — a remplacer par les vrais avis Google du client
-  const reviews = [
-    { name: 'Client verifie', text: 'Equipe serieuse et professionnelle. Tout s\'est passe rapidement et en toute transparence.', rating: 5 },
-    { name: 'Client verifie', text: 'Vehicule en parfait etat, conforme a la description. Je recommande.', rating: 5 },
-    { name: 'Client verifie', text: 'Tres bonne experience d\'achat. Accompagnement personnalise du debut a la fin.', rating: 5 },
-    { name: 'Client verifie', text: 'Service de depot-vente efficace. Mon vehicule a ete vendu rapidement.', rating: 5 },
-  ];
 
   return (
     <>
@@ -329,43 +321,6 @@ const HomeV3 = () => {
                 </div>
               </Link>
             ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ═══ REVIEWS ═══ Minimal testimonials */}
-      <section className="bg-[#0d1117] border-t border-white/5 py-20 md:py-32">
-        <div className="max-w-[1920px] mx-auto px-6 md:px-12 lg:px-24">
-          <p className="text-white/30 text-xs uppercase tracking-[0.3em] mb-4">Avis clients</p>
-          <h2 className="text-4xl md:text-5xl font-display font-bold text-white leading-[0.95] mb-16">
-            Ce qu'ils disent de nous
-          </h2>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
-            {reviews.map((review, i) => (
-              <div key={i}>
-                <div className="flex gap-1 mb-4">
-                  {Array.from({ length: 5 }).map((_, j) => (
-                    <Star key={j} size={12} className={j < review.rating ? 'text-white fill-white' : 'text-white/10'} />
-                  ))}
-                </div>
-                <p className="text-white/60 text-sm leading-relaxed mb-6 font-light italic">
-                  "{review.text}"
-                </p>
-                <p className="text-white text-sm font-medium">{review.name}</p>
-              </div>
-            ))}
-          </div>
-
-          <div className="mt-16">
-            <a
-              href="https://www.google.com/maps/place/Greco+Autogroup"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 text-white/30 text-xs uppercase tracking-[0.2em] hover:text-white/50 transition-colors"
-            >
-              Voir tous les avis sur Google <ArrowRight size={12} />
-            </a>
           </div>
         </div>
       </section>

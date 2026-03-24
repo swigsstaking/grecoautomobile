@@ -82,13 +82,8 @@ const Layout = ({ children }) => {
         <nav className="bg-dark-bg/95 backdrop-blur-md border-b border-primary-700/30">
           <div className="container-site py-4">
             <div className="flex items-center justify-between">
-              <Link to="/" className="group">
-                <span className="text-2xl font-display font-bold text-text-primary group-hover:text-primary-300 transition-colors">
-                  GRECO
-                </span>
-                <span className="text-2xl font-display font-light text-primary-400 ml-1">
-                  AUTOGROUP
-                </span>
+              <Link to="/" className="group flex-shrink-0">
+                <img src="/logo.png" alt="Greco Autogroup" className="h-12 md:h-14 w-auto" />
               </Link>
 
               {/* Desktop Navigation */}
@@ -206,8 +201,7 @@ const Layout = ({ children }) => {
             {/* Brand */}
             <div className="md:col-span-1">
               <Link to="/" className="inline-block mb-4">
-                <span className="text-xl font-display font-bold text-text-primary">GRECO</span>
-                <span className="text-xl font-display font-light text-primary-400 ml-1">AUTOGROUP</span>
+                <img src="/logo.png" alt="Greco Autogroup" className="h-10 w-auto" />
               </Link>
               <p className="text-text-secondary text-sm leading-relaxed">
                 {siteInfo.description || "Votre partenaire de confiance pour l'achat, la vente et le depot-vente de vehicules d'occasion."}

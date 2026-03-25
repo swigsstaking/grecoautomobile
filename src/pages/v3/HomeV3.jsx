@@ -50,6 +50,13 @@ const HomeV3 = () => {
 
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isTransitioning, setIsTransitioning] = useState(false);
+  const [heroReady, setHeroReady] = useState(false);
+
+  useEffect(() => {
+    // Small delay to let CSS paint before revealing hero
+    const t = setTimeout(() => setHeroReady(true), 50);
+    return () => clearTimeout(t);
+  }, []);
 
   const goToSlide = useCallback((index) => {
     if (isTransitioning) return;
@@ -75,7 +82,7 @@ const HomeV3 = () => {
       <SEOHead page="home" />
 
       {/* ═══ HERO ═══ Full viewport cinematic slider */}
-      <section className="relative h-screen overflow-hidden bg-black">
+      <section className={`relative h-screen overflow-hidden bg-black transition-opacity duration-500 ${heroReady ? 'opacity-100' : 'opacity-0'}`}>
         {heroSlides.map((slide, i) => (
           <div
             key={i}

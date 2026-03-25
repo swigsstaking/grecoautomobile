@@ -65,9 +65,15 @@ const ContactV3 = () => {
             {[
               {
                 icon: Phone,
-                label: 'Téléphone',
+                label: 'Mobile',
                 value: siteInfo.contact?.phone,
-                href: siteInfo.contact?.phone ? `tel:${siteInfo.contact.phone}` : null,
+                href: siteInfo.contact?.phone ? `tel:${siteInfo.contact.phone.replace(/\s/g, '')}` : null,
+              },
+              {
+                icon: Phone,
+                label: 'Fixe',
+                value: siteInfo.contact?.phoneLandline,
+                href: siteInfo.contact?.phoneLandline ? `tel:${siteInfo.contact.phoneLandline.replace(/\s/g, '')}` : null,
               },
               {
                 icon: Mail,
@@ -79,11 +85,7 @@ const ContactV3 = () => {
                 icon: MapPin,
                 label: 'Adresse',
                 value: siteInfo.contact?.address || 'Suisse',
-              },
-              {
-                icon: Clock,
-                label: 'Horaires',
-                value: siteInfo.contact?.hours || 'Lun-Ven: 8h-18h',
+                href: 'https://maps.google.com/?q=Rue+des+Aprages+2,+1957+Ardon',
               },
             ].filter(c => c.value).map((item, i) => (
               <div key={i} className="py-8 sm:first:pl-0 sm:pl-8 sm:last:pr-0 sm:pr-8">
@@ -225,7 +227,7 @@ const ContactV3 = () => {
 
               <div className="aspect-[4/3] overflow-hidden mb-8">
                 <iframe
-                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2745.5!2d6.63!3d46.52!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2sGreco+Autogroup!5e0!3m2!1sfr!2sch"
+                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2745.5!2d7.2456!3d46.2095!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zUnVlIGRlcyBBcHJhZ2VzIDIsIDE5NTcgQXJkb24!5e0!3m2!1sfr!2sch"
                   width="100%"
                   height="100%"
                   style={{ border: 0, filter: 'grayscale(1) invert(0.9) contrast(1.2)' }}
@@ -237,12 +239,19 @@ const ContactV3 = () => {
               </div>
 
               {/* Quick contact */}
-              <div className="grid grid-cols-2 gap-px bg-white/5">
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-px bg-white/5">
                 {siteInfo.contact?.phone && (
-                  <a href={`tel:${siteInfo.contact.phone}`} className="bg-[#0d1117] p-6 group block">
+                  <a href={`tel:${siteInfo.contact.phone.replace(/\s/g, '')}`} className="bg-[#0d1117] p-6 group block">
                     <Phone size={16} className="text-white/20 mb-2 group-hover:text-white/40 transition-colors" />
                     <p className="text-white text-sm font-medium">{siteInfo.contact.phone}</p>
-                    <p className="text-white/30 text-xs mt-1">Appeler</p>
+                    <p className="text-white/30 text-xs mt-1">Mobile</p>
+                  </a>
+                )}
+                {siteInfo.contact?.phoneLandline && (
+                  <a href={`tel:${siteInfo.contact.phoneLandline.replace(/\s/g, '')}`} className="bg-[#0d1117] p-6 group block">
+                    <Phone size={16} className="text-white/20 mb-2 group-hover:text-white/40 transition-colors" />
+                    <p className="text-white text-sm font-medium">{siteInfo.contact.phoneLandline}</p>
+                    <p className="text-white/30 text-xs mt-1">Fixe</p>
                   </a>
                 )}
                 {siteInfo.contact?.email && (

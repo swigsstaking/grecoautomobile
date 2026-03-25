@@ -41,42 +41,8 @@ const Layout = ({ children }) => {
     <div className="min-h-screen flex flex-col bg-dark-bg">
       {/* Header */}
       <header className="sticky top-0 z-50">
-        {/* Top Bar */}
-        <div className="bg-primary-700 border-b border-primary-600/50">
-          <div className="container-site flex flex-wrap justify-between items-center py-2 text-sm">
-            <div className="flex items-center gap-4">
-              {siteInfo.contact?.phone && (
-                <a href={`tel:${siteInfo.contact.phone}`} className="flex items-center gap-1.5 text-text-secondary hover:text-text-primary transition-colors">
-                  <Phone size={13} />
-                  <span>{siteInfo.contact.phone}</span>
-                </a>
-              )}
-              {siteInfo.contact?.email && (
-                <a href={`mailto:${siteInfo.contact.email}`} className="hidden sm:flex items-center gap-1.5 text-text-secondary hover:text-text-primary transition-colors">
-                  <Mail size={13} />
-                  <span>{siteInfo.contact.email}</span>
-                </a>
-              )}
-            </div>
-            <div className="flex items-center gap-3">
-              {siteInfo.social?.facebook && (
-                <a href={siteInfo.social.facebook} target="_blank" rel="noopener noreferrer" className="text-text-secondary hover:text-text-primary transition-colors">
-                  <Facebook size={15} />
-                </a>
-              )}
-              {siteInfo.social?.instagram && (
-                <a href={siteInfo.social.instagram} target="_blank" rel="noopener noreferrer" className="text-text-secondary hover:text-text-primary transition-colors">
-                  <Instagram size={15} />
-                </a>
-              )}
-              {siteInfo.social?.tiktok && (
-                <a href={siteInfo.social.tiktok} target="_blank" rel="noopener noreferrer" className="text-text-secondary hover:text-text-primary transition-colors">
-                  <TikTokIcon size={15} />
-                </a>
-              )}
-            </div>
-          </div>
-        </div>
+        {/* Top accent line */}
+        <div className="h-[3px] bg-primary-500"></div>
 
         {/* Main Navigation */}
         <nav className="bg-dark-bg/95 backdrop-blur-md border-b border-primary-700/30">

@@ -28,9 +28,41 @@ const SEOHead = ({ page = 'home' }) => {
       
       {/* Canonical */}
       <link rel="canonical" href={seo.canonical} />
-      
+
       {/* Language */}
       <html lang={siteInfo.language || 'fr'} />
+
+      {/* JSON-LD LocalBusiness */}
+      {page === 'home' && (
+        <script type="application/ld+json">{JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "AutoDealer",
+          "name": "Greco Autogroup",
+          "description": seo.description,
+          "url": "https://grecoautogroup.ch",
+          "telephone": "+41791919089",
+          "email": "info@grecoautogroup.ch",
+          "address": {
+            "@type": "PostalAddress",
+            "streetAddress": "Rue des Aprages 2",
+            "addressLocality": "Ardon",
+            "postalCode": "1957",
+            "addressRegion": "VS",
+            "addressCountry": "CH"
+          },
+          "geo": {
+            "@type": "GeoCoordinates",
+            "latitude": 46.2095,
+            "longitude": 7.2456
+          },
+          "areaServed": ["Valais", "Suisse romande", "Suisse"],
+          "priceRange": "$$",
+          "sameAs": [
+            siteInfo.social?.facebook,
+            siteInfo.social?.instagram
+          ].filter(Boolean)
+        })}</script>
+      )}
     </Helmet>
   );
 };

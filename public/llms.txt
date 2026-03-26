@@ -1,0 +1,23 @@
+# Greco Autogroup
+
+## About
+Greco Autogroup est une agence automobile basée à Ardon, en Valais (Suisse). Spécialisée dans l'achat, la vente et le dépôt-vente de véhicules d'occasion de qualité.
+
+## Services
+- **Achat** : Rachat immédiat de votre véhicule avec estimation gratuite et paiement sécurisé.
+- **Vente** : Véhicules d'occasion soigneusement inspectés et garantis. Essai routier disponible.
+- **Dépôt-vente** : Service complet — photos professionnelles, diffusion, négociation.
+
+## Contact
+- Adresse : Rue des Aprages 2, 1957 Ardon, Suisse
+- Téléphone mobile : +41 79 191 90 89
+- Téléphone fixe : +41 27 306 90 90
+- Email : info@grecoautogroup.ch
+- Site web : https://grecoautogroup.ch
+
+## Pages
+- Accueil : https://grecoautogroup.ch/
+- Notre Histoire : https://grecoautogroup.ch/notre-histoire
+- Véhicules : https://grecoautogroup.ch/vehicules
+- Services : https://grecoautogroup.ch/services
+- Contact : https://grecoautogroup.ch/contact

@@ -182,7 +182,7 @@ const HomeV3 = () => {
           <div className="flex flex-wrap items-center justify-center gap-12 md:gap-20">
             <a href="https://www.quality1.ch" target="_blank" rel="noopener noreferrer" className="group flex flex-col items-center gap-3">
               <img
-                src="/partners/quality1.svg"
+                src="/partners/quality1.png"
                 alt="Quality1 - Garantie automobile"
                 className="h-12 md:h-14 w-auto object-contain opacity-50 group-hover:opacity-90 transition-opacity duration-300"
               />
@@ -190,7 +190,7 @@ const HomeV3 = () => {
             </a>
             <a href="https://www.autoscout24.ch" target="_blank" rel="noopener noreferrer" className="group flex flex-col items-center gap-3">
               <img
-                src="/partners/autoscout24.svg"
+                src="/partners/autoscout24.png"
                 alt="AutoScout24 - Plateforme automobile"
                 className="h-12 md:h-14 w-auto object-contain opacity-50 group-hover:opacity-90 transition-opacity duration-300"
               />

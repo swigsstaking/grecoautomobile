@@ -179,15 +179,15 @@ const HomeV3 = () => {
       <section className="bg-[#0d1117]">
         <div className="max-w-[1920px] mx-auto px-6 md:px-12 lg:px-24 pb-16 md:pb-20">
           <div className="border-t border-white/[0.06] pt-10">
-            <p className="text-white/20 text-[10px] uppercase tracking-[0.4em] text-center mb-8">Ils nous font confiance</p>
+            <p className="text-white/20 text-[10px] uppercase tracking-[0.4em] text-center mb-8">Partenaires</p>
             <div className="flex items-center justify-center gap-6">
               <a href="https://www.quality1.ch" target="_blank" rel="noopener noreferrer"
-                className="bg-white rounded-md px-6 py-4 hover:shadow-lg hover:shadow-white/5 transition-all duration-300 hover:-translate-y-0.5">
-                <img src="/partners/quality1.png" alt="Quality1" className="h-8 w-auto object-contain" />
+                className="bg-white rounded-md px-8 py-5 hover:shadow-lg hover:shadow-white/5 transition-all duration-300 hover:-translate-y-0.5">
+                <img src="/partners/quality1.png" alt="Quality1" className="h-12 w-auto object-contain" />
               </a>
               <a href="https://www.autoscout24.ch" target="_blank" rel="noopener noreferrer"
-                className="bg-white rounded-md px-6 py-4 hover:shadow-lg hover:shadow-white/5 transition-all duration-300 hover:-translate-y-0.5">
-                <img src="/partners/autoscout24.png" alt="AutoScout24" className="h-8 w-auto object-contain" />
+                className="bg-white rounded-md px-8 py-5 hover:shadow-lg hover:shadow-white/5 transition-all duration-300 hover:-translate-y-0.5">
+                <img src="/partners/autoscout24.png" alt="AutoScout24" className="h-12 w-auto object-contain" />
               </a>
             </div>
           </div>

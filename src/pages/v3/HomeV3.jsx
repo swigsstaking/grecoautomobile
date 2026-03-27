@@ -150,7 +150,7 @@ const HomeV3 = () => {
       </section>
 
       {/* ═══ BRAND STRIP ═══ */}
-      <section className="bg-[#0d1117] py-16 md:py-24 border-t border-white/5">
+      <section className="bg-[#0d1117] pt-16 md:pt-20 pb-10 md:pb-12 border-t border-white/5">
         <div className="max-w-[1920px] mx-auto px-6 md:px-12 lg:px-24">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-12 md:gap-0 md:divide-x md:divide-white/10">
             <div className="md:pr-16">
@@ -176,37 +176,36 @@ const HomeV3 = () => {
       </section>
 
       {/* ═══ PARTNERS ═══ */}
-      <section className="bg-[#0d1117] border-t border-white/5">
-        <div className="max-w-[1920px] mx-auto px-6 md:px-12 lg:px-24 py-16 md:py-20">
-          <p className="text-white/30 text-xs uppercase tracking-[0.3em] mb-10 text-center">Nos partenaires</p>
-          <div className="flex flex-wrap items-center justify-center gap-8 md:gap-14">
-            <a href="https://www.quality1.ch" target="_blank" rel="noopener noreferrer" className="group flex flex-col items-center gap-3">
-              <div className="bg-white rounded-xl px-8 py-5 group-hover:bg-white/95 transition-all duration-300">
+      <section className="bg-[#0d1117]">
+        <div className="max-w-[1920px] mx-auto px-6 md:px-12 lg:px-24 pb-10">
+          <div className="flex items-center justify-center gap-6 md:gap-10">
+            <span className="text-white/20 text-[10px] uppercase tracking-[0.3em] hidden sm:block">Partenaires</span>
+            <div className="h-px w-8 bg-white/10 hidden sm:block" />
+            <a href="https://www.quality1.ch" target="_blank" rel="noopener noreferrer" className="group">
+              <div className="bg-white/[0.08] hover:bg-white/[0.12] rounded-lg px-5 py-3 transition-all duration-300">
                 <img
                   src="/partners/quality1.png"
                   alt="Quality1 - Garantie automobile"
-                  className="h-10 md:h-12 w-auto object-contain"
+                  className="h-7 md:h-8 w-auto object-contain brightness-0 invert opacity-60 group-hover:opacity-90 transition-opacity"
                 />
               </div>
-              <span className="text-white/30 text-xs uppercase tracking-[0.15em]">Garantie</span>
             </a>
-            <a href="https://www.autoscout24.ch" target="_blank" rel="noopener noreferrer" className="group flex flex-col items-center gap-3">
-              <div className="bg-white rounded-xl px-8 py-5 group-hover:bg-white/95 transition-all duration-300">
+            <a href="https://www.autoscout24.ch" target="_blank" rel="noopener noreferrer" className="group">
+              <div className="bg-white/[0.08] hover:bg-white/[0.12] rounded-lg px-5 py-3 transition-all duration-300">
                 <img
                   src="/partners/autoscout24.png"
                   alt="AutoScout24 - Plateforme automobile"
-                  className="h-10 md:h-12 w-auto object-contain"
+                  className="h-7 md:h-8 w-auto object-contain brightness-0 invert opacity-60 group-hover:opacity-90 transition-opacity"
                 />
               </div>
-              <span className="text-white/30 text-xs uppercase tracking-[0.15em]">Diffusion</span>
             </a>
           </div>
         </div>
       </section>
 
       {/* ═══ VEHICLE SHOWCASE ═══ Cinematic product reveal */}
-      <section className="bg-[#0d1117]">
-        <div className="max-w-[1920px] mx-auto px-6 md:px-12 lg:px-24 py-20 md:py-32">
+      <section className="bg-[#0d1117] border-t border-white/[0.03]">
+        <div className="max-w-[1920px] mx-auto px-6 md:px-12 lg:px-24 pt-16 md:pt-20 pb-20 md:pb-32">
           <div className="flex items-end justify-between mb-16">
             <div>
               <p className="text-white/30 text-xs uppercase tracking-[0.3em] mb-4">Catalogue</p>

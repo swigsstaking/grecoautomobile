@@ -175,30 +175,21 @@ const HomeV3 = () => {
         </div>
       </section>
 
-      {/* ═══ PARTNERS ═══ */}
+      {/* ═══ PARTNERS ═══ Integrated into brand section */}
       <section className="bg-[#0d1117]">
-        <div className="max-w-[1920px] mx-auto px-6 md:px-12 lg:px-24 pb-10">
-          <div className="flex items-center justify-center gap-6 md:gap-10">
-            <span className="text-white/20 text-[10px] uppercase tracking-[0.3em] hidden sm:block">Partenaires</span>
-            <div className="h-px w-8 bg-white/10 hidden sm:block" />
-            <a href="https://www.quality1.ch" target="_blank" rel="noopener noreferrer" className="group">
-              <div className="bg-white/[0.08] hover:bg-white/[0.12] rounded-lg px-5 py-3 transition-all duration-300">
-                <img
-                  src="/partners/quality1.png"
-                  alt="Quality1 - Garantie automobile"
-                  className="h-7 md:h-8 w-auto object-contain brightness-0 invert opacity-60 group-hover:opacity-90 transition-opacity"
-                />
-              </div>
-            </a>
-            <a href="https://www.autoscout24.ch" target="_blank" rel="noopener noreferrer" className="group">
-              <div className="bg-white/[0.08] hover:bg-white/[0.12] rounded-lg px-5 py-3 transition-all duration-300">
-                <img
-                  src="/partners/autoscout24.png"
-                  alt="AutoScout24 - Plateforme automobile"
-                  className="h-7 md:h-8 w-auto object-contain brightness-0 invert opacity-60 group-hover:opacity-90 transition-opacity"
-                />
-              </div>
-            </a>
+        <div className="max-w-[1920px] mx-auto px-6 md:px-12 lg:px-24 pb-16 md:pb-20">
+          <div className="border-t border-white/[0.06] pt-10">
+            <p className="text-white/20 text-[10px] uppercase tracking-[0.4em] text-center mb-8">Ils nous font confiance</p>
+            <div className="flex items-center justify-center gap-6">
+              <a href="https://www.quality1.ch" target="_blank" rel="noopener noreferrer"
+                className="bg-white rounded-md px-6 py-4 hover:shadow-lg hover:shadow-white/5 transition-all duration-300 hover:-translate-y-0.5">
+                <img src="/partners/quality1.png" alt="Quality1" className="h-8 w-auto object-contain" />
+              </a>
+              <a href="https://www.autoscout24.ch" target="_blank" rel="noopener noreferrer"
+                className="bg-white rounded-md px-6 py-4 hover:shadow-lg hover:shadow-white/5 transition-all duration-300 hover:-translate-y-0.5">
+                <img src="/partners/autoscout24.png" alt="AutoScout24" className="h-8 w-auto object-contain" />
+              </a>
+            </div>
           </div>
         </div>
       </section>

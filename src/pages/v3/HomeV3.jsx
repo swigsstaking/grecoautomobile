@@ -175,6 +175,31 @@ const HomeV3 = () => {
         </div>
       </section>
 
+      {/* ═══ PARTNERS ═══ */}
+      <section className="bg-[#0d1117] border-t border-white/5">
+        <div className="max-w-[1920px] mx-auto px-6 md:px-12 lg:px-24 py-16 md:py-20">
+          <p className="text-white/30 text-xs uppercase tracking-[0.3em] mb-10 text-center">Nos partenaires</p>
+          <div className="flex flex-wrap items-center justify-center gap-12 md:gap-20">
+            <a href="https://www.quality1.ch" target="_blank" rel="noopener noreferrer" className="group flex flex-col items-center gap-3">
+              <img
+                src="/partners/quality1.svg"
+                alt="Quality1 - Garantie automobile"
+                className="h-12 md:h-14 w-auto object-contain opacity-50 group-hover:opacity-90 transition-opacity duration-300"
+              />
+              <span className="text-white/30 text-xs uppercase tracking-[0.15em]">Garantie</span>
+            </a>
+            <a href="https://www.autoscout24.ch" target="_blank" rel="noopener noreferrer" className="group flex flex-col items-center gap-3">
+              <img
+                src="/partners/autoscout24.svg"
+                alt="AutoScout24 - Plateforme automobile"
+                className="h-12 md:h-14 w-auto object-contain opacity-50 group-hover:opacity-90 transition-opacity duration-300"
+              />
+              <span className="text-white/30 text-xs uppercase tracking-[0.15em]">Diffusion</span>
+            </a>
+          </div>
+        </div>
+      </section>
+
       {/* ═══ VEHICLE SHOWCASE ═══ Cinematic product reveal */}
       <section className="bg-[#0d1117]">
         <div className="max-w-[1920px] mx-auto px-6 md:px-12 lg:px-24 py-20 md:py-32">

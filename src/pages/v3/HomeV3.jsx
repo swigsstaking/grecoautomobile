@@ -174,7 +174,7 @@ const HomeV3 = () => {
                   { name: 'Toyota', src: '/brands/toyota.svg' },
                 ].map((brand) => (
                   <div key={`${setIndex}-${brand.name}`} className="mx-10 flex-shrink-0">
-                    <img src={brand.src} alt={brand.name} className="h-6 w-auto opacity-30 hover:opacity-60 transition-opacity duration-300" />
+                    <img src={brand.src} alt={brand.name} className="h-8 w-auto opacity-40 hover:opacity-70 transition-opacity duration-300" style={{ filter: 'brightness(0) invert(1)' }} />
                   </div>
                 ))}
               </div>

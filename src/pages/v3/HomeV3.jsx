@@ -149,6 +149,40 @@ const HomeV3 = () => {
         </div>
       </section>
 
+      {/* ═══ CAR BRANDS MARQUEE ═══ */}
+      <section className="bg-[#0d1117] border-t border-white/5 py-8 overflow-hidden">
+        <div className="relative">
+          {/* Fade edges */}
+          <div className="absolute left-0 top-0 bottom-0 w-24 bg-gradient-to-r from-[#0d1117] to-transparent z-10" />
+          <div className="absolute right-0 top-0 bottom-0 w-24 bg-gradient-to-l from-[#0d1117] to-transparent z-10" />
+          {/* Scrolling track — duplicated for seamless loop */}
+          <div className="flex animate-marquee whitespace-nowrap">
+            {[...Array(2)].map((_, setIndex) => (
+              <div key={setIndex} className="flex items-center shrink-0">
+                {[
+                  { name: 'Fiat', src: '/brands/fiat.svg' },
+                  { name: 'Volkswagen', src: '/brands/vw.svg' },
+                  { name: 'Škoda', src: '/brands/skoda.svg' },
+                  { name: 'Kia', src: '/brands/kia.svg' },
+                  { name: 'Suzuki', src: '/brands/suzuki.svg' },
+                  { name: 'Alfa Romeo', src: '/brands/alfa-romeo.svg' },
+                  { name: 'Renault', src: '/brands/renault.svg' },
+                  { name: 'Peugeot', src: '/brands/peugeot.svg' },
+                  { name: 'Audi', src: '/brands/audi.svg' },
+                  { name: 'BMW', src: '/brands/bmw.svg' },
+                  { name: 'Ford', src: '/brands/ford.svg' },
+                  { name: 'Toyota', src: '/brands/toyota.svg' },
+                ].map((brand) => (
+                  <div key={`${setIndex}-${brand.name}`} className="mx-10 flex-shrink-0">
+                    <img src={brand.src} alt={brand.name} className="h-6 w-auto opacity-30 hover:opacity-60 transition-opacity duration-300" />
+                  </div>
+                ))}
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* ═══ BRAND STRIP ═══ */}
       <section className="bg-[#0d1117] pt-16 md:pt-20 pb-10 md:pb-12 border-t border-white/5">
         <div className="max-w-[1920px] mx-auto px-6 md:px-12 lg:px-24">

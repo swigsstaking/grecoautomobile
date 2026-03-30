@@ -69,3 +69,12 @@ html {
   0%, 100% { top: 0; opacity: 0.6; }
   50% { top: calc(100% - 6px); opacity: 1; }
 }
+
+@keyframes marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+.animate-marquee {
+  animation: marquee 30s linear infinite;
+}

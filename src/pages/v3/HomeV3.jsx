@@ -224,8 +224,8 @@ const HomeV3 = () => {
                 <img src="/partners/autoscout24.png" alt="AutoScout24" className="h-12 w-auto object-contain" />
               </a>
               <a href="https://www.autolina.ch" target="_blank" rel="noopener noreferrer"
-                className="bg-white rounded-md w-[180px] h-[90px] flex items-center justify-center hover:shadow-lg hover:shadow-white/5 transition-all duration-300 hover:-translate-y-0.5">
-                <img src="/partners/autolina.svg" alt="Autolina" className="h-10 w-auto object-contain" />
+                className="bg-white rounded-md w-[180px] h-[90px] flex items-center justify-center p-5 hover:shadow-lg hover:shadow-white/5 transition-all duration-300 hover:-translate-y-0.5">
+                <img src="/partners/autolina.svg" alt="Autolina" className="max-h-8 max-w-[140px] object-contain" />
               </a>
             </div>
           </div>

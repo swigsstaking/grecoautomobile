@@ -36,16 +36,34 @@ const HomeV3 = () => {
     link: `/vehicules/${v.slug || v._id || v.id}`,
   }));
 
-  // Fallback si pas de vehicules
+  // Fallback si pas de vehicules — images réelles du garage
   if (heroSlides.length === 0) {
-    heroSlides.push({
-      image: null,
-      label: 'Greco Autogroup',
-      title: 'Achat & Vente',
-      subtitle: 'Automobile',
-      cta: 'Voir le catalogue',
-      link: '/vehicules',
-    });
+    heroSlides.push(
+      {
+        image: 'https://swigs.online/uploads/grecoautogroup/1775542051182-769409253.webp',
+        label: 'Greco Autogroup',
+        title: 'Alfa Romeo',
+        subtitle: 'Giulia',
+        cta: 'Voir le catalogue',
+        link: '/vehicules',
+      },
+      {
+        image: 'https://swigs.online/uploads/grecoautogroup/1775542049399-58977568.webp',
+        label: 'Sélection premium',
+        title: 'Qualité',
+        subtitle: 'Garantie',
+        cta: 'Découvrir',
+        link: '/vehicules',
+      },
+      {
+        image: 'https://swigs.online/uploads/grecoautogroup/1775542047236-190922193.webp',
+        label: 'À découvrir',
+        title: 'Kia',
+        subtitle: 'Picanto',
+        cta: 'Voir le catalogue',
+        link: '/vehicules',
+      },
+    );
   }
 
   const [currentSlide, setCurrentSlide] = useState(0);
@@ -303,7 +321,10 @@ const HomeV3 = () => {
 
       {/* ═══ ABOUT TEASER ═══ Full bleed image + text overlay */}
       <section className="relative min-h-[80vh] flex items-center bg-black overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-[#0a1628] via-[#13274a] to-[#0d1117]"></div>
+        <div className="absolute inset-0">
+          <img src="https://swigs.online/uploads/grecoautogroup/1775542049074-367922835.webp" alt="Garage Greco Autogroup" className="w-full h-full object-cover" />
+          <div className="absolute inset-0 bg-gradient-to-r from-[#0a1628]/90 via-[#0a1628]/70 to-transparent"></div>
+        </div>
         <div className="max-w-[1920px] mx-auto px-6 md:px-12 lg:px-24 relative z-10 py-20">
           <div className="max-w-2xl">
             <p className="text-white/30 text-xs uppercase tracking-[0.3em] mb-6">Qui sommes-nous</p>
@@ -340,19 +361,19 @@ const HomeV3 = () => {
               {
                 title: 'Achat',
                 desc: 'Vous souhaitez vendre votre véhicule ? Estimation gratuite, rachat immédiat, paiement sécurisé.',
-                image: null,
+                image: 'https://swigs.online/uploads/grecoautogroup/1775542049399-58977568.webp',
                 link: '/services#achat',
               },
               {
                 title: 'Vente',
                 desc: 'Découvrez notre sélection de véhicules inspectés et garantis. Essai routier disponible.',
-                image: null,
+                image: 'https://swigs.online/uploads/grecoautogroup/1775542050418-111557555.webp',
                 link: '/services#vente',
               },
               {
                 title: 'Dépôt-vente',
                 desc: 'Confiez-nous votre véhicule. Photos pro, diffusion, négociation — on gère tout.',
-                image: null,
+                image: 'https://swigs.online/uploads/grecoautogroup/1775542048321-636143732.webp',
                 link: '/services#depot-vente',
               },
             ].map((service, i) => (
@@ -391,7 +412,10 @@ const HomeV3 = () => {
 
       {/* ═══ CTA ═══ Cinematic final */}
       <section className="relative h-[60vh] min-h-[400px] flex items-center bg-black overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-[#0a1628] via-[#13274a] to-[#061224]"></div>
+        <div className="absolute inset-0">
+          <img src="https://swigs.online/uploads/grecoautogroup/1775542048321-636143732.webp" alt="" className="w-full h-full object-cover" />
+          <div className="absolute inset-0 bg-[#0a1628]/75"></div>
+        </div>
         <div className="max-w-[1920px] mx-auto px-6 md:px-12 lg:px-24 relative z-10 text-center w-full">
           <h2 className="text-4xl md:text-6xl font-display font-bold text-white mb-6">
             Trouvez votre prochain véhicule

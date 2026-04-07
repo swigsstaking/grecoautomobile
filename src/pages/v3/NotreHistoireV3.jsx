@@ -9,7 +9,10 @@ const NotreHistoireV3 = () => {
 
       {/* ═══ HERO ═══ Editorial full bleed */}
       <section className="relative h-[70vh] min-h-[500px] flex items-end bg-black overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-[#0a1628] via-[#13274a] to-[#0d1117]"></div>
+        <div className="absolute inset-0">
+          <img src="https://swigs.online/uploads/grecoautogroup/1775542049074-367922835.webp" alt="Greco Autogroup" className="w-full h-full object-cover object-top" />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#0a1628] via-[#0a1628]/50 to-transparent"></div>
+        </div>
         <div className="max-w-[1920px] mx-auto px-6 md:px-12 lg:px-24 relative z-10 pb-16 md:pb-24 w-full">
           <p className="text-white/30 text-xs uppercase tracking-[0.3em] mb-4">Qui sommes-nous</p>
           <h1 className="text-6xl md:text-8xl lg:text-[7rem] font-display font-bold text-white leading-[0.9]">
@@ -49,7 +52,8 @@ const NotreHistoireV3 = () => {
       </section>
 
       {/* ═══ FULL BLEED IMAGE ═══ */}
-      <section className="relative h-[50vh] min-h-[400px] bg-gradient-to-br from-[#0d1f3c] via-[#162d50] to-[#0a1628]">
+      <section className="relative h-[50vh] min-h-[400px] overflow-hidden">
+        <img src="https://swigs.online/uploads/grecoautogroup/1775542049399-58977568.webp" alt="Greco Autogroup garage" className="w-full h-full object-cover object-center" />
       </section>
 
       {/* ═══ TIMELINE ═══ Editorial approach */}
@@ -63,21 +67,21 @@ const NotreHistoireV3 = () => {
                 period: 'Les débuts',
                 title: 'La naissance d\'une passion',
                 text: 'Greco Autogroup naît de la passion d\'un homme pour l\'automobile. Ce qui a commencé comme un hobby est rapidement devenu une vocation. Chaque véhicule raconte une histoire, et nous avons voulu être ceux qui la transmettent.',
-                image: null,
+                image: 'https://swigs.online/uploads/grecoautogroup/1775542051182-769409253.webp',
                 align: 'left',
               },
               {
                 period: 'La croissance',
                 title: 'Une réputation bâtie sur la confiance',
                 text: 'Grâce à un service irréprochable et des véhicules de qualité, Greco Autogroup se fait un nom. Le bouche-à-oreille fait son œuvre — les clients reviennent et nous recommandent.',
-                image: null,
+                image: 'https://swigs.online/uploads/grecoautogroup/1775542050418-111557555.webp',
                 align: 'right',
               },
               {
                 period: 'Aujourd\'hui',
                 title: 'Un acteur incontournable',
                 text: 'Reconnu pour notre expertise, notre fiabilité et notre engagement envers chaque client. Plus de 500 véhicules vendus et un taux de satisfaction de 98%.',
-                image: null,
+                image: 'https://swigs.online/uploads/grecoautogroup/1775542047236-190922193.webp',
                 align: 'left',
               },
             ].map((item, i) => (

@@ -49,7 +49,10 @@ const ContactV3 = () => {
 
       {/* ═══ HERO ═══ */}
       <section className="relative h-[50vh] min-h-[400px] flex items-end bg-black overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-[#0a1628] via-[#13274a] to-[#0d1117]"></div>
+        <div className="absolute inset-0">
+          <img src="https://swigs.online/uploads/grecoautogroup/1775542048321-636143732.webp" alt="Greco Autogroup" className="w-full h-full object-cover" />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#0a1628] via-[#0a1628]/60 to-[#0a1628]/30"></div>
+        </div>
         <div className="max-w-[1920px] mx-auto px-6 md:px-12 lg:px-24 relative z-10 pb-16 md:pb-24 w-full">
           <p className="text-white/30 text-xs uppercase tracking-[0.3em] mb-4">Parlons-en</p>
           <h1 className="text-6xl md:text-8xl font-display font-bold text-white leading-[0.9]">

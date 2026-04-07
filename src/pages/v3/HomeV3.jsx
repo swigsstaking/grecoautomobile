@@ -26,45 +26,34 @@ const HomeV3 = () => {
   const allVehicules = (apiVehicules && apiVehicules.length > 0) ? apiVehicules : mockVehicules;
   const featuredVehicules = allVehicules.filter(v => v.status === 'available' || v.status !== 'sold');
 
-  // Hero slides — dynamiques depuis les vehicules disponibles
-  const heroSlides = featuredVehicules.slice(0, 3).map((v, i) => ({
-    image: v.images?.[0] || null,
-    label: i === 0 ? 'Dernier arrivage' : i === 1 ? 'Selection premium' : 'A decouvrir',
-    title: v.brand || v.title || '',
-    subtitle: v.model || '',
-    cta: 'Decouvrir',
-    link: `/vehicules/${v.slug || v._id || v.id}`,
-  }));
-
-  // Fallback si pas de vehicules — images réelles du garage
-  if (heroSlides.length === 0) {
-    heroSlides.push(
-      {
-        image: 'https://swigs.online/uploads/grecoautogroup/1775542051182-769409253.webp',
-        label: 'Greco Autogroup',
-        title: 'Alfa Romeo',
-        subtitle: 'Giulia',
-        cta: 'Voir le catalogue',
-        link: '/vehicules',
-      },
-      {
-        image: 'https://swigs.online/uploads/grecoautogroup/1775542049399-58977568.webp',
-        label: 'Sélection premium',
-        title: 'Qualité',
-        subtitle: 'Garantie',
-        cta: 'Découvrir',
-        link: '/vehicules',
-      },
-      {
-        image: 'https://swigs.online/uploads/grecoautogroup/1775542047236-190922193.webp',
-        label: 'À découvrir',
-        title: 'Kia',
-        subtitle: 'Picanto',
-        cta: 'Voir le catalogue',
-        link: '/vehicules',
-      },
-    );
-  }
+  // Hero slides — images réelles du garage + véhicules API
+  const grecoSlides = [
+    {
+      image: 'https://swigs.online/uploads/grecoautogroup/1775542051182-769409253.webp',
+      label: 'Bienvenue chez Greco Autogroup',
+      title: 'L\'excellence',
+      subtitle: 'automobile.',
+      cta: 'Voir le catalogue',
+      link: '/vehicules',
+    },
+    {
+      image: 'https://swigs.online/uploads/grecoautogroup/1775542049399-58977568.webp',
+      label: 'Ardon, Valais',
+      title: 'Qualité',
+      subtitle: '& confiance.',
+      cta: 'Notre histoire',
+      link: '/notre-histoire',
+    },
+    {
+      image: 'https://swigs.online/uploads/grecoautogroup/1775542047236-190922193.webp',
+      label: 'Achat · Vente · Dépôt-vente',
+      title: 'Votre prochain',
+      subtitle: 'véhicule.',
+      cta: 'Nous contacter',
+      link: '/contact',
+    },
+  ];
+  const heroSlides = grecoSlides;
 
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isTransitioning, setIsTransitioning] = useState(false);
@@ -322,7 +311,7 @@ const HomeV3 = () => {
       {/* ═══ ABOUT TEASER ═══ Full bleed image + text overlay */}
       <section className="relative min-h-[80vh] flex items-center bg-black overflow-hidden">
         <div className="absolute inset-0">
-          <img src="https://swigs.online/uploads/grecoautogroup/1775542049074-367922835.webp" alt="Garage Greco Autogroup" className="w-full h-full object-cover" />
+          <img src="https://swigs.online/uploads/grecoautogroup/1775542049074-367922835.webp" alt="Garage Greco Autogroup" className="w-full h-full object-cover object-top" />
           <div className="absolute inset-0 bg-gradient-to-r from-[#0a1628]/90 via-[#0a1628]/70 to-transparent"></div>
         </div>
         <div className="max-w-[1920px] mx-auto px-6 md:px-12 lg:px-24 relative z-10 py-20">

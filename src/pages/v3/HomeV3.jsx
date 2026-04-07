@@ -98,7 +98,7 @@ const HomeV3 = () => {
             }`}
           >
             {slide.image ? (
-              <img src={slide.image} alt="" className="w-full h-full object-cover" />
+              <img src={slide.image} alt="" className="w-full h-full object-cover" style={{ objectPosition: 'center 65%' }} />
             ) : (
               <div className="w-full h-full bg-gradient-to-br from-[#0a1628] via-[#0d1f3c] to-[#061224]"></div>
             )}
@@ -311,7 +311,7 @@ const HomeV3 = () => {
       {/* ═══ ABOUT TEASER ═══ Full bleed image + text overlay */}
       <section className="relative min-h-[80vh] flex items-center bg-black overflow-hidden">
         <div className="absolute inset-0">
-          <img src="https://swigs.online/uploads/grecoautogroup/1775542049074-367922835.webp" alt="Garage Greco Autogroup" className="w-full h-full object-cover object-top" />
+          <img src="https://swigs.online/uploads/grecoautogroup/1775542049074-367922835.webp" alt="Garage Greco Autogroup" className="w-full h-full object-cover" style={{ objectPosition: 'center 55%' }} />
           <div className="absolute inset-0 bg-gradient-to-r from-[#0a1628]/90 via-[#0a1628]/70 to-transparent"></div>
         </div>
         <div className="max-w-[1920px] mx-auto px-6 md:px-12 lg:px-24 relative z-10 py-20">
@@ -377,6 +377,7 @@ const HomeV3 = () => {
                       src={service.image}
                       alt={service.title}
                       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                      style={{ objectPosition: 'center 60%' }}
                     />
                   ) : (
                     <div className="w-full h-full bg-gradient-to-br from-[#0a1628] via-[#162d50] to-[#0d1117]"></div>
@@ -402,7 +403,7 @@ const HomeV3 = () => {
       {/* ═══ CTA ═══ Cinematic final */}
       <section className="relative h-[60vh] min-h-[400px] flex items-center bg-black overflow-hidden">
         <div className="absolute inset-0">
-          <img src="https://swigs.online/uploads/grecoautogroup/1775542048321-636143732.webp" alt="" className="w-full h-full object-cover" />
+          <img src="https://swigs.online/uploads/grecoautogroup/1775542048321-636143732.webp" alt="" className="w-full h-full object-cover" style={{ objectPosition: 'center 60%' }} />
           <div className="absolute inset-0 bg-[#0a1628]/75"></div>
         </div>
         <div className="max-w-[1920px] mx-auto px-6 md:px-12 lg:px-24 relative z-10 text-center w-full">

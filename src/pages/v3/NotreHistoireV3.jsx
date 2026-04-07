@@ -10,7 +10,7 @@ const NotreHistoireV3 = () => {
       {/* ═══ HERO ═══ Editorial full bleed */}
       <section className="relative h-[70vh] min-h-[500px] flex items-end bg-black overflow-hidden">
         <div className="absolute inset-0">
-          <img src="https://swigs.online/uploads/grecoautogroup/1775542049074-367922835.webp" alt="Greco Autogroup" className="w-full h-full object-cover object-top" />
+          <img src="https://swigs.online/uploads/grecoautogroup/1775542049074-367922835.webp" alt="Greco Autogroup" className="w-full h-full object-cover" style={{ objectPosition: 'center 55%' }} />
           <div className="absolute inset-0 bg-gradient-to-t from-[#0a1628] via-[#0a1628]/50 to-transparent"></div>
         </div>
         <div className="max-w-[1920px] mx-auto px-6 md:px-12 lg:px-24 relative z-10 pb-16 md:pb-24 w-full">
@@ -53,7 +53,7 @@ const NotreHistoireV3 = () => {
 
       {/* ═══ FULL BLEED IMAGE ═══ */}
       <section className="relative h-[50vh] min-h-[400px] overflow-hidden">
-        <img src="https://swigs.online/uploads/grecoautogroup/1775542049399-58977568.webp" alt="Greco Autogroup garage" className="w-full h-full object-cover object-center" />
+        <img src="https://swigs.online/uploads/grecoautogroup/1775542049399-58977568.webp" alt="Greco Autogroup garage" className="w-full h-full object-cover" style={{ objectPosition: 'center 65%' }} />
       </section>
 
       {/* ═══ TIMELINE ═══ Editorial approach */}
@@ -106,6 +106,7 @@ const NotreHistoireV3 = () => {
                       src={item.image}
                       alt={item.title}
                       className="w-full h-full object-cover hover:scale-105 transition-transform duration-1000"
+                      style={{ objectPosition: 'center 60%' }}
                     />
                   ) : (
                     <div className="w-full h-full bg-gradient-to-br from-[#0a1628] via-[#162d50] to-[#0d1117]"></div>

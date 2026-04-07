@@ -70,7 +70,7 @@ const ServicesV3 = () => {
       {/* ═══ HERO ═══ */}
       <section className="relative h-[60vh] min-h-[450px] flex items-end bg-black overflow-hidden">
         <div className="absolute inset-0">
-          <img src="https://swigs.online/uploads/grecoautogroup/1775542051182-769409253.webp" alt="Greco Autogroup" className="w-full h-full object-cover" />
+          <div className="w-full h-full bg-gradient-to-br from-[#0a1628] via-[#0d1f3c] to-[#061224]"></div>
           <div className="absolute inset-0 bg-gradient-to-t from-[#0a1628] via-[#0a1628]/50 to-transparent"></div>
         </div>
         <div className="max-w-[1920px] mx-auto px-6 md:px-12 lg:px-24 relative z-10 pb-16 md:pb-24 w-full">
@@ -91,6 +91,7 @@ const ServicesV3 = () => {
                 src={service.image}
                 alt={service.title}
                 className="w-full h-full object-cover opacity-60"
+                style={{ objectPosition: 'center 60%' }}
               />
             ) : (
               <div className="w-full h-full bg-gradient-to-br from-[#0a1628] via-[#162d50] to-[#0d1117]"></div>

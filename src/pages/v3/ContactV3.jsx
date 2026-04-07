@@ -50,7 +50,7 @@ const ContactV3 = () => {
       {/* ═══ HERO ═══ */}
       <section className="relative h-[50vh] min-h-[400px] flex items-end bg-black overflow-hidden">
         <div className="absolute inset-0">
-          <img src="https://swigs.online/uploads/grecoautogroup/1775542048321-636143732.webp" alt="Greco Autogroup" className="w-full h-full object-cover" />
+          <img src="https://swigs.online/uploads/grecoautogroup/1775542048321-636143732.webp" alt="Greco Autogroup" className="w-full h-full object-cover" style={{ objectPosition: 'center 60%' }} />
           <div className="absolute inset-0 bg-gradient-to-t from-[#0a1628] via-[#0a1628]/60 to-[#0a1628]/30"></div>
         </div>
         <div className="max-w-[1920px] mx-auto px-6 md:px-12 lg:px-24 relative z-10 pb-16 md:pb-24 w-full">

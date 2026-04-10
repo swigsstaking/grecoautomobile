@@ -2,7 +2,8 @@ import { useParams, Link } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import SEOHead from '../components/SEOHead';
 import { useSiteInfo } from '../hooks/useSiteInfo';
-import { ArrowLeft, Phone, Mail, Calendar, Gauge, Fuel, Car, Cog, Palette, Zap, Shield, Check, CheckCircle, AlertTriangle, XCircle, ExternalLink, Users } from 'lucide-react';
+import { useTranslation } from '../i18n/LanguageContext';
+import { ArrowLeft, Phone, Mail, Calendar, Gauge, Fuel, Car, Cog, Palette, Zap, Shield, Check, CheckCircle, AlertTriangle, XCircle, ExternalLink, Users, ChevronLeft, ChevronRight } from 'lucide-react';
 import { useState } from 'react';
 import seoData from '../data/seo.json';
 import mockVehicules from '../data/mockVehicules';
@@ -12,6 +13,7 @@ const API_URL = import.meta.env.VITE_API_URL || 'https://swigs.online/api';
 const VehiculeDetail = () => {
   const { id } = useParams();
   const siteInfo = useSiteInfo();
+  const { t } = useTranslation();
   const [selectedImage, setSelectedImage] = useState(0);
 
   const { data: apiVehicule, isLoading } = useQuery({
@@ -24,31 +26,25 @@ const VehiculeDetail = () => {
     },
   });
 
-  // Utiliser les données de l'API si disponibles, sinon chercher dans les données fictives
   const vehicule = apiVehicule || mockVehicules.find(v => v._id === id || v.slug === id);
 
   if (isLoading && !vehicule) {
     return (
-      <div className="min-h-[60vh] flex items-center justify-center bg-dark-bg">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary-400"></div>
+      <div className="min-h-[60vh] flex items-center justify-center bg-[#0d1117]">
+        <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-white/30"></div>
       </div>
     );
   }
 
   if (!vehicule) {
     return (
-      <div className="min-h-[60vh] flex items-center justify-center bg-dark-bg">
+      <div className="min-h-[60vh] flex items-center justify-center bg-[#0d1117]">
         <div className="text-center">
-          <Car size={64} className="text-primary-500/30 mx-auto mb-4" />
-          <h2 className="text-2xl font-display font-bold text-text-primary mb-2">
-            Véhicule non trouvé
-          </h2>
-          <p className="text-text-secondary mb-6">
-            Ce véhicule n'existe plus ou a été retiré de notre catalogue.
-          </p>
-          <Link to="/vehicules" className="btn-primary">
-            <ArrowLeft size={18} />
-            Retour aux véhicules
+          <Car size={48} className="text-white/10 mx-auto mb-6" />
+          <h2 className="text-2xl font-display font-bold text-white mb-2">Véhicule non trouvé</h2>
+          <p className="text-white/40 text-sm mb-8">Ce véhicule n'existe plus ou a été retiré du catalogue.</p>
+          <Link to="/vehicules" className="inline-flex items-center gap-2 px-6 py-3 bg-white text-black text-sm uppercase tracking-[0.15em] font-medium hover:bg-white/90 transition-colors">
+            <ArrowLeft size={14} /> Retour aux véhicules
           </Link>
         </div>
       </div>
@@ -56,121 +52,139 @@ const VehiculeDetail = () => {
   }
 
   const images = vehicule.images || (vehicule.image ? [vehicule.image] : []);
-  const brand = vehicule.brand || vehicule.metadata?.brand || '';
-  const model = vehicule.model || vehicule.metadata?.model || '';
-  const year = vehicule.year || vehicule.metadata?.year || '';
-  const mileage = vehicule.mileage || vehicule.metadata?.mileage || '';
-  const fuelType = vehicule.fuelType || vehicule.metadata?.fuelType || '';
-  const transmission = vehicule.transmission || vehicule.metadata?.transmission || '';
-  const color = vehicule.exteriorColor || vehicule.color || vehicule.metadata?.color || '';
+  const brand = vehicule.brand || '';
+  const model = vehicule.model || '';
+  const year = vehicule.year || '';
+  const mileage = vehicule.mileage || '';
+  const fuelType = vehicule.fuelType || '';
+  const transmission = vehicule.transmission || '';
+  const color = vehicule.exteriorColor || vehicule.color || '';
   const price = vehicule.price;
   const title = vehicule.title || vehicule.name || `${brand} ${model}`;
 
   const specs = [
     { icon: Calendar, label: 'Année', value: year },
-    { icon: Gauge, label: 'Kilométrage', value: mileage ? (typeof mileage === 'number' ? `${mileage.toLocaleString()} km` : mileage) : '' },
+    { icon: Gauge, label: 'Kilométrage', value: mileage ? `${(typeof mileage === 'number' ? mileage.toLocaleString() : mileage)} km` : '' },
     { icon: Fuel, label: 'Carburant', value: fuelType },
     { icon: Cog, label: 'Transmission', value: transmission },
-    { icon: Palette, label: 'Couleur', value: color },
-    { icon: Zap, label: 'Puissance', value: vehicule.power?.hp ? `${vehicule.power.hp} ch` : '' },
+    { icon: Zap, label: 'Puissance', value: vehicule.power?.hp ? `${vehicule.power.hp} ch (${vehicule.power.kw} kW)` : '' },
     { icon: Car, label: 'Carrosserie', value: vehicule.bodyType || '' },
+    { icon: Palette, label: 'Couleur', value: color },
     { icon: Shield, label: 'Garantie', value: vehicule.warranty || '' },
   ].filter(s => s.value);
+
+  const nextImage = () => setSelectedImage((prev) => (prev + 1) % images.length);
+  const prevImage = () => setSelectedImage((prev) => (prev - 1 + images.length) % images.length);
+
+  const report = vehicule.carVerticalReport;
 
   return (
     <>
       <SEOHead page="vehicules" />
 
-      {/* Back nav */}
-      <div className="bg-dark-section border-b border-primary-600/20">
-        <div className="container-site py-4">
-          <Link to="/vehicules" className="inline-flex items-center gap-2 text-text-secondary hover:text-primary-300 transition-colors text-sm">
-            <ArrowLeft size={16} />
-            Retour aux véhicules
-          </Link>
+      {/* ═══ GALLERY ═══ Full-width hero image */}
+      <section className="bg-black relative">
+        {/* Back nav overlay */}
+        <div className="absolute top-0 left-0 right-0 z-20 bg-gradient-to-b from-black/60 to-transparent">
+          <div className="max-w-[1920px] mx-auto px-6 md:px-12 lg:px-24 py-6">
+            <Link to="/vehicules" className="inline-flex items-center gap-2 text-white/50 hover:text-white text-sm transition-colors">
+              <ArrowLeft size={14} /> Retour aux véhicules
+            </Link>
+          </div>
         </div>
-      </div>
 
-      <section className="section bg-dark-bg">
-        <div className="container-site">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-            {/* Images */}
-            <div>
-              {images.length > 0 ? (
-                <>
-                  <div className="aspect-[16/10] bg-dark-section rounded-2xl overflow-hidden border border-primary-600/20 mb-4">
-                    <img
-                      src={images[selectedImage]}
-                      alt={title}
-                      className="w-full h-full object-cover"
-                    />
-                  </div>
-                  {images.length > 1 && (
-                    <div className="grid grid-cols-4 gap-3">
-                      {images.map((img, index) => (
-                        <button
-                          key={index}
-                          onClick={() => setSelectedImage(index)}
-                          className={`aspect-[16/10] rounded-lg overflow-hidden border-2 transition-colors cursor-pointer ${
-                            selectedImage === index
-                              ? 'border-primary-500'
-                              : 'border-primary-600/20 hover:border-primary-500/50'
-                          }`}
-                        >
-                          <img src={img} alt="" className="w-full h-full object-cover" />
-                        </button>
-                      ))}
-                    </div>
-                  )}
-                </>
-              ) : (
-                <div className="aspect-[16/10] bg-dark-section rounded-2xl border border-primary-600/20 flex items-center justify-center">
-                  <Car size={80} className="text-primary-500/20" />
-                </div>
-              )}
+        {/* Main image */}
+        {images.length > 0 ? (
+          <div className="relative h-[50vh] md:h-[65vh] overflow-hidden">
+            <img
+              src={images[selectedImage]}
+              alt={title}
+              className="w-full h-full object-cover transition-all duration-500"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-[#0d1117] via-transparent to-transparent"></div>
+
+            {/* Nav arrows */}
+            {images.length > 1 && (
+              <>
+                <button onClick={prevImage} className="absolute left-4 top-1/2 -translate-y-1/2 z-10 w-10 h-10 flex items-center justify-center bg-black/40 hover:bg-black/60 text-white rounded-full transition-colors cursor-pointer backdrop-blur-sm">
+                  <ChevronLeft size={20} />
+                </button>
+                <button onClick={nextImage} className="absolute right-4 top-1/2 -translate-y-1/2 z-10 w-10 h-10 flex items-center justify-center bg-black/40 hover:bg-black/60 text-white rounded-full transition-colors cursor-pointer backdrop-blur-sm">
+                  <ChevronRight size={20} />
+                </button>
+              </>
+            )}
+
+            {/* Image counter */}
+            {images.length > 1 && (
+              <div className="absolute bottom-6 right-6 z-10 px-3 py-1.5 bg-black/50 backdrop-blur-sm text-white/70 text-xs font-mono rounded-full">
+                {selectedImage + 1} / {images.length}
+              </div>
+            )}
+          </div>
+        ) : (
+          <div className="h-[40vh] flex items-center justify-center">
+            <Car size={64} className="text-white/10" />
+          </div>
+        )}
+
+        {/* Thumbnails strip */}
+        {images.length > 1 && (
+          <div className="bg-[#0d1117] border-t border-white/5">
+            <div className="max-w-[1920px] mx-auto px-6 md:px-12 lg:px-24 py-4">
+              <div className="flex gap-2 overflow-x-auto" style={{ scrollbarWidth: 'none' }}>
+                {images.map((img, i) => (
+                  <button
+                    key={i}
+                    onClick={() => setSelectedImage(i)}
+                    className={`flex-shrink-0 w-20 h-14 md:w-24 md:h-16 rounded overflow-hidden border-2 transition-all cursor-pointer ${
+                      selectedImage === i ? 'border-white opacity-100' : 'border-transparent opacity-40 hover:opacity-70'
+                    }`}
+                  >
+                    <img src={img} alt="" className="w-full h-full object-cover" />
+                  </button>
+                ))}
+              </div>
             </div>
+          </div>
+        )}
+      </section>
 
-            {/* Details */}
-            <div>
+      {/* ═══ CONTENT ═══ */}
+      <section className="bg-[#0d1117]">
+        <div className="max-w-[1920px] mx-auto px-6 md:px-12 lg:px-24 py-12 md:py-16">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-12 lg:gap-16">
+
+            {/* Left column — Info */}
+            <div className="lg:col-span-2">
+              {/* Status badges */}
               {vehicule.status === 'sold' && (
-                <div className="bg-red-500/10 border border-red-500/30 text-red-400 rounded-lg px-4 py-2 text-sm font-medium mb-4">
-                  Ce véhicule a été vendu
+                <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-red-500/10 border border-red-500/20 text-red-400 text-xs uppercase tracking-wider rounded mb-4">
+                  <XCircle size={12} /> Vendu
                 </div>
               )}
               {vehicule.status === 'reserved' && (
-                <div className="bg-yellow-500/10 border border-yellow-500/30 text-yellow-400 rounded-lg px-4 py-2 text-sm font-medium mb-4">
-                  Ce véhicule est réservé
+                <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-yellow-500/10 border border-yellow-500/20 text-yellow-400 text-xs uppercase tracking-wider rounded mb-4">
+                  <AlertTriangle size={12} /> Réservé
                 </div>
               )}
 
-              <h1 className="text-3xl md:text-4xl font-display font-bold text-text-primary mb-2">
+              {/* Title */}
+              <p className="text-white/30 text-xs uppercase tracking-[0.3em] mb-3">
+                {brand} {vehicule.condition ? `· ${vehicule.condition}` : ''}
+              </p>
+              <h1 className="text-4xl md:text-5xl font-display font-bold text-white leading-[0.95] mb-8">
                 {title}
               </h1>
 
-              {brand && (
-                <p className="text-text-secondary text-lg mb-6">
-                  {brand} {model} {vehicule.condition ? `· ${vehicule.condition}` : ''}
-                </p>
-              )}
-
-              {price !== undefined && price !== null && (
-                <div className="bg-dark-section border border-primary-600/20 rounded-xl p-6 mb-8">
-                  <span className="text-3xl font-display font-bold text-primary-300">
-                    CHF {typeof price === 'number' ? price.toLocaleString() : price}
-                  </span>
-                </div>
-              )}
-
-              {/* Specs */}
+              {/* Specs grid */}
               {specs.length > 0 && (
-                <div className="grid grid-cols-2 gap-4 mb-8">
-                  {specs.map((spec, index) => (
-                    <div key={index} className="flex items-center gap-3 bg-dark-section border border-primary-600/20 rounded-xl p-4">
-                      <spec.icon size={20} className="text-primary-400 flex-shrink-0" />
-                      <div>
-                        <p className="text-text-secondary text-xs uppercase tracking-wider">{spec.label}</p>
-                        <p className="text-text-primary font-medium">{spec.value}</p>
-                      </div>
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-px bg-white/5 rounded-lg overflow-hidden mb-10">
+                  {specs.map((spec, i) => (
+                    <div key={i} className="bg-[#0d1117] p-4 md:p-5">
+                      <spec.icon size={16} className="text-white/20 mb-2" />
+                      <p className="text-white/30 text-[10px] uppercase tracking-[0.2em] mb-1">{spec.label}</p>
+                      <p className="text-white font-medium text-sm">{spec.value}</p>
                     </div>
                   ))}
                 </div>
@@ -178,9 +192,9 @@ const VehiculeDetail = () => {
 
               {/* Description */}
               {vehicule.description && (
-                <div className="mb-8">
-                  <h2 className="text-xl font-display font-bold text-text-primary mb-4">Description</h2>
-                  <div className="text-text-secondary leading-relaxed whitespace-pre-line">
+                <div className="mb-10">
+                  <h2 className="text-white/30 text-xs uppercase tracking-[0.3em] mb-4">Description</h2>
+                  <div className="text-white/50 text-base leading-relaxed whitespace-pre-line font-light">
                     {vehicule.description}
                   </div>
                 </div>
@@ -188,13 +202,13 @@ const VehiculeDetail = () => {
 
               {/* Équipements */}
               {vehicule.features && vehicule.features.length > 0 && (
-                <div className="mb-8">
-                  <h2 className="text-xl font-display font-bold text-text-primary mb-4">Équipements</h2>
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                    {vehicule.features.map((feature, index) => (
-                      <div key={index} className="flex items-center gap-2 text-text-secondary text-sm">
-                        <Check size={16} className="text-primary-400 flex-shrink-0" />
-                        {feature}
+                <div className="mb-10">
+                  <h2 className="text-white/30 text-xs uppercase tracking-[0.3em] mb-4">Équipements</h2>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-2">
+                    {vehicule.features.map((feature, i) => (
+                      <div key={i} className="flex items-center gap-3 py-2 border-b border-white/5">
+                        <Check size={14} className="text-white/20 flex-shrink-0" />
+                        <span className="text-white/50 text-sm">{feature}</span>
                       </div>
                     ))}
                   </div>
@@ -202,111 +216,114 @@ const VehiculeDetail = () => {
               )}
 
               {/* carVertical Report */}
-              {vehicule.carVerticalReport?.summary && (
-                <div className="mb-8">
-                  <div className="flex items-center gap-2 mb-4">
-                    <Shield size={20} className="text-blue-400" />
-                    <h2 className="text-xl font-display font-bold text-text-primary">Rapport d'historique</h2>
-                    <span className="text-xs text-white/30 bg-white/5 px-2 py-0.5 rounded">carVertical</span>
+              {report?.summary && (
+                <div className="mb-10">
+                  <div className="flex items-center gap-3 mb-5">
+                    <Shield size={16} className="text-blue-400" />
+                    <h2 className="text-white/30 text-xs uppercase tracking-[0.3em]">Rapport d'historique</h2>
+                    <span className="text-[10px] text-blue-400/60 bg-blue-400/5 px-2 py-0.5 rounded border border-blue-400/10">carVertical</span>
                   </div>
                   <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
                     {/* Kilométrage */}
-                    <div className={`rounded-xl p-4 border ${
-                      vehicule.carVerticalReport.summary.mileageStatus === 'ok' ? 'bg-green-500/5 border-green-500/20' :
-                      vehicule.carVerticalReport.summary.mileageStatus === 'warning' ? 'bg-yellow-500/5 border-yellow-500/20' :
-                      'bg-red-500/5 border-red-500/20'
-                    }`}>
-                      {vehicule.carVerticalReport.summary.mileageStatus === 'ok' ? (
-                        <CheckCircle size={18} className="text-green-400 mb-2" />
-                      ) : vehicule.carVerticalReport.summary.mileageStatus === 'warning' ? (
-                        <AlertTriangle size={18} className="text-yellow-400 mb-2" />
-                      ) : (
-                        <XCircle size={18} className="text-red-400 mb-2" />
-                      )}
-                      <p className="text-text-secondary text-xs uppercase tracking-wider mb-1">Kilométrage</p>
-                      <p className={`font-bold text-sm ${
-                        vehicule.carVerticalReport.summary.mileageStatus === 'ok' ? 'text-green-400' :
-                        vehicule.carVerticalReport.summary.mileageStatus === 'warning' ? 'text-yellow-400' : 'text-red-400'
-                      }`}>
-                        {vehicule.carVerticalReport.summary.mileageStatus === 'ok' ? 'Vérifié' : vehicule.carVerticalReport.summary.mileageStatus === 'warning' ? 'Attention' : 'Alerte'}
-                      </p>
-                    </div>
+                    {(() => {
+                      const status = report.summary.mileageStatus;
+                      const isOk = status === 'ok';
+                      const isWarning = status === 'warning';
+                      return (
+                        <div className={`rounded-lg p-4 border ${isOk ? 'bg-green-500/5 border-green-500/10' : isWarning ? 'bg-yellow-500/5 border-yellow-500/10' : 'bg-red-500/5 border-red-500/10'}`}>
+                          {isOk ? <CheckCircle size={16} className="text-green-400 mb-2" /> : isWarning ? <AlertTriangle size={16} className="text-yellow-400 mb-2" /> : <XCircle size={16} className="text-red-400 mb-2" />}
+                          <p className="text-white/30 text-[10px] uppercase tracking-wider mb-1">Kilométrage</p>
+                          <p className={`font-bold text-sm ${isOk ? 'text-green-400' : isWarning ? 'text-yellow-400' : 'text-red-400'}`}>
+                            {isOk ? 'Vérifié' : isWarning ? 'Attention' : 'Alerte'}
+                          </p>
+                        </div>
+                      );
+                    })()}
 
                     {/* Dommages */}
-                    <div className={`rounded-xl p-4 border ${
-                      (vehicule.carVerticalReport.summary.damageRecords || 0) === 0 ? 'bg-green-500/5 border-green-500/20' : 'bg-yellow-500/5 border-yellow-500/20'
-                    }`}>
-                      {(vehicule.carVerticalReport.summary.damageRecords || 0) === 0 ? (
-                        <CheckCircle size={18} className="text-green-400 mb-2" />
-                      ) : (
-                        <AlertTriangle size={18} className="text-yellow-400 mb-2" />
-                      )}
-                      <p className="text-text-secondary text-xs uppercase tracking-wider mb-1">Dommages</p>
-                      <p className={`font-bold text-sm ${(vehicule.carVerticalReport.summary.damageRecords || 0) === 0 ? 'text-green-400' : 'text-yellow-400'}`}>
-                        {vehicule.carVerticalReport.summary.damageRecords || 0} enregistré(s)
+                    <div className={`rounded-lg p-4 border ${(report.summary.damageRecords || 0) === 0 ? 'bg-green-500/5 border-green-500/10' : 'bg-yellow-500/5 border-yellow-500/10'}`}>
+                      {(report.summary.damageRecords || 0) === 0 ? <CheckCircle size={16} className="text-green-400 mb-2" /> : <AlertTriangle size={16} className="text-yellow-400 mb-2" />}
+                      <p className="text-white/30 text-[10px] uppercase tracking-wider mb-1">Dommages</p>
+                      <p className={`font-bold text-sm ${(report.summary.damageRecords || 0) === 0 ? 'text-green-400' : 'text-yellow-400'}`}>
+                        {report.summary.damageRecords || 0} enregistré(s)
                       </p>
                     </div>
 
                     {/* Vol */}
-                    <div className={`rounded-xl p-4 border ${
-                      vehicule.carVerticalReport.summary.stolenCheck === 'clear' ? 'bg-green-500/5 border-green-500/20' : 'bg-red-500/5 border-red-500/20'
-                    }`}>
-                      {vehicule.carVerticalReport.summary.stolenCheck === 'clear' ? (
-                        <CheckCircle size={18} className="text-green-400 mb-2" />
-                      ) : (
-                        <XCircle size={18} className="text-red-400 mb-2" />
-                      )}
-                      <p className="text-text-secondary text-xs uppercase tracking-wider mb-1">Vol</p>
-                      <p className={`font-bold text-sm ${vehicule.carVerticalReport.summary.stolenCheck === 'clear' ? 'text-green-400' : 'text-red-400'}`}>
-                        {vehicule.carVerticalReport.summary.stolenCheck === 'clear' ? 'Non signalé' : 'Signalé'}
+                    <div className={`rounded-lg p-4 border ${report.summary.stolenCheck === 'clear' ? 'bg-green-500/5 border-green-500/10' : 'bg-red-500/5 border-red-500/10'}`}>
+                      {report.summary.stolenCheck === 'clear' ? <CheckCircle size={16} className="text-green-400 mb-2" /> : <XCircle size={16} className="text-red-400 mb-2" />}
+                      <p className="text-white/30 text-[10px] uppercase tracking-wider mb-1">Vol</p>
+                      <p className={`font-bold text-sm ${report.summary.stolenCheck === 'clear' ? 'text-green-400' : 'text-red-400'}`}>
+                        {report.summary.stolenCheck === 'clear' ? 'Non signalé' : 'Signalé'}
                       </p>
                     </div>
 
                     {/* Propriétaires */}
-                    <div className="rounded-xl p-4 border bg-blue-500/5 border-blue-500/20">
-                      <Users size={18} className="text-blue-400 mb-2" />
-                      <p className="text-text-secondary text-xs uppercase tracking-wider mb-1">Propriétaires</p>
-                      <p className="font-bold text-sm text-blue-400">
-                        {vehicule.carVerticalReport.summary.ownerCount || '—'}
-                      </p>
+                    <div className="rounded-lg p-4 border bg-blue-500/5 border-blue-500/10">
+                      <Users size={16} className="text-blue-400 mb-2" />
+                      <p className="text-white/30 text-[10px] uppercase tracking-wider mb-1">Propriétaires</p>
+                      <p className="font-bold text-sm text-blue-400">{report.summary.ownerCount || '—'}</p>
                     </div>
                   </div>
 
-                  {vehicule.carVerticalReport.reportUrl && (
-                    <a
-                      href={vehicule.carVerticalReport.reportUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center gap-2 mt-3 text-xs text-blue-400 hover:text-blue-300 transition-colors"
-                    >
-                      Voir le rapport complet <ExternalLink size={12} />
+                  {report.reportUrl && (
+                    <a href={report.reportUrl} target="_blank" rel="noopener noreferrer"
+                      className="inline-flex items-center gap-1.5 mt-3 text-xs text-blue-400/60 hover:text-blue-400 transition-colors">
+                      Voir le rapport complet <ExternalLink size={10} />
                     </a>
                   )}
                 </div>
               )}
+            </div>
 
-              {/* Contact CTA */}
-              <div className="bg-dark-section border border-primary-600/20 rounded-xl p-6">
-                <h3 className="text-lg font-display font-bold text-text-primary mb-3">
-                  Intéressé par ce véhicule ?
-                </h3>
-                <p className="text-text-secondary text-sm mb-4">
-                  Contactez-nous pour plus d'informations ou pour organiser un essai.
-                </p>
-                <div className="flex flex-wrap gap-3">
-                  <Link
-                    to={`/contact?vehicule=${encodeURIComponent(title)}&prix=${price || ''}&annee=${year}&km=${mileage}`}
-                    className="btn-primary"
-                  >
-                    <Mail size={18} />
-                    Nous contacter
-                  </Link>
-                  {siteInfo.contact?.phone && (
-                    <a href={`tel:${siteInfo.contact.phone}`} className="btn-outline">
-                      <Phone size={18} />
-                      Appeler
-                    </a>
-                  )}
+            {/* Right column — Sticky sidebar */}
+            <div className="lg:col-span-1">
+              <div className="lg:sticky lg:top-24 space-y-6">
+                {/* Price card */}
+                {price !== undefined && price !== null && (
+                  <div className="border border-white/10 rounded-lg p-6">
+                    <p className="text-white/30 text-xs uppercase tracking-[0.2em] mb-2">Prix</p>
+                    <p className="text-3xl font-display font-bold text-white">
+                      CHF {typeof price === 'number' ? price.toLocaleString() : price}
+                    </p>
+                    {vehicule.condition && (
+                      <p className="text-white/20 text-xs mt-1">{vehicule.condition}</p>
+                    )}
+                  </div>
+                )}
+
+                {/* VIN */}
+                {vehicule.vin && (
+                  <div className="border border-white/10 rounded-lg p-6">
+                    <p className="text-white/30 text-xs uppercase tracking-[0.2em] mb-2">N° de châssis</p>
+                    <p className="text-white/60 text-sm font-mono">{vehicule.vin}</p>
+                  </div>
+                )}
+
+                {/* Contact CTA */}
+                <div className="border border-white/10 rounded-lg p-6">
+                  <h3 className="text-lg font-display font-bold text-white mb-2">
+                    Intéressé ?
+                  </h3>
+                  <p className="text-white/40 text-sm mb-5">
+                    Contactez-nous pour plus d'informations ou un essai routier.
+                  </p>
+                  <div className="space-y-3">
+                    <Link
+                      to={`/contact?vehicule=${encodeURIComponent(title)}&prix=${price || ''}&annee=${year}&km=${mileage}`}
+                      className="group flex items-center justify-center gap-2 w-full px-6 py-3 bg-white text-black text-sm uppercase tracking-[0.15em] font-medium hover:bg-white/90 transition-colors"
+                    >
+                      <Mail size={14} /> Nous contacter
+                    </Link>
+                    {siteInfo.contact?.phone && (
+                      <a
+                        href={`tel:${siteInfo.contact.phone}`}
+                        className="flex items-center justify-center gap-2 w-full px-6 py-3 border border-white/20 text-white text-sm uppercase tracking-[0.15em] font-medium hover:border-white/40 transition-colors"
+                      >
+                        <Phone size={14} /> {siteInfo.contact.phone}
+                      </a>
+                    )}
+                  </div>
                 </div>
               </div>
             </div>

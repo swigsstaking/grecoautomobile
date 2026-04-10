@@ -1,7 +1,8 @@
 import { Link, useLocation } from 'react-router-dom';
-import { Phone, Mail, Facebook, Instagram, Menu, X, ChevronDown } from 'lucide-react';
+import { Phone, Mail, Facebook, Instagram, Menu, X, ChevronDown, Globe } from 'lucide-react';
 import { useState } from 'react';
 import { useSiteInfo } from '../hooks/useSiteInfo';
+import { useTranslation } from '../i18n/LanguageContext';
 
 const TikTokIcon = ({ size = 15, className = '' }) => (
   <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor" className={className}>
@@ -12,24 +13,37 @@ const TikTokIcon = ({ size = 15, className = '' }) => (
 const Layout = ({ children }) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [openDropdown, setOpenDropdown] = useState(null);
+  const [langMenuOpen, setLangMenuOpen] = useState(false);
   const siteInfo = useSiteInfo();
   const location = useLocation();
+  const { t, lang, setLang } = useTranslation();
 
   const navigation = [
-    { name: 'Accueil', path: '/' },
-    { name: 'Notre Histoire', path: '/notre-histoire' },
-    { name: 'Vehicules', path: '/vehicules' },
+    { name: t('nav.home'), path: '/' },
+    { name: t('nav.history'), path: '/notre-histoire' },
     {
-      name: 'Services',
-      path: '/services',
+      name: lang === 'it' ? 'Veicoli' : 'Vehicules',
+      path: '/vehicules',
       children: [
-        { name: 'Achat', path: '/services#achat' },
-        { name: 'Vente', path: '/services#vente' },
-        { name: 'Depot-vente', path: '/services#depot-vente' },
+        { name: t('nav.vehicles_new'), path: '/vehicules?type=neuf' },
+        { name: t('nav.vehicles_used'), path: '/vehicules?type=occasion' },
       ],
     },
-    { name: 'Contact', path: '/contact' },
+    {
+      name: t('nav.services'),
+      path: '/services',
+      children: [
+        { name: t('nav.purchase'), path: '/services#achat' },
+        { name: t('nav.sale'), path: '/services#vente' },
+        { name: t('nav.consignment'), path: '/services#depot-vente' },
+        { name: t('nav.custom_search'), path: '/services#recherche' },
+        { name: t('nav.mechanics'), path: '/services#mecanique' },
+      ],
+    },
+    { name: t('nav.contact'), path: '/contact' },
   ];
+
+  const langLabels = { fr: 'FR', it: 'IT' };
 
   const isActive = (path) => {
     const cleanPath = path.split('#')[0];
@@ -82,10 +96,37 @@ const Layout = ({ children }) => {
                     )}
                   </div>
                 ))}
+                {/* Language switcher */}
+                <div className="relative ml-3">
+                  <button
+                    onClick={() => setLangMenuOpen(!langMenuOpen)}
+                    className="flex items-center gap-1.5 px-3 py-2 rounded-md text-sm text-text-secondary hover:text-text-primary hover:bg-primary-500/10 transition-colors cursor-pointer"
+                  >
+                    <Globe size={14} />
+                    {langLabels[lang]}
+                    <ChevronDown size={12} />
+                  </button>
+                  {langMenuOpen && (
+                    <div className="absolute top-full right-0 mt-1 bg-dark-section border border-primary-600/30 rounded-lg shadow-xl min-w-[100px] overflow-hidden">
+                      {Object.entries(langLabels).map(([code, label]) => (
+                        <button
+                          key={code}
+                          onClick={() => { setLang(code); setLangMenuOpen(false); }}
+                          className={`block w-full text-left px-4 py-2.5 text-sm transition-colors cursor-pointer ${
+                            lang === code ? 'text-text-primary bg-primary-500/20' : 'text-text-secondary hover:text-text-primary hover:bg-primary-500/10'
+                          }`}
+                        >
+                          {label}
+                        </button>
+                      ))}
+                    </div>
+                  )}
+                </div>
+
                 {siteInfo.contact?.phone && (
-                  <a href={`tel:${siteInfo.contact.phone}`} className="btn-primary ml-4 text-sm">
+                  <a href={`tel:${siteInfo.contact.phone}`} className="btn-primary ml-2 text-sm">
                     <Phone size={16} />
-                    Appeler
+                    {t('nav.call')}
                   </a>
                 )}
               </div>
@@ -142,10 +183,26 @@ const Layout = ({ children }) => {
                       )}
                     </div>
                   ))}
+                  {/* Mobile language switcher */}
+                  <div className="flex items-center gap-2 mt-3 pt-3 border-t border-primary-700/30">
+                    <Globe size={14} className="text-text-secondary" />
+                    {Object.entries(langLabels).map(([code, label]) => (
+                      <button
+                        key={code}
+                        onClick={() => setLang(code)}
+                        className={`px-3 py-1.5 rounded-md text-sm font-medium transition-colors cursor-pointer ${
+                          lang === code ? 'bg-primary-500/20 text-text-primary' : 'text-text-secondary hover:text-text-primary'
+                        }`}
+                      >
+                        {label}
+                      </button>
+                    ))}
+                  </div>
+
                   {siteInfo.contact?.phone && (
                     <a href={`tel:${siteInfo.contact.phone}`} className="btn-primary justify-center mt-2 text-sm">
                       <Phone size={16} />
-                      Appeler
+                      {t('nav.call')}
                     </a>
                   )}
                 </div>
@@ -170,13 +227,13 @@ const Layout = ({ children }) => {
                 <img src="/logo.png" alt="Greco Autogroup" className="h-10 w-auto" />
               </Link>
               <p className="text-text-secondary text-sm leading-relaxed">
-                {siteInfo.description || "Votre partenaire de confiance pour l'achat, la vente et le depot-vente de vehicules d'occasion."}
+                {siteInfo.description || "Votre partenaire de confiance pour l'achat, la vente et le dépôt-vente de véhicules d'occasion."}
               </p>
             </div>
 
             {/* Navigation */}
             <div>
-              <h3 className="text-sm font-semibold uppercase tracking-wider text-text-primary mb-4">Navigation</h3>
+              <h3 className="text-sm font-semibold uppercase tracking-wider text-text-primary mb-4">{t('footer.navigation')}</h3>
               <ul className="space-y-2">
                 {navigation.map((item) => (
                   <li key={item.name}>
@@ -190,17 +247,19 @@ const Layout = ({ children }) => {
 
             {/* Services */}
             <div>
-              <h3 className="text-sm font-semibold uppercase tracking-wider text-text-primary mb-4">Services</h3>
+              <h3 className="text-sm font-semibold uppercase tracking-wider text-text-primary mb-4">{t('footer.services')}</h3>
               <ul className="space-y-2">
-                <li><Link to="/services#achat" className="text-text-secondary hover:text-primary-300 transition-colors text-sm">Achat</Link></li>
-                <li><Link to="/services#vente" className="text-text-secondary hover:text-primary-300 transition-colors text-sm">Vente</Link></li>
-                <li><Link to="/services#depot-vente" className="text-text-secondary hover:text-primary-300 transition-colors text-sm">Depot-vente</Link></li>
+                <li><Link to="/services#achat" className="text-text-secondary hover:text-primary-300 transition-colors text-sm">{t('nav.purchase')}</Link></li>
+                <li><Link to="/services#vente" className="text-text-secondary hover:text-primary-300 transition-colors text-sm">{t('nav.sale')}</Link></li>
+                <li><Link to="/services#depot-vente" className="text-text-secondary hover:text-primary-300 transition-colors text-sm">{t('nav.consignment')}</Link></li>
+                <li><Link to="/services#recherche" className="text-text-secondary hover:text-primary-300 transition-colors text-sm">{t('nav.custom_search')}</Link></li>
+                <li><Link to="/services#mecanique" className="text-text-secondary hover:text-primary-300 transition-colors text-sm">{t('nav.mechanics')}</Link></li>
               </ul>
             </div>
 
             {/* Contact */}
             <div>
-              <h3 className="text-sm font-semibold uppercase tracking-wider text-text-primary mb-4">Contact</h3>
+              <h3 className="text-sm font-semibold uppercase tracking-wider text-text-primary mb-4">{t('footer.contact')}</h3>
               <div className="space-y-3 text-sm">
                 {siteInfo.contact?.address && (
                   <p className="text-text-secondary">{siteInfo.contact.address}</p>
@@ -244,7 +303,7 @@ const Layout = ({ children }) => {
 
           <div className="border-t border-primary-700/30 mt-10 pt-8 text-center text-text-secondary text-sm">
             <p>
-              &copy; {new Date().getFullYear()} {siteInfo.siteName || 'Greco Autogroup'}. Tous droits reserves.
+              &copy; {new Date().getFullYear()} {siteInfo.siteName || 'Greco Autogroup'}. {t('footer.rights')}
               {' | '}
               <a
                 href="https://swigs.ch"
@@ -252,7 +311,7 @@ const Layout = ({ children }) => {
                 rel="noopener noreferrer"
                 className="hover:text-primary-300 transition-colors"
               >
-                Site cree par Swigs SA
+                {t('footer.made_by')}
               </a>
             </p>
           </div>

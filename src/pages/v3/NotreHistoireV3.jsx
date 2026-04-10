@@ -1,8 +1,10 @@
 import SEOHead from '../../components/SEOHead';
 import { ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { useTranslation } from '../../i18n/LanguageContext';
 
 const NotreHistoireV3 = () => {
+  const { t } = useTranslation();
   return (
     <>
       <SEOHead page="notre-histoire" />
@@ -14,9 +16,9 @@ const NotreHistoireV3 = () => {
           <div className="absolute inset-0 bg-gradient-to-t from-[#0a1628] via-[#0a1628]/50 to-transparent"></div>
         </div>
         <div className="max-w-[1920px] mx-auto px-6 md:px-12 lg:px-24 relative z-10 pb-16 md:pb-24 w-full">
-          <p className="text-white/30 text-xs uppercase tracking-[0.3em] mb-4">Qui sommes-nous</p>
+          <p className="text-white/30 text-xs uppercase tracking-[0.3em] mb-4">{t('home.about_label')}</p>
           <h1 className="text-6xl md:text-8xl lg:text-[7rem] font-display font-bold text-white leading-[0.9]">
-            Notre<br />Histoire
+            {t('history.title')}
           </h1>
         </div>
       </section>
@@ -154,14 +156,14 @@ const NotreHistoireV3 = () => {
               to="/contact"
               className="group inline-flex items-center gap-3 px-8 py-4 bg-white text-black text-sm uppercase tracking-[0.15em] font-medium hover:bg-white/90 transition-colors"
             >
-              Nous contacter
+              {t('home.cta_contact')}
               <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
             </Link>
             <Link
               to="/vehicules"
               className="inline-flex items-center gap-3 px-8 py-4 border border-white/20 text-white text-sm uppercase tracking-[0.15em] font-medium hover:border-white/40 transition-colors"
             >
-              Voir nos véhicules
+              {t('home.cta_catalog')}
             </Link>
           </div>
         </div>

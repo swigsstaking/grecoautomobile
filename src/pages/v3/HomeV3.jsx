@@ -6,11 +6,13 @@ import { ArrowRight, ArrowLeft, ChevronRight, Play, ArrowDown, Car } from 'lucid
 import { Link } from 'react-router-dom';
 import seoData from '../../data/seo.json';
 import mockVehicules from '../../data/mockVehicules';
+import { useTranslation } from '../../i18n/LanguageContext';
 
 const API_URL = import.meta.env.VITE_API_URL || 'https://swigs.online/api';
 
 const HomeV3 = () => {
   const siteInfo = useSiteInfo();
+  const { t } = useTranslation();
 
   const { data: apiVehicules } = useQuery({
     queryKey: ['vehicules-home', seoData.site.slug],
@@ -30,26 +32,26 @@ const HomeV3 = () => {
   const grecoSlides = [
     {
       image: 'https://swigs.online/uploads/grecoautogroup/1775542051182-769409253.webp',
-      label: 'Bienvenue chez Greco Autogroup',
-      title: 'L\'excellence',
-      subtitle: 'automobile.',
-      cta: 'Voir le catalogue',
+      label: t('home.hero1.label'),
+      title: t('home.hero1.title'),
+      subtitle: t('home.hero1.subtitle'),
+      cta: t('home.hero1.cta'),
       link: '/vehicules',
     },
     {
       image: 'https://swigs.online/uploads/grecoautogroup/1775542049399-58977568.webp',
-      label: 'Ardon, Valais',
-      title: 'Qualité',
-      subtitle: '& confiance.',
-      cta: 'Notre histoire',
+      label: t('home.hero2.label'),
+      title: t('home.hero2.title'),
+      subtitle: t('home.hero2.subtitle'),
+      cta: t('home.hero2.cta'),
       link: '/notre-histoire',
     },
     {
       image: 'https://swigs.online/uploads/grecoautogroup/1775542047236-190922193.webp',
-      label: 'Achat · Vente · Dépôt-vente',
-      title: 'Votre prochain',
-      subtitle: 'véhicule.',
-      cta: 'Nous contacter',
+      label: t('home.hero3.label'),
+      title: t('home.hero3.title'),
+      subtitle: t('home.hero3.subtitle'),
+      cta: t('home.hero3.cta'),
       link: '/contact',
     },
   ];
@@ -157,11 +159,11 @@ const HomeV3 = () => {
       </section>
 
       {/* ═══ CAR BRANDS MARQUEE ═══ */}
-      <section className="bg-[#0d1117] border-t border-white/5 py-8 overflow-hidden">
+      <section className="bg-white py-10 overflow-hidden">
         <div className="relative">
           {/* Fade edges */}
-          <div className="absolute left-0 top-0 bottom-0 w-24 bg-gradient-to-r from-[#0d1117] to-transparent z-10" />
-          <div className="absolute right-0 top-0 bottom-0 w-24 bg-gradient-to-l from-[#0d1117] to-transparent z-10" />
+          <div className="absolute left-0 top-0 bottom-0 w-24 bg-gradient-to-r from-white to-transparent z-10" />
+          <div className="absolute right-0 top-0 bottom-0 w-24 bg-gradient-to-l from-white to-transparent z-10" />
           {/* Scrolling track — duplicated for seamless loop */}
           <div className="flex animate-marquee whitespace-nowrap">
             {[...Array(2)].map((_, setIndex) => (
@@ -180,8 +182,8 @@ const HomeV3 = () => {
                   { name: 'Ford', src: '/brands/ford.svg' },
                   { name: 'Toyota', src: '/brands/toyota.svg' },
                 ].map((brand) => (
-                  <div key={`${setIndex}-${brand.name}`} className="mx-10 flex-shrink-0">
-                    <img src={brand.src} alt={brand.name} className="h-8 w-auto opacity-40 hover:opacity-70 transition-opacity duration-300" style={{ filter: 'brightness(0) invert(1)' }} />
+                  <div key={`${setIndex}-${brand.name}`} className="mx-12 flex-shrink-0">
+                    <img src={brand.src} alt={brand.name} className="h-10 w-auto opacity-80 hover:opacity-100 transition-opacity duration-300" />
                   </div>
                 ))}
               </div>
@@ -193,48 +195,56 @@ const HomeV3 = () => {
       {/* ═══ BRAND STRIP ═══ */}
       <section className="bg-[#0d1117] pt-16 md:pt-20 pb-10 md:pb-12 border-t border-white/5">
         <div className="max-w-[1920px] mx-auto px-6 md:px-12 lg:px-24">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-12 md:gap-0 md:divide-x md:divide-white/10">
-            <div className="md:pr-16">
-              <p className="text-white/30 text-xs uppercase tracking-[0.3em] mb-3">Achat</p>
-              <p className="text-white text-lg font-light leading-relaxed">
-                Nous rachetons votre véhicule au meilleur prix. Estimation gratuite en 24h.
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 md:gap-0 md:divide-x md:divide-white/10">
+            <div className="md:pr-10 lg:pr-12">
+              <p className="text-white/30 text-xs uppercase tracking-[0.3em] mb-3">{t('home.strip.purchase')}</p>
+              <p className="text-white text-base font-light leading-relaxed">
+                {t('home.strip.purchase_desc')}
               </p>
             </div>
-            <div className="md:px-16">
-              <p className="text-white/30 text-xs uppercase tracking-[0.3em] mb-3">Vente</p>
-              <p className="text-white text-lg font-light leading-relaxed">
-                Des véhicules soigneusement inspectés et garantis. Qualité certifiée.
+            <div className="md:px-10 lg:px-12">
+              <p className="text-white/30 text-xs uppercase tracking-[0.3em] mb-3">{t('home.strip.sale')}</p>
+              <p className="text-white text-base font-light leading-relaxed">
+                {t('home.strip.sale_desc')}
               </p>
             </div>
-            <div className="md:pl-16">
-              <p className="text-white/30 text-xs uppercase tracking-[0.3em] mb-3">Dépôt-vente</p>
-              <p className="text-white text-lg font-light leading-relaxed">
-                Confiez-nous la vente de votre véhicule. Nous nous occupons de tout.
+            <div className="md:px-10 lg:px-12">
+              <p className="text-white/30 text-xs uppercase tracking-[0.3em] mb-3">{t('home.strip.consignment')}</p>
+              <p className="text-white text-base font-light leading-relaxed">
+                {t('home.strip.consignment_desc')}
+              </p>
+            </div>
+            <div className="md:pl-10 lg:pl-12">
+              <p className="text-white/30 text-xs uppercase tracking-[0.3em] mb-3">{t('home.strip.clean')}</p>
+              <p className="text-white text-base font-light leading-relaxed">
+                {t('home.strip.clean_desc')}
               </p>
             </div>
           </div>
         </div>
       </section>
 
-      {/* ═══ PARTNERS ═══ Integrated into brand section */}
-      <section className="bg-[#0d1117]">
-        <div className="max-w-[1920px] mx-auto px-6 md:px-12 lg:px-24 pb-16 md:pb-20">
-          <div className="border-t border-white/[0.06] pt-10">
-            <p className="text-white/20 text-[10px] uppercase tracking-[0.4em] text-center mb-8">Partenaires</p>
-            <div className="flex items-center justify-center gap-6">
-              <a href="https://www.quality1.ch" target="_blank" rel="noopener noreferrer"
-                className="bg-white rounded-md w-[180px] h-[90px] flex items-center justify-center hover:shadow-lg hover:shadow-white/5 transition-all duration-300 hover:-translate-y-0.5">
-                <img src="/partners/quality1.png" alt="Quality1" className="h-12 w-auto object-contain" />
-              </a>
-              <a href="https://www.autoscout24.ch" target="_blank" rel="noopener noreferrer"
-                className="bg-white rounded-md w-[180px] h-[90px] flex items-center justify-center hover:shadow-lg hover:shadow-white/5 transition-all duration-300 hover:-translate-y-0.5">
-                <img src="/partners/autoscout24.png" alt="AutoScout24" className="h-12 w-auto object-contain" />
-              </a>
-              <a href="https://www.autolina.ch" target="_blank" rel="noopener noreferrer"
-                className="bg-white rounded-md w-[180px] h-[90px] flex items-center justify-center p-5 hover:shadow-lg hover:shadow-white/5 transition-all duration-300 hover:-translate-y-0.5">
-                <img src="/partners/autolina.svg" alt="Autolina" className="max-h-8 max-w-[140px] object-contain" />
-              </a>
-            </div>
+      {/* ═══ PARTNERS ═══ */}
+      <section className="bg-[#f0f0f0] py-12 md:py-16">
+        <div className="max-w-[1920px] mx-auto px-6 md:px-12 lg:px-24">
+          <p className="text-gray-600 text-xs uppercase tracking-[0.3em] text-center mb-10 font-medium">Nos partenaires de confiance</p>
+          <div className="flex items-center justify-center gap-16 md:gap-24 flex-wrap">
+            <a href="https://www.quality1.ch" target="_blank" rel="noopener noreferrer"
+              className="flex items-center justify-center hover:scale-105 transition-transform duration-300">
+              <img src="/partners/quality1.png" alt="Quality1" className="h-14 w-auto object-contain" />
+            </a>
+            <a href="https://www.autoscout24.ch" target="_blank" rel="noopener noreferrer"
+              className="flex items-center justify-center hover:scale-105 transition-transform duration-300">
+              <img src="/partners/autoscout24.png" alt="AutoScout24" className="h-14 w-auto object-contain" />
+            </a>
+            <a href="https://www.autolina.ch" target="_blank" rel="noopener noreferrer"
+              className="flex items-center justify-center hover:scale-105 transition-transform duration-300">
+              <img src="/partners/autolina.svg" alt="Autolina" className="h-10 w-auto object-contain" />
+            </a>
+            <a href="https://www.carvertical.com" target="_blank" rel="noopener noreferrer"
+              className="flex items-center justify-center hover:scale-105 transition-transform duration-300">
+              <img src="/partners/carvertical.svg" alt="carVertical" className="h-10 w-auto object-contain" />
+            </a>
           </div>
         </div>
       </section>
@@ -244,16 +254,16 @@ const HomeV3 = () => {
         <div className="max-w-[1920px] mx-auto px-6 md:px-12 lg:px-24 pt-16 md:pt-20 pb-20 md:pb-32">
           <div className="flex items-end justify-between mb-16">
             <div>
-              <p className="text-white/30 text-xs uppercase tracking-[0.3em] mb-4">Catalogue</p>
+              <p className="text-white/30 text-xs uppercase tracking-[0.3em] mb-4">{t('home.catalog')}</p>
               <h2 className="text-4xl md:text-6xl font-display font-bold text-white leading-[0.95]">
-                Nos modèles
+                {t('home.our_models')}
               </h2>
             </div>
             <Link
               to="/vehicules"
               className="hidden md:inline-flex items-center gap-2 text-white/50 text-sm uppercase tracking-[0.15em] hover:text-white transition-colors"
             >
-              Tout voir <ArrowRight size={14} />
+              {t('home.view_all')} <ArrowRight size={14} />
             </Link>
           </div>
         </div>
@@ -303,7 +313,7 @@ const HomeV3 = () => {
 
         <div className="max-w-[1920px] mx-auto px-6 md:px-12 lg:px-24 pb-20 md:hidden">
           <Link to="/vehicules" className="inline-flex items-center gap-2 text-white/50 text-sm uppercase tracking-[0.15em] hover:text-white transition-colors">
-            Voir tout le catalogue <ArrowRight size={14} />
+            {t('home.view_catalog')} <ArrowRight size={14} />
           </Link>
         </div>
       </section>
@@ -316,20 +326,19 @@ const HomeV3 = () => {
         </div>
         <div className="max-w-[1920px] mx-auto px-6 md:px-12 lg:px-24 relative z-10 py-20">
           <div className="max-w-2xl">
-            <p className="text-white/30 text-xs uppercase tracking-[0.3em] mb-6">Qui sommes-nous</p>
+            <p className="text-white/30 text-xs uppercase tracking-[0.3em] mb-6">{t('home.about_label')}</p>
             <h2 className="text-5xl md:text-7xl font-display font-bold text-white leading-[0.95] mb-8">
-              L'automobile,<br />
-              notre passion.
+              {t('home.about_title_1')}<br />
+              {t('home.about_title_2')}
             </h2>
             <p className="text-white/60 text-lg md:text-xl font-light leading-relaxed mb-10 max-w-lg">
-              Greco Autogroup, votre partenaire automobile de confiance.
-              Achat, vente et depot-vente avec un service sur mesure.
+              {t('home.about_desc')}
             </p>
             <Link
               to="/notre-histoire"
               className="group inline-flex items-center gap-3 text-white text-sm uppercase tracking-[0.2em] font-medium border-b border-white/20 pb-2 hover:border-white/50 transition-colors"
             >
-              Notre histoire
+              {t('home.about_cta')}
               <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
             </Link>
           </div>
@@ -339,60 +348,53 @@ const HomeV3 = () => {
       {/* ═══ SERVICES ═══ Clean editorial grid */}
       <section className="bg-[#0d1117] py-20 md:py-32">
         <div className="max-w-[1920px] mx-auto px-6 md:px-12 lg:px-24">
-          <p className="text-white/30 text-xs uppercase tracking-[0.3em] mb-4">Services</p>
+          <p className="text-white/30 text-xs uppercase tracking-[0.3em] mb-4">{t('home.services')}</p>
           <h2 className="text-4xl md:text-6xl font-display font-bold text-white leading-[0.95] mb-20">
-            Comment pouvons-nous<br />
-            vous aider ?
+            {t('home.services_title_1')}<br />
+            {t('home.services_title_2')}
           </h2>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-px bg-white/5">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {[
               {
-                title: 'Achat',
-                desc: 'Vous souhaitez vendre votre véhicule ? Estimation gratuite, rachat immédiat, paiement sécurisé.',
+                title: t('home.services.purchase'),
+                desc: t('home.services.purchase_desc'),
                 image: 'https://swigs.online/uploads/grecoautogroup/1775542049399-58977568.webp',
                 link: '/services#achat',
               },
               {
-                title: 'Vente',
-                desc: 'Découvrez notre sélection de véhicules inspectés et garantis. Essai routier disponible.',
+                title: t('home.services.sale'),
+                desc: t('home.services.sale_desc'),
                 image: 'https://swigs.online/uploads/grecoautogroup/1775542050418-111557555.webp',
                 link: '/services#vente',
               },
               {
-                title: 'Dépôt-vente',
-                desc: 'Confiez-nous votre véhicule. Photos pro, diffusion, négociation — on gère tout.',
+                title: t('home.services.consignment'),
+                desc: t('home.services.consignment_desc'),
                 image: 'https://swigs.online/uploads/grecoautogroup/1775542048321-636143732.webp',
                 link: '/services#depot-vente',
               },
+              {
+                title: t('home.services.custom_search'),
+                desc: t('home.services.custom_search_desc'),
+                image: 'https://swigs.online/uploads/grecoautogroup/1775542047236-190922193.webp',
+                link: '/services#recherche',
+              },
+              {
+                title: t('home.services.mechanics'),
+                desc: t('home.services.mechanics_desc'),
+                image: 'https://swigs.online/uploads/grecoautogroup/1775542049074-367922835.webp',
+                link: '/services#mecanique',
+              },
             ].map((service, i) => (
-              <Link
-                key={i}
-                to={service.link}
-                className="group bg-[#0d1117] p-0 block"
-              >
-                <div className="aspect-[4/3] overflow-hidden">
-                  {service.image ? (
-                    <img
-                      src={service.image}
-                      alt={service.title}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
-                      style={{ objectPosition: 'center 60%' }}
-                    />
-                  ) : (
-                    <div className="w-full h-full bg-gradient-to-br from-[#0a1628] via-[#162d50] to-[#0d1117]"></div>
-                  )}
+              <Link key={i} to={service.link} className="group block border border-white/10 rounded-sm overflow-hidden hover:border-white/20 transition-colors">
+                <div className="aspect-[16/10] overflow-hidden">
+                  <img src={service.image} alt={service.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" style={{ objectPosition: 'center 60%' }} />
                 </div>
-                <div className="p-8 md:p-10">
-                  <h3 className="text-2xl font-display font-bold text-white mb-3 group-hover:text-white/80 transition-colors">
-                    {service.title}
-                  </h3>
-                  <p className="text-white/40 leading-relaxed mb-6 text-sm">
-                    {service.desc}
-                  </p>
-                  <span className="inline-flex items-center gap-2 text-white/50 text-xs uppercase tracking-[0.2em] group-hover:text-white/70 transition-colors">
-                    En savoir plus <ChevronRight size={12} />
-                  </span>
+                <div className="p-6 md:p-8">
+                  <h3 className="text-xl font-display font-bold text-white mb-3 group-hover:text-white/80 transition-colors">{service.title}</h3>
+                  <p className="text-white/40 leading-relaxed mb-5 text-sm">{service.desc}</p>
+                  <span className="inline-flex items-center gap-2 text-white/50 text-xs uppercase tracking-[0.2em] group-hover:text-white/70 transition-colors">{t('home.learn_more')} <ChevronRight size={12} /></span>
                 </div>
               </Link>
             ))}
@@ -408,24 +410,24 @@ const HomeV3 = () => {
         </div>
         <div className="max-w-[1920px] mx-auto px-6 md:px-12 lg:px-24 relative z-10 text-center w-full">
           <h2 className="text-4xl md:text-6xl font-display font-bold text-white mb-6">
-            Trouvez votre prochain véhicule
+            {t('home.cta_title')}
           </h2>
           <p className="text-white/50 text-lg font-light mb-10 max-w-xl mx-auto">
-            Parcourez notre catalogue ou contactez-nous pour une recherche personnalisée.
+            {t('home.cta_desc')}
           </p>
           <div className="flex flex-wrap justify-center gap-6">
             <Link
               to="/vehicules"
               className="group inline-flex items-center gap-3 px-8 py-4 bg-white text-black text-sm uppercase tracking-[0.15em] font-medium hover:bg-white/90 transition-colors"
             >
-              Voir le catalogue
+              {t('home.cta_catalog')}
               <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
             </Link>
             <Link
               to="/contact"
               className="inline-flex items-center gap-3 px-8 py-4 border border-white/20 text-white text-sm uppercase tracking-[0.15em] font-medium hover:border-white/40 transition-colors"
             >
-              Nous contacter
+              {t('home.cta_contact')}
             </Link>
           </div>
         </div>

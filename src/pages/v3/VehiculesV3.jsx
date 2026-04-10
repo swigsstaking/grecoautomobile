@@ -1,17 +1,21 @@
 import { useState, useMemo } from 'react';
 import { useQuery } from '@tanstack/react-query';
-import { Link } from 'react-router-dom';
+import { Link, useSearchParams } from 'react-router-dom';
 import SEOHead from '../../components/SEOHead';
 import { Search, X, Car, ArrowRight, SlidersHorizontal } from 'lucide-react';
 import seoData from '../../data/seo.json';
 import mockVehicules from '../../data/mockVehicules';
+import { useTranslation } from '../../i18n/LanguageContext';
 
 const API_URL = import.meta.env.VITE_API_URL || 'https://swigs.online/api';
 
 const VehiculesV3 = () => {
+  const [searchParams] = useSearchParams();
+  const vehicleType = searchParams.get('type'); // 'neuf' or 'occasion'
   const [searchTerm, setSearchTerm] = useState('');
   const [filters, setFilters] = useState({ brand: '', fuelType: '', priceRange: '', sortBy: 'newest' });
   const [showFilters, setShowFilters] = useState(false);
+  const { t } = useTranslation();
 
   const { data: vehiculesData, isLoading } = useQuery({
     queryKey: ['vehicules', seoData.site.slug],
@@ -29,8 +33,19 @@ const VehiculesV3 = () => {
   const brands = useMemo(() => [...new Set(vehicules.map(v => v.brand || v.metadata?.brand).filter(Boolean))].sort(), [vehicules]);
   const fuelTypes = useMemo(() => [...new Set(vehicules.map(v => v.fuelType || v.metadata?.fuelType).filter(Boolean))].sort(), [vehicules]);
 
+  const pageTitle = vehicleType === 'neuf' ? t('vehicles.new') : vehicleType === 'occasion' ? t('vehicles.used') : t('vehicles.all');
+
   const filteredVehicules = useMemo(() => {
     let result = [...vehicules];
+    // Filter by vehicle type (neuf/occasion) from URL
+    if (vehicleType === 'neuf') {
+      result = result.filter(v => (v.condition || v.metadata?.condition || '').toLowerCase() === 'neuf');
+    } else if (vehicleType === 'occasion') {
+      result = result.filter(v => {
+        const cond = (v.condition || v.metadata?.condition || '').toLowerCase();
+        return cond !== 'neuf'; // Everything that's not "neuf" is occasion
+      });
+    }
     if (searchTerm) {
       const term = searchTerm.toLowerCase();
       result = result.filter(v =>
@@ -63,12 +78,12 @@ const VehiculesV3 = () => {
       {/* ═══ HERO ═══ Minimal */}
       <section className="bg-[#0d1117] pt-32 pb-12 md:pt-40 md:pb-16">
         <div className="max-w-[1920px] mx-auto px-6 md:px-12 lg:px-24">
-          <p className="text-white/30 text-xs uppercase tracking-[0.3em] mb-4">Catalogue</p>
+          <p className="text-white/30 text-xs uppercase tracking-[0.3em] mb-4">{t('vehicles.catalog')}</p>
           <h1 className="text-5xl md:text-7xl font-display font-bold text-white leading-[0.9] mb-4">
-            Nos Véhicules
+            {pageTitle}
           </h1>
           <p className="text-white/40 text-lg font-light max-w-xl">
-            {filteredVehicules.length} véhicule{filteredVehicules.length > 1 ? 's' : ''} disponible{filteredVehicules.length > 1 ? 's' : ''}
+            {filteredVehicules.length} {filteredVehicules.length > 1 ? t('vehicles.vehicles') : t('vehicles.vehicle')} {filteredVehicules.length > 1 ? t('vehicles.available_plural') : t('vehicles.available')}
           </p>
         </div>
       </section>
@@ -81,7 +96,7 @@ const VehiculesV3 = () => {
               <Search size={16} className="absolute left-4 top-1/2 -translate-y-1/2 text-white/20" />
               <input
                 type="text"
-                placeholder="Rechercher..."
+                placeholder={t('vehicles.search')}
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
                 className="w-full pl-11 pr-4 py-3 bg-white/5 border border-white/10 text-white placeholder:text-white/20 focus:border-white/20 focus:outline-none transition-colors text-sm"
@@ -92,9 +107,9 @@ const VehiculesV3 = () => {
               onChange={(e) => setFilters({ ...filters, sortBy: e.target.value })}
               className="px-4 py-3 bg-white/5 border border-white/10 text-white text-sm focus:border-white/20 focus:outline-none transition-colors cursor-pointer"
             >
-              <option value="newest">Plus récents</option>
-              <option value="price-asc">Prix croissant</option>
-              <option value="price-desc">Prix décroissant</option>
+              <option value="newest">{t('vehicles.newest')}</option>
+              <option value="price-asc">{t('vehicles.price_asc')}</option>
+              <option value="price-desc">{t('vehicles.price_desc')}</option>
             </select>
             <button
               onClick={() => setShowFilters(!showFilters)}
@@ -103,7 +118,7 @@ const VehiculesV3 = () => {
               }`}
             >
               <SlidersHorizontal size={14} />
-              Filtres
+              {t('vehicles.filters')}
               {hasActiveFilters && <span className="w-1.5 h-1.5 bg-white rounded-full"></span>}
             </button>
           </div>
@@ -111,15 +126,15 @@ const VehiculesV3 = () => {
           {showFilters && (
             <div className="mt-4 pt-4 border-t border-white/5 grid grid-cols-1 md:grid-cols-4 gap-3">
               <select value={filters.brand} onChange={(e) => setFilters({ ...filters, brand: e.target.value })} className="px-4 py-3 bg-white/5 border border-white/10 text-white text-sm cursor-pointer focus:outline-none">
-                <option value="">Toutes les marques</option>
+                <option value="">{t('vehicles.all_brands')}</option>
                 {brands.map(b => <option key={b} value={b}>{b}</option>)}
               </select>
               <select value={filters.fuelType} onChange={(e) => setFilters({ ...filters, fuelType: e.target.value })} className="px-4 py-3 bg-white/5 border border-white/10 text-white text-sm cursor-pointer focus:outline-none">
-                <option value="">Tous carburants</option>
+                <option value="">{t('vehicles.all_fuels')}</option>
                 {fuelTypes.map(f => <option key={f} value={f}>{f}</option>)}
               </select>
               <select value={filters.priceRange} onChange={(e) => setFilters({ ...filters, priceRange: e.target.value })} className="px-4 py-3 bg-white/5 border border-white/10 text-white text-sm cursor-pointer focus:outline-none">
-                <option value="">Tous les prix</option>
+                <option value="">{t('vehicles.all_prices')}</option>
                 <option value="0-10000">&lt; 10'000 CHF</option>
                 <option value="10000-20000">10'000 - 20'000</option>
                 <option value="20000-30000">20'000 - 30'000</option>
@@ -128,7 +143,7 @@ const VehiculesV3 = () => {
               </select>
               {hasActiveFilters && (
                 <button onClick={clearFilters} className="flex items-center justify-center gap-2 text-white/40 hover:text-white text-sm cursor-pointer">
-                  <X size={14} /> Effacer
+                  <X size={14} /> {t('vehicles.clear')}
                 </button>
               )}
             </div>
@@ -142,11 +157,11 @@ const VehiculesV3 = () => {
           {filteredVehicules.length === 0 ? (
             <div className="text-center py-32">
               <Car size={48} className="text-white/10 mx-auto mb-6" />
-              <h3 className="text-xl font-display font-bold text-white mb-2">Aucun résultat</h3>
-              <p className="text-white/40 text-sm mb-6">Modifiez vos critères de recherche.</p>
+              <h3 className="text-xl font-display font-bold text-white mb-2">{t('vehicles.no_results')}</h3>
+              <p className="text-white/40 text-sm mb-6">{t('vehicles.no_results_desc')}</p>
               {hasActiveFilters && (
                 <button onClick={clearFilters} className="text-white/50 text-sm underline underline-offset-4 hover:text-white cursor-pointer">
-                  Effacer les filtres
+                  {t('vehicles.clear_filters')}
                 </button>
               )}
             </div>
@@ -180,12 +195,12 @@ const VehiculesV3 = () => {
                       )}
                       {vehicule.status === 'sold' && (
                         <div className="absolute inset-0 bg-black/60 flex items-center justify-center">
-                          <span className="text-white text-xs uppercase tracking-[0.3em]">Vendu</span>
+                          <span className="text-white text-xs uppercase tracking-[0.3em]">{t('vehicles.sold')}</span>
                         </div>
                       )}
                       {vehicule.status === 'reserved' && (
                         <div className="absolute inset-0 bg-black/40 flex items-center justify-center">
-                          <span className="text-white text-xs uppercase tracking-[0.3em]">Reserve</span>
+                          <span className="text-white text-xs uppercase tracking-[0.3em]">{t('vehicles.reserved')}</span>
                         </div>
                       )}
                     </div>

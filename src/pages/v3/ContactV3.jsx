@@ -3,12 +3,14 @@ import { useSearchParams } from 'react-router-dom';
 import SEOHead from '../../components/SEOHead';
 import { useSiteInfo } from '../../hooks/useSiteInfo';
 import { useContact } from '../../hooks/useContact';
+import { useTranslation } from '../../i18n/LanguageContext';
 import { Phone, Mail, MapPin, Send, Check, AlertCircle, Clock, ArrowRight, Car } from 'lucide-react';
 
 const ContactV3 = () => {
   const siteInfo = useSiteInfo();
   const contactMutation = useContact();
   const [searchParams] = useSearchParams();
+  const { t } = useTranslation();
 
   const vehiculeName = searchParams.get('vehicule');
   const vehiculePrix = searchParams.get('prix');
@@ -17,10 +19,10 @@ const ContactV3 = () => {
 
   const buildVehicleMessage = () => {
     if (!vehiculeName) return '';
-    let msg = `Bonjour,\n\nJe suis interesse(e) par le vehicule suivant :\n- ${vehiculeName}`;
+    let msg = `Bonjour,\n\nJe suis intéressé(e) par le véhicule suivant :\n- ${vehiculeName}`;
     if (vehiculeAnnee) msg += ` (${vehiculeAnnee})`;
-    if (vehiculeKm && vehiculeKm !== '0') msg += `\n- Kilometrage : ${Number(vehiculeKm).toLocaleString('fr-CH')} km`;
-    if (vehiculePrix) msg += `\n- Prix affiche : CHF ${Number(vehiculePrix).toLocaleString('fr-CH')}.-`;
+    if (vehiculeKm && vehiculeKm !== '0') msg += `\n- Kilométrage : ${Number(vehiculeKm).toLocaleString('fr-CH')} km`;
+    if (vehiculePrix) msg += `\n- Prix affiché : CHF ${Number(vehiculePrix).toLocaleString('fr-CH')}.-`;
     msg += '\n\nMerci de me recontacter pour plus d\'informations.\n\nCordialement,';
     return msg;
   };
@@ -54,9 +56,9 @@ const ContactV3 = () => {
           <div className="absolute inset-0 bg-gradient-to-t from-[#0a1628] via-[#0a1628]/60 to-[#0a1628]/30"></div>
         </div>
         <div className="max-w-[1920px] mx-auto px-6 md:px-12 lg:px-24 relative z-10 pb-16 md:pb-24 w-full">
-          <p className="text-white/30 text-xs uppercase tracking-[0.3em] mb-4">Parlons-en</p>
+          <p className="text-white/30 text-xs uppercase tracking-[0.3em] mb-4">{t('contact.label')}</p>
           <h1 className="text-6xl md:text-8xl font-display font-bold text-white leading-[0.9]">
-            Contact
+            {t('contact.title')}
           </h1>
         </div>
       </section>
@@ -113,9 +115,9 @@ const ContactV3 = () => {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-32">
             {/* Form */}
             <div>
-              <p className="text-white/30 text-xs uppercase tracking-[0.3em] mb-4">Formulaire</p>
+              <p className="text-white/30 text-xs uppercase tracking-[0.3em] mb-4">{t('contact.form_title')}</p>
               <h2 className="text-3xl md:text-4xl font-display font-bold text-white leading-[0.95] mb-10">
-                Envoyez-nous<br />un message
+                {t('contact.form_title')}
               </h2>
 
               {vehiculeName && !submitted && (
@@ -123,7 +125,7 @@ const ContactV3 = () => {
                   <Car size={18} className="text-white/30 flex-shrink-0" />
                   <div>
                     <p className="text-white text-sm font-medium">Demande pour : {vehiculeName}</p>
-                    <p className="text-white/30 text-xs">Le message a ete pre-rempli avec les details du vehicule.</p>
+                    <p className="text-white/30 text-xs">Le message a été pré-rempli avec les détails du véhicule.</p>
                   </div>
                 </div>
               )}
@@ -131,7 +133,7 @@ const ContactV3 = () => {
               {submitted ? (
                 <div className="border border-white/10 p-12 text-center">
                   <Check size={32} className="text-white/40 mx-auto mb-6" />
-                  <h3 className="text-2xl font-display font-bold text-white mb-3">Message envoyé</h3>
+                  <h3 className="text-2xl font-display font-bold text-white mb-3">{t('contact.success')}</h3>
                   <p className="text-white/40 text-sm mb-8">
                     Nous vous répondrons dans les plus brefs délais.
                   </p>
@@ -146,7 +148,7 @@ const ContactV3 = () => {
                 <form onSubmit={handleSubmit} className="space-y-6">
                   <div>
                     <label htmlFor="name" className="block text-white/30 text-xs uppercase tracking-[0.2em] mb-3">
-                      Nom complet *
+                      {t('contact.name')} *
                     </label>
                     <input
                       type="text" id="name" name="name" required
@@ -159,7 +161,7 @@ const ContactV3 = () => {
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
                       <label htmlFor="email" className="block text-white/30 text-xs uppercase tracking-[0.2em] mb-3">
-                        Email *
+                        {t('contact.email')} *
                       </label>
                       <input
                         type="email" id="email" name="email" required
@@ -170,7 +172,7 @@ const ContactV3 = () => {
                     </div>
                     <div>
                       <label htmlFor="phone" className="block text-white/30 text-xs uppercase tracking-[0.2em] mb-3">
-                        Téléphone
+                        {t('contact.phone')}
                       </label>
                       <input
                         type="tel" id="phone" name="phone"
@@ -183,7 +185,7 @@ const ContactV3 = () => {
 
                   <div>
                     <label htmlFor="message" className="block text-white/30 text-xs uppercase tracking-[0.2em] mb-3">
-                      Message *
+                      {t('contact.message')} *
                     </label>
                     <textarea
                       id="message" name="message" required rows={4}
@@ -208,11 +210,11 @@ const ContactV3 = () => {
                     {contactMutation.isPending ? (
                       <>
                         <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-black"></div>
-                        Envoi...
+                        {t('contact.sending')}
                       </>
                     ) : (
                       <>
-                        Envoyer
+                        {t('contact.send')}
                         <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
                       </>
                     )}

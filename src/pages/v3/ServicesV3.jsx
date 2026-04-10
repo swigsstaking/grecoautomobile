@@ -2,10 +2,12 @@ import { useEffect } from 'react';
 import { useLocation, Link } from 'react-router-dom';
 import SEOHead from '../../components/SEOHead';
 import { useSiteInfo } from '../../hooks/useSiteInfo';
+import { useTranslation } from '../../i18n/LanguageContext';
 import { ArrowRight, Check } from 'lucide-react';
 
 const ServicesV3 = () => {
   const siteInfo = useSiteInfo();
+  const { t } = useTranslation();
   const location = useLocation();
 
   useEffect(() => {
@@ -61,6 +63,36 @@ const ServicesV3 = () => {
         'Commission transparente',
       ],
     },
+    {
+      id: 'recherche',
+      image: 'https://swigs.online/uploads/grecoautogroup/1775542047236-190922193.webp',
+      title: 'Recherches personnalisées',
+      subtitle: 'Nous trouvons votre véhicule idéal',
+      description: 'Vous recherchez un modèle précis, une finition particulière ou un véhicule rare ? Notre réseau de partenaires et notre expertise du marché nous permettent de trouver exactement ce que vous cherchez.',
+      features: [
+        'Recherche ciblée selon vos critères',
+        'Accès à un large réseau de partenaires',
+        'Inspection et vérification complète',
+        'Négociation au meilleur prix',
+        'Livraison à domicile possible',
+        'Accompagnement personnalisé',
+      ],
+    },
+    {
+      id: 'mecanique',
+      image: 'https://swigs.online/uploads/grecoautogroup/1775542049074-367922835.webp',
+      title: 'Partenaire mécanique & carrosserie',
+      subtitle: 'Un réseau de professionnels qualifiés',
+      description: 'Grâce à nos partenaires mécaniciens et carrossiers de confiance, nous assurons l\'entretien, la réparation et la remise en état de votre véhicule. Un service complet pour votre tranquillité.',
+      features: [
+        'Entretien régulier et révisions',
+        'Réparations mécaniques toutes marques',
+        'Travaux de carrosserie et peinture',
+        'Contrôle technique pré-vente',
+        'Devis gratuit et transparent',
+        'Partenaires certifiés et expérimentés',
+      ],
+    },
   ];
 
   return (
@@ -74,9 +106,9 @@ const ServicesV3 = () => {
           <div className="absolute inset-0 bg-gradient-to-t from-[#0a1628] via-[#0a1628]/50 to-transparent"></div>
         </div>
         <div className="max-w-[1920px] mx-auto px-6 md:px-12 lg:px-24 relative z-10 pb-16 md:pb-24 w-full">
-          <p className="text-white/30 text-xs uppercase tracking-[0.3em] mb-4">Ce que nous proposons</p>
+          <p className="text-white/30 text-xs uppercase tracking-[0.3em] mb-4">{t('services.label')}</p>
           <h1 className="text-6xl md:text-8xl font-display font-bold text-white leading-[0.9]">
-            Nos Services
+            {t('services.title')}
           </h1>
         </div>
       </section>
@@ -120,7 +152,7 @@ const ServicesV3 = () => {
                       to="/contact"
                       className="group inline-flex items-center gap-3 px-8 py-4 bg-white text-black text-sm uppercase tracking-[0.15em] font-medium hover:bg-white/90 transition-colors"
                     >
-                      Nous contacter
+                      {t('home.cta_contact')}
                       <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
                     </Link>
                     {siteInfo.contact?.phone && (
@@ -128,13 +160,13 @@ const ServicesV3 = () => {
                         href={`tel:${siteInfo.contact.phone}`}
                         className="inline-flex items-center gap-3 px-8 py-4 border border-white/20 text-white text-sm uppercase tracking-[0.15em] font-medium hover:border-white/40 transition-colors"
                       >
-                        Appeler
+                        {t('nav.call')}
                       </a>
                     )}
                   </div>
                 </div>
                 <div>
-                  <p className="text-white/20 text-xs uppercase tracking-[0.3em] mb-8">Les avantages</p>
+                  <p className="text-white/20 text-xs uppercase tracking-[0.3em] mb-8">{t('services.advantages', 'Les avantages')}</p>
                   <div className="space-y-5">
                     {service.features.map((feature, i) => (
                       <div key={i} className="flex items-center gap-4 text-white/60 group">

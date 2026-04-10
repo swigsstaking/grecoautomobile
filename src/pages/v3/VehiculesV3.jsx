@@ -95,80 +95,80 @@ const VehiculesV3 = () => {
     <>
       <SEOHead page="vehicules" />
 
-      {/* ═══ HERO ═══ */}
-      <section className="bg-[#0d1117] pt-32 pb-8 md:pt-40 md:pb-12">
+      {/* ═══ HERO + SEARCH ═══ */}
+      <section className="bg-[#0d1117] pt-32 md:pt-40">
         <div className="max-w-[1920px] mx-auto px-6 md:px-12 lg:px-24">
           <p className="text-white/30 text-xs uppercase tracking-[0.3em] mb-4">{t('vehicles.catalog')}</p>
-          <h1 className="text-5xl md:text-7xl font-display font-bold text-white leading-[0.9] mb-6">
+          <h1 className="text-5xl md:text-7xl font-display font-bold text-white leading-[0.9] mb-8">
             {pageTitle}
           </h1>
 
-          {/* Tabs */}
-          <div className="flex items-center gap-1 mt-8">
-            {tabs.map((tab) => (
+          {/* Tabs + Search row */}
+          <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 pb-6 border-b border-white/5">
+            {/* Tabs */}
+            <div className="flex items-center gap-1">
+              {tabs.map((tab) => (
+                <button
+                  key={tab.key || 'all'}
+                  onClick={() => navigate(tab.key ? `/vehicules?type=${tab.key}` : '/vehicules')}
+                  className={`px-4 py-2 text-sm font-medium transition-colors cursor-pointer rounded-lg ${
+                    vehicleType === tab.key
+                      ? 'bg-white/10 text-white'
+                      : 'text-white/30 hover:text-white/60 hover:bg-white/5'
+                  }`}
+                >
+                  {tab.label}
+                  <span className="ml-1.5 text-[10px] opacity-40">{tab.count}</span>
+                </button>
+              ))}
+            </div>
+
+            {/* Search + sort + filters */}
+            <div className="flex items-center gap-2">
+              <div className="relative">
+                <Search size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-white/20" />
+                <input
+                  type="text"
+                  placeholder={t('vehicles.search')}
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                  className="w-48 md:w-56 pl-9 pr-3 py-2 bg-white/5 border border-white/10 rounded-lg text-white placeholder:text-white/20 focus:border-white/20 focus:outline-none transition-colors text-sm"
+                />
+              </div>
+              <select
+                value={filters.sortBy}
+                onChange={(e) => setFilters({ ...filters, sortBy: e.target.value })}
+                className="px-3 py-2 bg-white/5 border border-white/10 rounded-lg text-white text-sm focus:border-white/20 focus:outline-none transition-colors cursor-pointer"
+              >
+                <option value="newest">{t('vehicles.newest')}</option>
+                <option value="price-asc">{t('vehicles.price_asc')}</option>
+                <option value="price-desc">{t('vehicles.price_desc')}</option>
+              </select>
               <button
-                key={tab.key || 'all'}
-                onClick={() => navigate(tab.key ? `/vehicules?type=${tab.key}` : '/vehicules')}
-                className={`px-5 py-2.5 text-sm font-medium transition-colors cursor-pointer rounded-t-lg ${
-                  vehicleType === tab.key
-                    ? 'bg-white/10 text-white border-b-2 border-white'
-                    : 'text-white/40 hover:text-white/60 hover:bg-white/5'
+                onClick={() => setShowFilters(!showFilters)}
+                className={`flex items-center gap-1.5 px-3 py-2 border rounded-lg text-sm transition-colors cursor-pointer ${
+                  showFilters || hasActiveFilters ? 'bg-white/10 border-white/20 text-white' : 'bg-white/5 border-white/10 text-white/40 hover:text-white'
                 }`}
               >
-                {tab.label}
-                <span className="ml-2 text-xs opacity-50">{tab.count}</span>
+                <SlidersHorizontal size={13} />
+                {t('vehicles.filters')}
+                {hasActiveFilters && <span className="w-1.5 h-1.5 bg-white rounded-full"></span>}
               </button>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ═══ SEARCH & FILTERS ═══ */}
-      <section className="sticky top-[73px] z-30 bg-[#0d1117]/95 backdrop-blur-lg border-y border-white/5">
-        <div className="max-w-[1920px] mx-auto px-6 md:px-12 lg:px-24 py-4">
-          <div className="flex flex-col md:flex-row gap-3 items-center">
-            <div className="relative flex-grow w-full md:w-auto">
-              <Search size={16} className="absolute left-4 top-1/2 -translate-y-1/2 text-white/20" />
-              <input
-                type="text"
-                placeholder={t('vehicles.search')}
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-full pl-11 pr-4 py-3 bg-white/5 border border-white/10 rounded-lg text-white placeholder:text-white/20 focus:border-white/20 focus:outline-none transition-colors text-sm"
-              />
             </div>
-            <select
-              value={filters.sortBy}
-              onChange={(e) => setFilters({ ...filters, sortBy: e.target.value })}
-              className="px-4 py-3 bg-white/5 border border-white/10 rounded-lg text-white text-sm focus:border-white/20 focus:outline-none transition-colors cursor-pointer"
-            >
-              <option value="newest">{t('vehicles.newest')}</option>
-              <option value="price-asc">{t('vehicles.price_asc')}</option>
-              <option value="price-desc">{t('vehicles.price_desc')}</option>
-            </select>
-            <button
-              onClick={() => setShowFilters(!showFilters)}
-              className={`flex items-center gap-2 px-4 py-3 border rounded-lg text-sm transition-colors cursor-pointer ${
-                showFilters || hasActiveFilters ? 'bg-white/10 border-white/20 text-white' : 'bg-white/5 border-white/10 text-white/50 hover:text-white'
-              }`}
-            >
-              <SlidersHorizontal size={14} />
-              {t('vehicles.filters')}
-              {hasActiveFilters && <span className="w-1.5 h-1.5 bg-white rounded-full"></span>}
-            </button>
           </div>
 
+          {/* Expanded filters */}
           {showFilters && (
-            <div className="mt-4 pt-4 border-t border-white/5 grid grid-cols-1 md:grid-cols-4 gap-3">
-              <select value={filters.brand} onChange={(e) => setFilters({ ...filters, brand: e.target.value })} className="px-4 py-3 bg-white/5 border border-white/10 rounded-lg text-white text-sm cursor-pointer focus:outline-none">
+            <div className="py-4 border-b border-white/5 grid grid-cols-1 md:grid-cols-4 gap-3">
+              <select value={filters.brand} onChange={(e) => setFilters({ ...filters, brand: e.target.value })} className="px-3 py-2 bg-white/5 border border-white/10 rounded-lg text-white text-sm cursor-pointer focus:outline-none">
                 <option value="">{t('vehicles.all_brands')}</option>
                 {brands.map(b => <option key={b} value={b}>{b}</option>)}
               </select>
-              <select value={filters.fuelType} onChange={(e) => setFilters({ ...filters, fuelType: e.target.value })} className="px-4 py-3 bg-white/5 border border-white/10 rounded-lg text-white text-sm cursor-pointer focus:outline-none">
+              <select value={filters.fuelType} onChange={(e) => setFilters({ ...filters, fuelType: e.target.value })} className="px-3 py-2 bg-white/5 border border-white/10 rounded-lg text-white text-sm cursor-pointer focus:outline-none">
                 <option value="">{t('vehicles.all_fuels')}</option>
                 {fuelTypes.map(f => <option key={f} value={f}>{f}</option>)}
               </select>
-              <select value={filters.priceRange} onChange={(e) => setFilters({ ...filters, priceRange: e.target.value })} className="px-4 py-3 bg-white/5 border border-white/10 rounded-lg text-white text-sm cursor-pointer focus:outline-none">
+              <select value={filters.priceRange} onChange={(e) => setFilters({ ...filters, priceRange: e.target.value })} className="px-3 py-2 bg-white/5 border border-white/10 rounded-lg text-white text-sm cursor-pointer focus:outline-none">
                 <option value="">{t('vehicles.all_prices')}</option>
                 <option value="0-10000">&lt; 10'000 CHF</option>
                 <option value="10000-20000">10'000 - 20'000</option>

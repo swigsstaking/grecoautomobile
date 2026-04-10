@@ -2,7 +2,7 @@ import { useParams, Link } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import SEOHead from '../components/SEOHead';
 import { useSiteInfo } from '../hooks/useSiteInfo';
-import { ArrowLeft, Phone, Mail, Calendar, Gauge, Fuel, Car, Cog, Palette, Zap, Shield, Check } from 'lucide-react';
+import { ArrowLeft, Phone, Mail, Calendar, Gauge, Fuel, Car, Cog, Palette, Zap, Shield, Check, CheckCircle, AlertTriangle, XCircle, ExternalLink, Users } from 'lucide-react';
 import { useState } from 'react';
 import seoData from '../data/seo.json';
 import mockVehicules from '../data/mockVehicules';
@@ -198,6 +198,90 @@ const VehiculeDetail = () => {
                       </div>
                     ))}
                   </div>
+                </div>
+              )}
+
+              {/* carVertical Report */}
+              {vehicule.carVerticalReport?.summary && (
+                <div className="mb-8">
+                  <div className="flex items-center gap-2 mb-4">
+                    <Shield size={20} className="text-blue-400" />
+                    <h2 className="text-xl font-display font-bold text-text-primary">Rapport d'historique</h2>
+                    <span className="text-xs text-white/30 bg-white/5 px-2 py-0.5 rounded">carVertical</span>
+                  </div>
+                  <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+                    {/* Kilométrage */}
+                    <div className={`rounded-xl p-4 border ${
+                      vehicule.carVerticalReport.summary.mileageStatus === 'ok' ? 'bg-green-500/5 border-green-500/20' :
+                      vehicule.carVerticalReport.summary.mileageStatus === 'warning' ? 'bg-yellow-500/5 border-yellow-500/20' :
+                      'bg-red-500/5 border-red-500/20'
+                    }`}>
+                      {vehicule.carVerticalReport.summary.mileageStatus === 'ok' ? (
+                        <CheckCircle size={18} className="text-green-400 mb-2" />
+                      ) : vehicule.carVerticalReport.summary.mileageStatus === 'warning' ? (
+                        <AlertTriangle size={18} className="text-yellow-400 mb-2" />
+                      ) : (
+                        <XCircle size={18} className="text-red-400 mb-2" />
+                      )}
+                      <p className="text-text-secondary text-xs uppercase tracking-wider mb-1">Kilométrage</p>
+                      <p className={`font-bold text-sm ${
+                        vehicule.carVerticalReport.summary.mileageStatus === 'ok' ? 'text-green-400' :
+                        vehicule.carVerticalReport.summary.mileageStatus === 'warning' ? 'text-yellow-400' : 'text-red-400'
+                      }`}>
+                        {vehicule.carVerticalReport.summary.mileageStatus === 'ok' ? 'Vérifié' : vehicule.carVerticalReport.summary.mileageStatus === 'warning' ? 'Attention' : 'Alerte'}
+                      </p>
+                    </div>
+
+                    {/* Dommages */}
+                    <div className={`rounded-xl p-4 border ${
+                      (vehicule.carVerticalReport.summary.damageRecords || 0) === 0 ? 'bg-green-500/5 border-green-500/20' : 'bg-yellow-500/5 border-yellow-500/20'
+                    }`}>
+                      {(vehicule.carVerticalReport.summary.damageRecords || 0) === 0 ? (
+                        <CheckCircle size={18} className="text-green-400 mb-2" />
+                      ) : (
+                        <AlertTriangle size={18} className="text-yellow-400 mb-2" />
+                      )}
+                      <p className="text-text-secondary text-xs uppercase tracking-wider mb-1">Dommages</p>
+                      <p className={`font-bold text-sm ${(vehicule.carVerticalReport.summary.damageRecords || 0) === 0 ? 'text-green-400' : 'text-yellow-400'}`}>
+                        {vehicule.carVerticalReport.summary.damageRecords || 0} enregistré(s)
+                      </p>
+                    </div>
+
+                    {/* Vol */}
+                    <div className={`rounded-xl p-4 border ${
+                      vehicule.carVerticalReport.summary.stolenCheck === 'clear' ? 'bg-green-500/5 border-green-500/20' : 'bg-red-500/5 border-red-500/20'
+                    }`}>
+                      {vehicule.carVerticalReport.summary.stolenCheck === 'clear' ? (
+                        <CheckCircle size={18} className="text-green-400 mb-2" />
+                      ) : (
+                        <XCircle size={18} className="text-red-400 mb-2" />
+                      )}
+                      <p className="text-text-secondary text-xs uppercase tracking-wider mb-1">Vol</p>
+                      <p className={`font-bold text-sm ${vehicule.carVerticalReport.summary.stolenCheck === 'clear' ? 'text-green-400' : 'text-red-400'}`}>
+                        {vehicule.carVerticalReport.summary.stolenCheck === 'clear' ? 'Non signalé' : 'Signalé'}
+                      </p>
+                    </div>
+
+                    {/* Propriétaires */}
+                    <div className="rounded-xl p-4 border bg-blue-500/5 border-blue-500/20">
+                      <Users size={18} className="text-blue-400 mb-2" />
+                      <p className="text-text-secondary text-xs uppercase tracking-wider mb-1">Propriétaires</p>
+                      <p className="font-bold text-sm text-blue-400">
+                        {vehicule.carVerticalReport.summary.ownerCount || '—'}
+                      </p>
+                    </div>
+                  </div>
+
+                  {vehicule.carVerticalReport.reportUrl && (
+                    <a
+                      href={vehicule.carVerticalReport.reportUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-2 mt-3 text-xs text-blue-400 hover:text-blue-300 transition-colors"
+                    >
+                      Voir le rapport complet <ExternalLink size={12} />
+                    </a>
+                  )}
                 </div>
               )}
 

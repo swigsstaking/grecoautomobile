@@ -232,7 +232,7 @@ const ContactV3 = () => {
 
               <div className="aspect-[4/3] overflow-hidden mb-8">
                 <iframe
-                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2745.5!2d7.2456!3d46.2095!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zUnVlIGRlcyBBcHJhZ2VzIDIsIDE5NTcgQXJkb24!5e0!3m2!1sfr!2sch"
+                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2745.5!2d7.2686508!3d46.204933!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x478ec5c829a2b641%3A0xfaed480cb0b961a9!2sGreco+Auto+Group!5e0!3m2!1sfr!2sch"
                   width="100%"
                   height="100%"
                   style={{ border: 0, filter: 'grayscale(1) invert(0.9) contrast(1.2)' }}

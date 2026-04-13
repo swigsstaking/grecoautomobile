@@ -65,9 +65,10 @@ const SEOHead = ({ page = 'home' }) => {
           },
           "geo": {
             "@type": "GeoCoordinates",
-            "latitude": 46.2095,
-            "longitude": 7.2456
+            "latitude": 46.204933,
+            "longitude": 7.2686508
           },
+          "hasMap": "https://www.google.com/maps/place/Greco+Auto+Group/@46.204933,7.2686508,17z/data=!4m6!3m5!1s0x478ec5c829a2b641:0xfaed480cb0b961a9!8m2!3d46.204933!4d7.2686508!16s%2Fg%2F11z5rspzkh",
           "areaServed": [
             { "@type": "State", "name": "Valais" },
             { "@type": "Country", "name": "Suisse" },
@@ -99,6 +100,7 @@ const SEOHead = ({ page = 'home' }) => {
             ]
           },
           "sameAs": [
+            "https://www.google.com/maps/place/Greco+Auto+Group/@46.204933,7.2686508,17z/data=!4m6!3m5!1s0x478ec5c829a2b641:0xfaed480cb0b961a9!8m2!3d46.204933!4d7.2686508!16s%2Fg%2F11z5rspzkh",
             siteInfo.social?.facebook,
             siteInfo.social?.instagram,
           ].filter(Boolean)

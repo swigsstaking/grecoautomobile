@@ -13,7 +13,7 @@
       "keywords": ["achat voiture occasion Valais", "vente voiture Ardon", "dépôt vente automobile Suisse", "voiture occasion Sion", "Greco Autogroup", "concessionnaire Valais", "garage automobile Ardon"],
       "ogTitle": "Greco Autogroup | Voitures d'Occasion en Valais",
       "ogDescription": "Spécialiste de l'achat, la vente et le dépôt-vente de véhicules d'occasion à Ardon (VS). Véhicules inspectés et garantis.",
-      "ogImage": "/og-image.jpg",
+      "ogImage": "https://swigs.online/uploads/grecoautogroup/1775542049074-367922835.webp",
       "canonical": "https://grecoautogroup.ch"
     },
     "notre-histoire": {
@@ -22,7 +22,7 @@
       "keywords": ["histoire Greco Autogroup", "garage automobile Ardon", "passion automobile Valais", "concessionnaire Suisse romande"],
       "ogTitle": "Notre Histoire | Greco Autogroup",
       "ogDescription": "Plus de 10 ans de passion automobile à Ardon, Valais.",
-      "ogImage": "/og-image.jpg",
+      "ogImage": "https://swigs.online/uploads/grecoautogroup/1775542049074-367922835.webp",
       "canonical": "https://grecoautogroup.ch/notre-histoire"
     },
     "vehicules": {
@@ -31,7 +31,7 @@
       "keywords": ["véhicule occasion Valais", "voiture occasion Ardon", "BMW occasion Sion", "Mercedes occasion Valais", "Audi occasion Suisse", "garage Ardon"],
       "ogTitle": "Nos Véhicules d'Occasion | Greco Autogroup",
       "ogDescription": "Véhicules d'occasion inspectés et garantis à Ardon, Valais.",
-      "ogImage": "/og-image.jpg",
+      "ogImage": "https://swigs.online/uploads/grecoautogroup/1775542049074-367922835.webp",
       "canonical": "https://grecoautogroup.ch/vehicules"
     },
     "services": {
@@ -40,7 +40,7 @@
       "keywords": ["rachat voiture Valais", "vente automobile Ardon", "dépôt vente voiture Suisse", "estimation voiture gratuite", "service automobile Sion"],
       "ogTitle": "Services Automobile | Greco Autogroup",
       "ogDescription": "Achat, vente et dépôt-vente automobile à Ardon, Valais. Estimation gratuite.",
-      "ogImage": "/og-image.jpg",
+      "ogImage": "https://swigs.online/uploads/grecoautogroup/1775542049074-367922835.webp",
       "canonical": "https://grecoautogroup.ch/services"
     },
     "contact": {
@@ -49,7 +49,7 @@
       "keywords": ["contact Greco Autogroup", "garage Ardon Valais", "téléphone garage automobile", "adresse Greco Autogroup"],
       "ogTitle": "Contactez Greco Autogroup | Ardon, Valais",
       "ogDescription": "Rue des Aprages 2, 1957 Ardon — Tél: 079 191 90 89. Contactez-nous pour l'achat ou la vente de votre véhicule.",
-      "ogImage": "/og-image.jpg",
+      "ogImage": "https://swigs.online/uploads/grecoautogroup/1775542049074-367922835.webp",
       "canonical": "https://grecoautogroup.ch/contact"
     }
   },

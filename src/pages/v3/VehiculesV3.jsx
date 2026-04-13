@@ -1,6 +1,7 @@
 import { useState, useMemo } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { Link, useSearchParams, useNavigate } from 'react-router-dom';
+import { Helmet } from 'react-helmet-async';
 import SEOHead from '../../components/SEOHead';
 import { Search, X, Car, ArrowRight, SlidersHorizontal, Fuel, Gauge, Calendar } from 'lucide-react';
 import seoData from '../../data/seo.json';
@@ -91,9 +92,38 @@ const VehiculesV3 = () => {
     { key: 'occasion', label: t('vehicles.used'), count: counts.occasion },
   ];
 
+  // Schema.org ItemList for vehicle listing
+  const itemListSchema = {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    "name": pageTitle,
+    "numberOfItems": filteredVehicules.length,
+    "itemListElement": filteredVehicules.slice(0, 20).map((v, i) => ({
+      "@type": "ListItem",
+      "position": i + 1,
+      "item": {
+        "@type": "Vehicle",
+        "name": v.title || v.name || `${v.brand} ${v.model}`,
+        "brand": { "@type": "Brand", "name": v.brand },
+        "model": v.model,
+        "vehicleModelDate": v.year ? String(v.year) : undefined,
+        "url": `https://grecoautogroup.ch/vehicules/${v.slug || v._id || v.id}`,
+        "image": v.images?.[0],
+        "offers": v.price ? {
+          "@type": "Offer",
+          "price": v.price,
+          "priceCurrency": v.currency || "CHF",
+        } : undefined,
+      },
+    })),
+  };
+
   return (
     <>
       <SEOHead page="vehicules" />
+      <Helmet>
+        <script type="application/ld+json">{JSON.stringify(itemListSchema)}</script>
+      </Helmet>
 
       {/* ═══ HERO + SEARCH ═══ */}
       <section className="bg-[#0d1117] pt-32 md:pt-40">

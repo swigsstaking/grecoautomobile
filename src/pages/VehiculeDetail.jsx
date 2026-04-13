@@ -1,5 +1,6 @@
 import { useParams, Link } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
+import { Helmet } from 'react-helmet-async';
 import SEOHead from '../components/SEOHead';
 import { useSiteInfo } from '../hooks/useSiteInfo';
 import { useTranslation } from '../i18n/LanguageContext';
@@ -78,9 +79,71 @@ const VehiculeDetail = () => {
 
   const report = vehicule.carVerticalReport;
 
+  // Vehicle Schema.org JSON-LD
+  const vehicleSchema = {
+    "@context": "https://schema.org",
+    "@type": "Vehicle",
+    "name": title,
+    "description": vehicule.description || `${title} disponible chez Greco Autogroup à Ardon, Valais.`,
+    "brand": { "@type": "Brand", "name": brand },
+    "model": model,
+    "vehicleModelDate": year ? String(year) : undefined,
+    "mileageFromOdometer": mileage ? { "@type": "QuantitativeValue", "value": mileage, "unitCode": "KMT" } : undefined,
+    "fuelType": fuelType,
+    "vehicleTransmission": transmission,
+    "color": color,
+    "bodyType": vehicule.bodyType,
+    "numberOfDoors": vehicule.doors,
+    "vehicleSeatingCapacity": vehicule.seats,
+    "vehicleIdentificationNumber": vehicule.vin,
+    "image": images,
+    "offers": price ? {
+      "@type": "Offer",
+      "price": price,
+      "priceCurrency": vehicule.currency || "CHF",
+      "availability": vehicule.status === 'sold'
+        ? "https://schema.org/SoldOut"
+        : vehicule.status === 'reserved'
+          ? "https://schema.org/LimitedAvailability"
+          : "https://schema.org/InStock",
+      "seller": {
+        "@type": "AutoDealer",
+        "name": "Greco Autogroup",
+        "address": {
+          "@type": "PostalAddress",
+          "streetAddress": "Rue des Aprages 2",
+          "addressLocality": "Ardon",
+          "postalCode": "1957",
+          "addressRegion": "VS",
+          "addressCountry": "CH"
+        }
+      }
+    } : undefined,
+  };
+
+  const breadcrumbSchema = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Accueil", "item": "https://grecoautogroup.ch" },
+      { "@type": "ListItem", "position": 2, "name": "Véhicules", "item": "https://grecoautogroup.ch/vehicules" },
+      { "@type": "ListItem", "position": 3, "name": title, "item": `https://grecoautogroup.ch/vehicules/${id}` },
+    ],
+  };
+
   return (
     <>
       <SEOHead page="vehicules" />
+      <Helmet>
+        <title>{`${title} | Greco Autogroup`}</title>
+        <meta name="description" content={`${title}${year ? ` ${year}` : ''}${mileage ? ` · ${typeof mileage === 'number' ? mileage.toLocaleString() : mileage} km` : ''}${price ? ` · CHF ${typeof price === 'number' ? price.toLocaleString() : price}` : ''}. Disponible chez Greco Autogroup à Ardon, Valais.`} />
+        <link rel="canonical" href={`https://grecoautogroup.ch/vehicules/${id}`} />
+        <meta property="og:title" content={`${title} | Greco Autogroup`} />
+        <meta property="og:type" content="product" />
+        {images[0] && <meta property="og:image" content={images[0]} />}
+        <script type="application/ld+json">{JSON.stringify(vehicleSchema)}</script>
+        <script type="application/ld+json">{JSON.stringify(breadcrumbSchema)}</script>
+      </Helmet>
 
       {/* ═══ GALLERY ═══ Full-width hero image */}
       <section className="bg-black relative">

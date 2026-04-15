@@ -25,7 +25,7 @@ const VehiculesV3 = () => {
   const [showFilters, setShowFilters] = useState(false);
   const { t } = useTranslation();
 
-  const { data: vehiculesData, isLoading } = useQuery({
+  const { data: vehiculesData, isLoading, isSuccess } = useQuery({
     queryKey: ['vehicules', seoData.site.slug],
     queryFn: async () => {
       const response = await fetch(`${API_URL}/public/vehicles?siteId=${seoData.site.slug}`);
@@ -36,7 +36,11 @@ const VehiculesV3 = () => {
     staleTime: 1000 * 60 * 5,
   });
 
-  const vehicules = (vehiculesData && vehiculesData.length > 0) ? vehiculesData : mockVehicules;
+  // Only use mock data as fallback if API succeeded but returned empty (dev mode)
+  // During loading, return empty array to avoid flashing wrong vehicles
+  const vehicules = isSuccess
+    ? (vehiculesData && vehiculesData.length > 0 ? vehiculesData : mockVehicules)
+    : [];
 
   const brands = useMemo(() => [...new Set(vehicules.map(v => v.brand || v.metadata?.brand).filter(Boolean))].sort(), [vehicules]);
   const fuelTypes = useMemo(() => [...new Set(vehicules.map(v => v.fuelType || v.metadata?.fuelType).filter(Boolean))].sort(), [vehicules]);
@@ -221,10 +225,25 @@ const VehiculesV3 = () => {
         <div className="max-w-[1920px] mx-auto px-6 md:px-12 lg:px-24">
           {/* Results count */}
           <p className="text-white/20 text-xs uppercase tracking-[0.2em] mb-6">
-            {filteredVehicules.length} {filteredVehicules.length > 1 ? t('vehicles.vehicles') : t('vehicles.vehicle')} {filteredVehicules.length > 1 ? t('vehicles.available_plural') : t('vehicles.available')}
+            {isLoading ? '\u00A0' : (
+              <>{filteredVehicules.length} {filteredVehicules.length > 1 ? t('vehicles.vehicles') : t('vehicles.vehicle')} {filteredVehicules.length > 1 ? t('vehicles.available_plural') : t('vehicles.available')}</>
+            )}
           </p>
 
-          {filteredVehicules.length === 0 ? (
+          {isLoading ? (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {[...Array(6)].map((_, i) => (
+                <div key={i} className="border border-white/[0.06] rounded-lg overflow-hidden animate-pulse">
+                  <div className="aspect-[16/10] bg-white/5"></div>
+                  <div className="p-5">
+                    <div className="h-4 bg-white/5 rounded mb-3 w-3/4"></div>
+                    <div className="h-3 bg-white/5 rounded mb-4 w-1/2"></div>
+                    <div className="h-5 bg-white/5 rounded w-1/3"></div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          ) : filteredVehicules.length === 0 ? (
             <div className="text-center py-32">
               <Car size={48} className="text-white/10 mx-auto mb-6" />
               <h3 className="text-xl font-display font-bold text-white mb-2">{t('vehicles.no_results')}</h3>

@@ -14,7 +14,7 @@ const HomeV3 = () => {
   const siteInfo = useSiteInfo();
   const { t } = useTranslation();
 
-  const { data: apiVehicules } = useQuery({
+  const { data: apiVehicules, isSuccess: vehiclesLoaded } = useQuery({
     queryKey: ['vehicules-home', seoData.site.slug],
     queryFn: async () => {
       const response = await fetch(`${API_URL}/public/vehicles?siteId=${seoData.site.slug}`);
@@ -25,7 +25,9 @@ const HomeV3 = () => {
     staleTime: 1000 * 60 * 5,
   });
 
-  const allVehicules = (apiVehicules && apiVehicules.length > 0) ? apiVehicules : mockVehicules;
+  const allVehicules = vehiclesLoaded
+    ? (apiVehicules && apiVehicules.length > 0 ? apiVehicules : mockVehicules)
+    : [];
   const featuredVehicules = allVehicules.filter(v => v.status === 'available' || v.status !== 'sold');
 
   // Hero slides — images réelles du garage + véhicules API

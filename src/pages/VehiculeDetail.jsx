@@ -17,7 +17,7 @@ const VehiculeDetail = () => {
   const { t } = useTranslation();
   const [selectedImage, setSelectedImage] = useState(0);
 
-  const { data: apiVehicule, isLoading } = useQuery({
+  const { data: apiVehicule, isLoading, isError } = useQuery({
     queryKey: ['vehicule', id],
     queryFn: async () => {
       const response = await fetch(`${API_URL}/public/vehicles/${id}?siteId=${seoData.site.slug}`);
@@ -25,11 +25,13 @@ const VehiculeDetail = () => {
       const json = await response.json();
       return json.data;
     },
+    retry: false,
   });
 
-  const vehicule = apiVehicule || mockVehicules.find(v => v._id === id || v.slug === id);
+  // Only fall back to mock data if API failed (dev mode)
+  const vehicule = apiVehicule || (isError ? mockVehicules.find(v => v._id === id || v.slug === id) : null);
 
-  if (isLoading && !vehicule) {
+  if (isLoading) {
     return (
       <div className="min-h-[60vh] flex items-center justify-center bg-[#0d1117]">
         <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-white/30"></div>

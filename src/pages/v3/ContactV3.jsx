@@ -4,7 +4,9 @@ import SEOHead from '../../components/SEOHead';
 import { useSiteInfo } from '../../hooks/useSiteInfo';
 import { useContact } from '../../hooks/useContact';
 import { useTranslation } from '../../i18n/LanguageContext';
-import { Phone, Mail, MapPin, Send, Check, AlertCircle, Clock, ArrowRight, Car } from 'lucide-react';
+import { Phone, Mail, MapPin, Send, Check, AlertCircle, Clock, ArrowRight, Car, Calendar } from 'lucide-react';
+
+const BOOKING_URL = 'https://calendar.app.google/XXBtoLywzECtVDKJ8';
 
 const ContactV3 = () => {
   const siteInfo = useSiteInfo();
@@ -66,7 +68,7 @@ const ContactV3 = () => {
       {/* ═══ CONTACT INFO ═══ Horizontal strip */}
       <section className="bg-[#0d1117] border-b border-white/5">
         <div className="max-w-[1920px] mx-auto px-6 md:px-12 lg:px-24">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 divide-y sm:divide-y-0 sm:divide-x divide-white/5">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 divide-y sm:divide-y-0 sm:divide-x divide-white/5">
             {[
               {
                 icon: Phone,
@@ -92,12 +94,24 @@ const ContactV3 = () => {
                 value: siteInfo.contact?.address || 'Suisse',
                 href: 'https://maps.google.com/?q=Rue+des+Aprages+2,+1957+Ardon',
               },
+              {
+                icon: Calendar,
+                label: 'Rendez-vous',
+                value: 'Réserver en ligne',
+                href: BOOKING_URL,
+                external: true,
+              },
             ].filter(c => c.value).map((item, i) => (
               <div key={i} className="py-8 sm:first:pl-0 sm:pl-8 sm:last:pr-0 sm:pr-8">
                 <item.icon size={16} className="text-white/20 mb-3" />
                 <p className="text-white/30 text-xs uppercase tracking-[0.2em] mb-1">{item.label}</p>
                 {item.href ? (
-                  <a href={item.href} className="text-white text-sm hover:text-white/70 transition-colors">
+                  <a
+                    href={item.href}
+                    target={item.external ? '_blank' : undefined}
+                    rel={item.external ? 'noopener noreferrer' : undefined}
+                    className="text-white text-sm hover:text-white/70 transition-colors"
+                  >
                     {item.value}
                   </a>
                 ) : (
@@ -105,6 +119,39 @@ const ContactV3 = () => {
                 )}
               </div>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ═══ BOOKING CTA ═══ */}
+      <section className="bg-[#0d1117] border-b border-white/5 py-16 md:py-20">
+        <div className="max-w-[1920px] mx-auto px-6 md:px-12 lg:px-24">
+          <div className="relative overflow-hidden border border-white/10 rounded-lg">
+            <div className="absolute inset-0 bg-gradient-to-br from-[#0a1628] via-[#0d1f3c] to-[#0a1628] opacity-50"></div>
+            <div className="relative grid grid-cols-1 md:grid-cols-[1fr_auto] gap-8 md:gap-12 p-8 md:p-12 items-center">
+              <div>
+                <div className="flex items-center gap-2 mb-4">
+                  <Calendar size={16} className="text-white/40" />
+                  <p className="text-white/40 text-xs uppercase tracking-[0.3em]">Réservation en ligne</p>
+                </div>
+                <h2 className="text-3xl md:text-4xl font-display font-bold text-white leading-[0.95] mb-4">
+                  Prenez rendez-vous<br />en quelques clics
+                </h2>
+                <p className="text-white/50 text-base font-light leading-relaxed max-w-xl">
+                  Choisissez un créneau qui vous convient pour découvrir un véhicule, faire estimer le vôtre ou discuter de votre projet. Confirmation immédiate par email.
+                </p>
+              </div>
+              <a
+                href={BOOKING_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group inline-flex items-center justify-center gap-3 px-8 py-4 bg-white text-black text-sm uppercase tracking-[0.15em] font-medium hover:bg-white/90 transition-colors whitespace-nowrap"
+              >
+                <Calendar size={16} />
+                Réserver un créneau
+                <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
+              </a>
+            </div>
           </div>
         </div>
       </section>

@@ -117,20 +117,20 @@ const ContactV3 = () => {
       </section>
 
       {/* ═══ CONTACT INFO ═══ Horizontal strip */}
-      <section className="bg-[#0d1117] border-b border-white/5">
-        <div className="max-w-[1920px] mx-auto px-6 md:px-12 lg:px-24">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 divide-y sm:divide-y-0 sm:divide-x divide-white/5">
+      <section className="bg-[#0a1020]">
+        <div className="max-w-[1920px] mx-auto">
+          <div className="grid grid-cols-2 lg:grid-cols-5 gap-px bg-white/5">
             {contactItems.map((item, i) => (
               <a
                 key={i}
                 href={item.href}
                 target={item.external ? '_blank' : undefined}
                 rel={item.external ? 'noopener noreferrer' : undefined}
-                className="py-8 sm:first:pl-0 sm:pl-8 sm:last:pr-0 sm:pr-8 hover:bg-white/[0.02] transition-colors block"
+                className="bg-[#0d1117] p-6 hover:bg-white/[0.03] transition-colors block"
               >
                 <item.icon size={16} className="text-white/20 mb-3" />
-                <p className="text-white/30 text-xs uppercase tracking-[0.2em] mb-1">{item.label}</p>
-                <p className="text-white text-sm hover:text-white/70 transition-colors">{item.value}</p>
+                <p className="text-white/30 text-[10px] uppercase tracking-[0.2em] mb-1">{item.label}</p>
+                <p className="text-white text-sm">{item.value}</p>
               </a>
             ))}
           </div>

@@ -65,63 +65,61 @@ const ContactV3 = () => {
         </div>
       </section>
 
-      {/* ═══ CONTACT INFO ═══ Phone-first layout */}
+      {/* ═══ CONTACT INFO ═══ Single row under hero */}
       <section className="bg-[#0d1117] border-b border-white/5">
-        <div className="max-w-[1920px] mx-auto px-6 md:px-12 lg:px-24 py-10">
-          {/* Phone buttons — prominent */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
+        <div className="max-w-[1920px] mx-auto px-6 md:px-12 lg:px-24">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-px bg-white/5">
+            {/* Mobile — prominent */}
             {siteInfo.contact?.phone && (
-              <a
-                href={`tel:${siteInfo.contact.phone.replace(/\s/g, '')}`}
-                className="group flex items-center gap-5 p-6 bg-white/5 border border-white/10 rounded-lg hover:bg-white/10 hover:border-white/20 transition-all"
-              >
-                <div className="w-14 h-14 flex items-center justify-center rounded-full bg-green-500/10 border border-green-500/20 group-hover:bg-green-500/20 transition-colors">
-                  <Phone size={22} className="text-green-400" />
+              <a href={`tel:${siteInfo.contact.phone.replace(/\s/g, '')}`} className="group bg-[#0d1117] flex items-center gap-4 p-6 hover:bg-white/5 transition-colors">
+                <div className="w-12 h-12 flex items-center justify-center rounded-full bg-green-500/10 border border-green-500/20 group-hover:bg-green-500/20 transition-colors flex-shrink-0">
+                  <Phone size={20} className="text-green-400" />
                 </div>
                 <div>
-                  <p className="text-white/40 text-xs uppercase tracking-[0.2em] mb-1">Mobile</p>
-                  <p className="text-white text-xl font-display font-bold">{siteInfo.contact.phone}</p>
+                  <p className="text-white/30 text-[10px] uppercase tracking-[0.2em] mb-1">Mobile</p>
+                  <p className="text-white text-lg font-display font-bold">{siteInfo.contact.phone}</p>
                 </div>
               </a>
             )}
-            {siteInfo.contact?.phoneLandline && (
-              <a
-                href={`tel:${siteInfo.contact.phoneLandline.replace(/\s/g, '')}`}
-                className="group flex items-center gap-5 p-6 bg-white/5 border border-white/10 rounded-lg hover:bg-white/10 hover:border-white/20 transition-all"
-              >
-                <div className="w-14 h-14 flex items-center justify-center rounded-full bg-blue-500/10 border border-blue-500/20 group-hover:bg-blue-500/20 transition-colors">
-                  <Phone size={22} className="text-blue-400" />
-                </div>
-                <div>
-                  <p className="text-white/40 text-xs uppercase tracking-[0.2em] mb-1">Fixe</p>
-                  <p className="text-white text-xl font-display font-bold">{siteInfo.contact.phoneLandline}</p>
-                </div>
-              </a>
-            )}
-          </div>
 
-          {/* Other info — secondary */}
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-            {siteInfo.contact?.email && (
-              <a href={`mailto:${siteInfo.contact.email}`} className="flex items-center gap-4 p-4 rounded-lg hover:bg-white/5 transition-colors">
-                <Mail size={16} className="text-white/30" />
+            {/* Fixe — prominent */}
+            {siteInfo.contact?.phoneLandline && (
+              <a href={`tel:${siteInfo.contact.phoneLandline.replace(/\s/g, '')}`} className="group bg-[#0d1117] flex items-center gap-4 p-6 hover:bg-white/5 transition-colors">
+                <div className="w-12 h-12 flex items-center justify-center rounded-full bg-blue-500/10 border border-blue-500/20 group-hover:bg-blue-500/20 transition-colors flex-shrink-0">
+                  <Phone size={20} className="text-blue-400" />
+                </div>
                 <div>
-                  <p className="text-white/30 text-[10px] uppercase tracking-[0.2em] mb-0.5">Email</p>
+                  <p className="text-white/30 text-[10px] uppercase tracking-[0.2em] mb-1">Fixe</p>
+                  <p className="text-white text-lg font-display font-bold">{siteInfo.contact.phoneLandline}</p>
+                </div>
+              </a>
+            )}
+
+            {/* Email */}
+            {siteInfo.contact?.email && (
+              <a href={`mailto:${siteInfo.contact.email}`} className="bg-[#0d1117] flex items-center gap-4 p-6 hover:bg-white/5 transition-colors">
+                <Mail size={18} className="text-white/20 flex-shrink-0" />
+                <div>
+                  <p className="text-white/30 text-[10px] uppercase tracking-[0.2em] mb-1">Email</p>
                   <p className="text-white text-sm">{siteInfo.contact.email}</p>
                 </div>
               </a>
             )}
-            <a href="https://maps.google.com/?q=Rue+des+Aprages+2,+1957+Ardon" target="_blank" rel="noopener noreferrer" className="flex items-center gap-4 p-4 rounded-lg hover:bg-white/5 transition-colors">
-              <MapPin size={16} className="text-white/30" />
+
+            {/* Adresse */}
+            <a href="https://maps.google.com/?q=Rue+des+Aprages+2,+1957+Ardon" target="_blank" rel="noopener noreferrer" className="bg-[#0d1117] flex items-center gap-4 p-6 hover:bg-white/5 transition-colors">
+              <MapPin size={18} className="text-white/20 flex-shrink-0" />
               <div>
-                <p className="text-white/30 text-[10px] uppercase tracking-[0.2em] mb-0.5">Adresse</p>
+                <p className="text-white/30 text-[10px] uppercase tracking-[0.2em] mb-1">Adresse</p>
                 <p className="text-white text-sm">{siteInfo.contact?.address || 'Ardon, Valais'}</p>
               </div>
             </a>
-            <a href={BOOKING_URL} target="_blank" rel="noopener noreferrer" className="flex items-center gap-4 p-4 rounded-lg hover:bg-white/5 transition-colors">
-              <Calendar size={16} className="text-white/30" />
+
+            {/* Rendez-vous */}
+            <a href={BOOKING_URL} target="_blank" rel="noopener noreferrer" className="bg-[#0d1117] flex items-center gap-4 p-6 hover:bg-white/5 transition-colors">
+              <Calendar size={18} className="text-white/20 flex-shrink-0" />
               <div>
-                <p className="text-white/30 text-[10px] uppercase tracking-[0.2em] mb-0.5">Rendez-vous</p>
+                <p className="text-white/30 text-[10px] uppercase tracking-[0.2em] mb-1">Rendez-vous</p>
                 <p className="text-white text-sm">Réserver en ligne</p>
               </div>
             </a>

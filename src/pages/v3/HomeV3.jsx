@@ -240,7 +240,7 @@ const HomeV3 = () => {
                   { name: 'AutoScout24', src: '/partners/autoscout24.png', href: 'https://www.autoscout24.ch', h: 'h-12' },
                   { name: 'Autolina', src: '/partners/autolina.svg', href: 'https://www.autolina.ch', h: 'h-9' },
                   { name: 'carVertical', src: '/partners/carvertical.svg', href: 'https://www.carvertical.com', h: 'h-8' },
-                  { name: 'Cembra', src: '/partners/cembra.svg', href: 'https://www.cembra.ch', h: 'h-9' },
+                  { name: 'Cembra', src: '/partners/cembra.svg', href: 'https://www.cembra.ch', h: 'h-12' },
                   { name: 'Generali', src: '/partners/generali.svg', href: 'https://www.generali.ch', h: 'h-7' },
                 ].map((partner) => (
                   <a
@@ -248,7 +248,7 @@ const HomeV3 = () => {
                     href={partner.href}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="mx-14 flex-shrink-0 opacity-60 hover:opacity-100 transition-opacity duration-300"
+                    className="mx-14 flex-shrink-0 hover:scale-105 transition-transform duration-300"
                   >
                     <img src={partner.src} alt={partner.name} className={`${partner.h} w-auto object-contain`} />
                   </a>

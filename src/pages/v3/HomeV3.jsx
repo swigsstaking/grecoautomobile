@@ -226,35 +226,35 @@ const HomeV3 = () => {
         </div>
       </section>
 
-      {/* ═══ PARTNERS ═══ */}
-      <section className="bg-[#f0f0f0] py-12 md:py-16">
-        <div className="max-w-[1920px] mx-auto px-6 md:px-12 lg:px-24">
-          <p className="text-gray-600 text-xs uppercase tracking-[0.3em] text-center mb-10 font-medium">Nos partenaires de confiance</p>
-          <div className="flex items-center justify-center gap-16 md:gap-24 flex-wrap">
-            <a href="https://www.quality1.ch" target="_blank" rel="noopener noreferrer"
-              className="flex items-center justify-center hover:scale-105 transition-transform duration-300">
-              <img src="/partners/quality1.png" alt="Quality1" className="h-14 w-auto object-contain" />
-            </a>
-            <a href="https://www.autoscout24.ch" target="_blank" rel="noopener noreferrer"
-              className="flex items-center justify-center hover:scale-105 transition-transform duration-300">
-              <img src="/partners/autoscout24.png" alt="AutoScout24" className="h-14 w-auto object-contain" />
-            </a>
-            <a href="https://www.autolina.ch" target="_blank" rel="noopener noreferrer"
-              className="flex items-center justify-center hover:scale-105 transition-transform duration-300">
-              <img src="/partners/autolina.svg" alt="Autolina" className="h-10 w-auto object-contain" />
-            </a>
-            <a href="https://www.carvertical.com" target="_blank" rel="noopener noreferrer"
-              className="flex items-center justify-center hover:scale-105 transition-transform duration-300">
-              <img src="/partners/carvertical.svg" alt="carVertical" className="h-10 w-auto object-contain" />
-            </a>
-            <a href="https://www.cembra.ch" target="_blank" rel="noopener noreferrer"
-              className="flex items-center justify-center hover:scale-105 transition-transform duration-300">
-              <img src="/partners/cembra.svg" alt="Cembra" className="h-10 w-auto object-contain" />
-            </a>
-            <a href="https://www.generali.ch" target="_blank" rel="noopener noreferrer"
-              className="flex items-center justify-center hover:scale-105 transition-transform duration-300">
-              <img src="/partners/generali.svg" alt="Generali" className="h-8 w-auto object-contain" />
-            </a>
+      {/* ═══ PARTNERS MARQUEE ═══ */}
+      <section className="bg-[#f0f0f0] py-12 md:py-14 overflow-hidden">
+        <p className="text-gray-400 text-[10px] uppercase tracking-[0.4em] text-center mb-8 font-medium">Nos partenaires de confiance</p>
+        <div className="relative">
+          <div className="absolute left-0 top-0 bottom-0 w-24 bg-gradient-to-r from-[#f0f0f0] to-transparent z-10" />
+          <div className="absolute right-0 top-0 bottom-0 w-24 bg-gradient-to-l from-[#f0f0f0] to-transparent z-10" />
+          <div className="flex animate-marquee-slow whitespace-nowrap">
+            {[...Array(2)].map((_, setIndex) => (
+              <div key={setIndex} className="flex items-center shrink-0">
+                {[
+                  { name: 'Quality1', src: '/partners/quality1.png', href: 'https://www.quality1.ch', h: 'h-12' },
+                  { name: 'AutoScout24', src: '/partners/autoscout24.png', href: 'https://www.autoscout24.ch', h: 'h-12' },
+                  { name: 'Autolina', src: '/partners/autolina.svg', href: 'https://www.autolina.ch', h: 'h-9' },
+                  { name: 'carVertical', src: '/partners/carvertical.svg', href: 'https://www.carvertical.com', h: 'h-8' },
+                  { name: 'Cembra', src: '/partners/cembra.svg', href: 'https://www.cembra.ch', h: 'h-9' },
+                  { name: 'Generali', src: '/partners/generali.svg', href: 'https://www.generali.ch', h: 'h-7' },
+                ].map((partner) => (
+                  <a
+                    key={`${setIndex}-${partner.name}`}
+                    href={partner.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="mx-14 flex-shrink-0 opacity-60 hover:opacity-100 transition-opacity duration-300"
+                  >
+                    <img src={partner.src} alt={partner.name} className={`${partner.h} w-auto object-contain`} />
+                  </a>
+                ))}
+              </div>
+            ))}
           </div>
         </div>
       </section>
@@ -399,7 +399,7 @@ const HomeV3 = () => {
               {
                 title: t('home.services.languages'),
                 desc: t('home.services.languages_desc'),
-                image: null,
+                image: 'https://swigs.online/uploads/grecoautogroup/1775542050418-111557555.webp',
                 link: '/contact',
               },
             ].map((service, i) => (

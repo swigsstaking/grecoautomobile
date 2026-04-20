@@ -78,3 +78,7 @@ html {
 .animate-marquee {
   animation: marquee 30s linear infinite;
 }
+
+.animate-marquee-slow {
+  animation: marquee 45s linear infinite;
+}

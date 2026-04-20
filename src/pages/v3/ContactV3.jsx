@@ -4,7 +4,7 @@ import SEOHead from '../../components/SEOHead';
 import { useSiteInfo } from '../../hooks/useSiteInfo';
 import { useContact } from '../../hooks/useContact';
 import { useTranslation } from '../../i18n/LanguageContext';
-import { Phone, Mail, MapPin, Send, Check, AlertCircle, Clock, ArrowRight, Car, Calendar } from 'lucide-react';
+import { Phone, Mail, MapPin, Check, AlertCircle, ArrowRight, Car, Calendar } from 'lucide-react';
 
 const BOOKING_URL = 'https://calendar.app.google/XXBtoLywzECtVDKJ8';
 
@@ -47,6 +47,11 @@ const ContactV3 = () => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
+  const phoneNumber = siteInfo.contact?.phone || '079 191 90 89';
+  const phoneLandline = siteInfo.contact?.phoneLandline || '027 306 90 90';
+  const email = siteInfo.contact?.email || 'info@grecoautogroup.ch';
+  const address = siteInfo.contact?.address || 'Rue des Aprages 2, 1957 Ardon';
+
   return (
     <>
       <SEOHead page="contact" />
@@ -65,106 +70,81 @@ const ContactV3 = () => {
         </div>
       </section>
 
-      {/* ═══ CONTACT INFO ═══ Single row under hero */}
-      <section className="bg-[#0d1117] border-b border-white/5">
+      {/* ═══ MAIN CONTENT ═══ 3 columns: phones | form | map */}
+      <section className="bg-[#0d1117] py-16 md:py-24">
         <div className="max-w-[1920px] mx-auto px-6 md:px-12 lg:px-24">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-px bg-white/5">
-            {/* Mobile — prominent */}
-            {siteInfo.contact?.phone && (
-              <a href={`tel:${siteInfo.contact.phone.replace(/\s/g, '')}`} className="group bg-[#0d1117] flex items-center gap-4 p-6 hover:bg-white/5 transition-colors">
-                <div className="w-12 h-12 flex items-center justify-center rounded-full bg-green-500/10 border border-green-500/20 group-hover:bg-green-500/20 transition-colors flex-shrink-0">
+          <div className="grid grid-cols-1 lg:grid-cols-[320px_1fr_1fr] gap-12 lg:gap-16">
+
+            {/* ── LEFT SIDEBAR: Contact cards ── */}
+            <div className="space-y-4">
+              {/* Téléphone Mobile */}
+              <a
+                href={`tel:${phoneNumber.replace(/\s/g, '')}`}
+                className="group flex items-center gap-4 p-5 border border-white/10 rounded-lg hover:bg-white/5 hover:border-white/20 transition-all"
+              >
+                <div className="w-12 h-12 flex items-center justify-center rounded-full bg-green-500/10 border border-green-500/20 flex-shrink-0">
                   <Phone size={20} className="text-green-400" />
                 </div>
                 <div>
-                  <p className="text-white/30 text-[10px] uppercase tracking-[0.2em] mb-1">Mobile</p>
-                  <p className="text-white text-lg font-display font-bold">{siteInfo.contact.phone}</p>
+                  <p className="text-white/30 text-[10px] uppercase tracking-[0.2em] mb-0.5">Mobile</p>
+                  <p className="text-white text-lg font-display font-bold group-hover:text-green-400 transition-colors">{phoneNumber}</p>
                 </div>
               </a>
-            )}
 
-            {/* Fixe — prominent */}
-            {siteInfo.contact?.phoneLandline && (
-              <a href={`tel:${siteInfo.contact.phoneLandline.replace(/\s/g, '')}`} className="group bg-[#0d1117] flex items-center gap-4 p-6 hover:bg-white/5 transition-colors">
-                <div className="w-12 h-12 flex items-center justify-center rounded-full bg-blue-500/10 border border-blue-500/20 group-hover:bg-blue-500/20 transition-colors flex-shrink-0">
+              {/* Téléphone Fixe */}
+              <a
+                href={`tel:${phoneLandline.replace(/\s/g, '')}`}
+                className="group flex items-center gap-4 p-5 border border-white/10 rounded-lg hover:bg-white/5 hover:border-white/20 transition-all"
+              >
+                <div className="w-12 h-12 flex items-center justify-center rounded-full bg-blue-500/10 border border-blue-500/20 flex-shrink-0">
                   <Phone size={20} className="text-blue-400" />
                 </div>
                 <div>
-                  <p className="text-white/30 text-[10px] uppercase tracking-[0.2em] mb-1">Fixe</p>
-                  <p className="text-white text-lg font-display font-bold">{siteInfo.contact.phoneLandline}</p>
+                  <p className="text-white/30 text-[10px] uppercase tracking-[0.2em] mb-0.5">Fixe</p>
+                  <p className="text-white text-lg font-display font-bold group-hover:text-blue-400 transition-colors">{phoneLandline}</p>
                 </div>
               </a>
-            )}
 
-            {/* Email */}
-            {siteInfo.contact?.email && (
-              <a href={`mailto:${siteInfo.contact.email}`} className="bg-[#0d1117] flex items-center gap-4 p-6 hover:bg-white/5 transition-colors">
+              {/* Email */}
+              <a
+                href={`mailto:${email}`}
+                className="group flex items-center gap-4 p-5 border border-white/10 rounded-lg hover:bg-white/5 hover:border-white/20 transition-all"
+              >
                 <Mail size={18} className="text-white/20 flex-shrink-0" />
                 <div>
-                  <p className="text-white/30 text-[10px] uppercase tracking-[0.2em] mb-1">Email</p>
-                  <p className="text-white text-sm">{siteInfo.contact.email}</p>
+                  <p className="text-white/30 text-[10px] uppercase tracking-[0.2em] mb-0.5">Email</p>
+                  <p className="text-white text-sm">{email}</p>
                 </div>
               </a>
-            )}
 
-            {/* Adresse */}
-            <a href="https://maps.google.com/?q=Rue+des+Aprages+2,+1957+Ardon" target="_blank" rel="noopener noreferrer" className="bg-[#0d1117] flex items-center gap-4 p-6 hover:bg-white/5 transition-colors">
-              <MapPin size={18} className="text-white/20 flex-shrink-0" />
-              <div>
-                <p className="text-white/30 text-[10px] uppercase tracking-[0.2em] mb-1">Adresse</p>
-                <p className="text-white text-sm">{siteInfo.contact?.address || 'Ardon, Valais'}</p>
-              </div>
-            </a>
-
-            {/* Rendez-vous */}
-            <a href={BOOKING_URL} target="_blank" rel="noopener noreferrer" className="bg-[#0d1117] flex items-center gap-4 p-6 hover:bg-white/5 transition-colors">
-              <Calendar size={18} className="text-white/20 flex-shrink-0" />
-              <div>
-                <p className="text-white/30 text-[10px] uppercase tracking-[0.2em] mb-1">Rendez-vous</p>
-                <p className="text-white text-sm">Réserver en ligne</p>
-              </div>
-            </a>
-          </div>
-        </div>
-      </section>
-
-      {/* ═══ BOOKING CTA ═══ */}
-      <section className="bg-[#0d1117] border-b border-white/5 py-16 md:py-20">
-        <div className="max-w-[1920px] mx-auto px-6 md:px-12 lg:px-24">
-          <div className="relative overflow-hidden border border-white/10 rounded-lg">
-            <div className="absolute inset-0 bg-gradient-to-br from-[#0a1628] via-[#0d1f3c] to-[#0a1628] opacity-50"></div>
-            <div className="relative grid grid-cols-1 md:grid-cols-[1fr_auto] gap-8 md:gap-12 p-8 md:p-12 items-center">
-              <div>
-                <div className="flex items-center gap-2 mb-4">
-                  <Calendar size={16} className="text-white/40" />
-                  <p className="text-white/40 text-xs uppercase tracking-[0.3em]">Réservation en ligne</p>
+              {/* Adresse */}
+              <a
+                href="https://maps.google.com/?q=Greco+Auto+Group+Ardon"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group flex items-center gap-4 p-5 border border-white/10 rounded-lg hover:bg-white/5 hover:border-white/20 transition-all"
+              >
+                <MapPin size={18} className="text-white/20 flex-shrink-0" />
+                <div>
+                  <p className="text-white/30 text-[10px] uppercase tracking-[0.2em] mb-0.5">Adresse</p>
+                  <p className="text-white text-sm">{address}</p>
                 </div>
-                <h2 className="text-3xl md:text-4xl font-display font-bold text-white leading-[0.95] mb-4">
-                  Prenez rendez-vous<br />en quelques clics
-                </h2>
-                <p className="text-white/50 text-base font-light leading-relaxed max-w-xl">
-                  Choisissez un créneau qui vous convient pour découvrir un véhicule, faire estimer le vôtre ou discuter de votre projet. Confirmation immédiate par email.
-                </p>
-              </div>
+              </a>
+
+              {/* Rendez-vous */}
               <a
                 href={BOOKING_URL}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group inline-flex items-center justify-center gap-3 px-8 py-4 bg-white text-black text-sm uppercase tracking-[0.15em] font-medium hover:bg-white/90 transition-colors whitespace-nowrap"
+                className="group flex items-center gap-3 justify-center w-full px-6 py-4 bg-white text-black text-sm uppercase tracking-[0.15em] font-medium rounded-lg hover:bg-white/90 transition-colors"
               >
                 <Calendar size={16} />
-                Réserver un créneau
+                Prendre rendez-vous
                 <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
               </a>
             </div>
-          </div>
-        </div>
-      </section>
 
-      {/* ═══ FORM + MAP ═══ */}
-      <section className="bg-[#0d1117] py-20 md:py-32">
-        <div className="max-w-[1920px] mx-auto px-6 md:px-12 lg:px-24">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-32">
-            {/* Form */}
+            {/* ── CENTER: Form ── */}
             <div>
               <p className="text-white/30 text-xs uppercase tracking-[0.3em] mb-4">{t('contact.form_title')}</p>
               <h2 className="text-3xl md:text-4xl font-display font-bold text-white leading-[0.95] mb-10">
@@ -172,7 +152,7 @@ const ContactV3 = () => {
               </h2>
 
               {vehiculeName && !submitted && (
-                <div className="flex items-center gap-3 border border-white/10 p-4 mb-8">
+                <div className="flex items-center gap-3 border border-white/10 rounded-lg p-4 mb-8">
                   <Car size={18} className="text-white/30 flex-shrink-0" />
                   <div>
                     <p className="text-white text-sm font-medium">Demande pour : {vehiculeName}</p>
@@ -182,8 +162,8 @@ const ContactV3 = () => {
               )}
 
               {submitted ? (
-                <div className="border border-white/10 p-12 text-center">
-                  <Check size={32} className="text-white/40 mx-auto mb-6" />
+                <div className="border border-white/10 rounded-lg p-12 text-center">
+                  <Check size={32} className="text-green-400 mx-auto mb-6" />
                   <h3 className="text-2xl font-display font-bold text-white mb-3">{t('contact.success')}</h3>
                   <p className="text-white/40 text-sm mb-8">
                     Nous vous répondrons dans les plus brefs délais.
@@ -274,14 +254,14 @@ const ContactV3 = () => {
               )}
             </div>
 
-            {/* Map */}
+            {/* ── RIGHT: Map ── */}
             <div>
               <p className="text-white/30 text-xs uppercase tracking-[0.3em] mb-4">Localisation</p>
               <h2 className="text-3xl md:text-4xl font-display font-bold text-white leading-[0.95] mb-10">
                 Nous trouver
               </h2>
 
-              <div className="aspect-[4/3] overflow-hidden mb-8">
+              <div className="aspect-[4/3] overflow-hidden rounded-lg mb-6">
                 <iframe
                   src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2745.5!2d7.2686508!3d46.204933!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x478ec5c829a2b641%3A0xfaed480cb0b961a9!2sGreco+Auto+Group!5e0!3m2!1sfr!2sch"
                   width="100%"
@@ -294,29 +274,10 @@ const ContactV3 = () => {
                 />
               </div>
 
-              {/* Quick contact */}
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-px bg-white/5">
-                {siteInfo.contact?.phone && (
-                  <a href={`tel:${siteInfo.contact.phone.replace(/\s/g, '')}`} className="bg-[#0d1117] p-6 group block">
-                    <Phone size={16} className="text-white/20 mb-2 group-hover:text-white/40 transition-colors" />
-                    <p className="text-white text-sm font-medium">{siteInfo.contact.phone}</p>
-                    <p className="text-white/30 text-xs mt-1">Mobile</p>
-                  </a>
-                )}
-                {siteInfo.contact?.phoneLandline && (
-                  <a href={`tel:${siteInfo.contact.phoneLandline.replace(/\s/g, '')}`} className="bg-[#0d1117] p-6 group block">
-                    <Phone size={16} className="text-white/20 mb-2 group-hover:text-white/40 transition-colors" />
-                    <p className="text-white text-sm font-medium">{siteInfo.contact.phoneLandline}</p>
-                    <p className="text-white/30 text-xs mt-1">Fixe</p>
-                  </a>
-                )}
-                {siteInfo.contact?.email && (
-                  <a href={`mailto:${siteInfo.contact.email}`} className="bg-[#0d1117] p-6 group block">
-                    <Mail size={16} className="text-white/20 mb-2 group-hover:text-white/40 transition-colors" />
-                    <p className="text-white text-sm font-medium">{siteInfo.contact.email}</p>
-                    <p className="text-white/30 text-xs mt-1">Écrire</p>
-                  </a>
-                )}
+              <div className="border border-white/10 rounded-lg p-6">
+                <p className="text-white font-display font-bold mb-2">Greco Autogroup</p>
+                <p className="text-white/40 text-sm mb-1">{address}</p>
+                <p className="text-white/40 text-sm">Lun-Ven : 8h-18h | Sam : sur RDV</p>
               </div>
             </div>
           </div>

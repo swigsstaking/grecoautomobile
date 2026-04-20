@@ -36,6 +36,7 @@ const SEOHead = ({ page = 'home' }) => {
       <link rel="canonical" href={seo.canonical} />
       <link rel="alternate" hreflang="fr" href={seo.canonical} />
       <link rel="alternate" hreflang="it" href={seo.canonical} />
+      <link rel="alternate" hreflang="de" href={seo.canonical} />
       <link rel="alternate" hreflang="x-default" href={seo.canonical} />
 
       {/* Language */}
@@ -117,7 +118,7 @@ const SEOHead = ({ page = 'home' }) => {
           "name": "Greco Autogroup",
           "description": seo.description,
           "publisher": { "@id": "https://grecoautogroup.ch/#organization" },
-          "inLanguage": ["fr-CH", "it-CH"],
+          "inLanguage": ["fr-CH", "it-CH", "de-CH"],
           "potentialAction": {
             "@type": "SearchAction",
             "target": "https://grecoautogroup.ch/vehicules?search={search_term_string}",

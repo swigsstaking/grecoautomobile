@@ -247,6 +247,14 @@ const HomeV3 = () => {
               className="flex items-center justify-center hover:scale-105 transition-transform duration-300">
               <img src="/partners/carvertical.svg" alt="carVertical" className="h-10 w-auto object-contain" />
             </a>
+            <a href="https://www.cembra.ch" target="_blank" rel="noopener noreferrer"
+              className="flex items-center justify-center hover:scale-105 transition-transform duration-300">
+              <img src="/partners/cembra.svg" alt="Cembra" className="h-10 w-auto object-contain" />
+            </a>
+            <a href="https://www.generali.ch" target="_blank" rel="noopener noreferrer"
+              className="flex items-center justify-center hover:scale-105 transition-transform duration-300">
+              <img src="/partners/generali.svg" alt="Generali" className="h-8 w-auto object-contain" />
+            </a>
           </div>
         </div>
       </section>
@@ -387,6 +395,12 @@ const HomeV3 = () => {
                 desc: t('home.services.mechanics_desc'),
                 image: 'https://swigs.online/uploads/grecoautogroup/1775542049074-367922835.webp',
                 link: '/services#mecanique',
+              },
+              {
+                title: t('home.services.languages'),
+                desc: t('home.services.languages_desc'),
+                image: null,
+                link: '/contact',
               },
             ].map((service, i) => (
               <Link key={i} to={service.link} className="group block border border-white/10 rounded-sm overflow-hidden hover:border-white/20 transition-colors">

@@ -22,7 +22,7 @@ const Layout = ({ children }) => {
     { name: t('nav.home'), path: '/' },
     { name: t('nav.history'), path: '/notre-histoire' },
     {
-      name: lang === 'it' ? 'Veicoli' : 'Vehicules',
+      name: lang === 'de' ? 'Fahrzeuge' : lang === 'it' ? 'Veicoli' : 'Véhicules',
       path: '/vehicules',
       children: [
         { name: t('nav.vehicles_new'), path: '/vehicules?type=neuf' },
@@ -43,7 +43,7 @@ const Layout = ({ children }) => {
     { name: t('nav.contact'), path: '/contact' },
   ];
 
-  const langLabels = { fr: 'FR', it: 'IT' };
+  const langLabels = { fr: 'FR', it: 'IT', de: 'DE' };
 
   const isActive = (path) => {
     const cleanPath = path.split('#')[0];

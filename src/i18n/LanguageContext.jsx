@@ -3,7 +3,7 @@ import translations from './translations';
 
 const LanguageContext = createContext();
 
-const SUPPORTED_LANGS = ['fr', 'it'];
+const SUPPORTED_LANGS = ['fr', 'it', 'de'];
 const DEFAULT_LANG = 'fr';
 
 export const LanguageProvider = ({ children }) => {

@@ -68,6 +68,8 @@ const translations = {
     'home.services.custom_search_desc': 'Vous cherchez un modèle précis ? Nous le trouvons pour vous grâce à notre réseau de partenaires.',
     'home.services.mechanics': 'Mécanique & carrosserie',
     'home.services.mechanics_desc': 'Grâce à nos partenaires mécaniciens et carrossiers, nous assurons l\'entretien et la réparation de votre véhicule.',
+    'home.services.languages': 'Service multilingue',
+    'home.services.languages_desc': 'Notre équipe vous accueille en français et en italien pour un accompagnement personnalisé.',
     'home.learn_more': 'En savoir plus',
 
     // Home CTA
@@ -204,6 +206,8 @@ const translations = {
     'home.services.custom_search_desc': 'Cercate un modello preciso? Lo troviamo per voi grazie alla nostra rete di partner.',
     'home.services.mechanics': 'Meccanica & carrozzeria',
     'home.services.mechanics_desc': 'Grazie ai nostri partner meccanici e carrozzieri, garantiamo la manutenzione e la riparazione del vostro veicolo.',
+    'home.services.languages': 'Servizio multilingue',
+    'home.services.languages_desc': 'Il nostro team vi accoglie in francese e italiano per un accompagnamento personalizzato.',
     'home.learn_more': 'Scopri di più',
 
     // Home CTA
@@ -269,6 +273,141 @@ const translations = {
     'footer.contact': 'Contatto',
     'footer.rights': 'Tutti i diritti riservati.',
     'footer.made_by': 'Sito creato da Swigs SA',
+  },
+
+  de: {
+    // Nav
+    'nav.home': 'Startseite',
+    'nav.history': 'Unsere Geschichte',
+    'nav.vehicles_new': 'Neuwagen',
+    'nav.vehicles_used': 'Gebrauchtwagen',
+    'nav.services': 'Dienstleistungen',
+    'nav.contact': 'Kontakt',
+    'nav.purchase': 'Ankauf',
+    'nav.sale': 'Verkauf',
+    'nav.consignment': 'Kommissionsverkauf',
+    'nav.custom_search': 'Individuelle Suche',
+    'nav.mechanics': 'Mechanik & Karosserie',
+    'nav.call': 'Anrufen',
+
+    // Home hero
+    'home.hero1.label': 'Willkommen bei Greco Autogroup',
+    'home.hero1.title': 'Exzellenz',
+    'home.hero1.subtitle': 'im Automobilbereich.',
+    'home.hero1.cta': 'Katalog ansehen',
+    'home.hero2.label': 'Ardon, Wallis',
+    'home.hero2.title': 'Qualität',
+    'home.hero2.subtitle': '& Vertrauen.',
+    'home.hero2.cta': 'Unsere Geschichte',
+    'home.hero3.label': 'Ankauf · Verkauf · Kommission',
+    'home.hero3.title': 'Ihr nächstes',
+    'home.hero3.subtitle': 'Fahrzeug.',
+    'home.hero3.cta': 'Kontaktieren Sie uns',
+
+    // Home brand strip
+    'home.strip.purchase': 'Ankauf',
+    'home.strip.purchase_desc': 'Wir kaufen Ihr Fahrzeug zum besten Preis. Kostenlose Schätzung innerhalb von 24 Stunden.',
+    'home.strip.sale': 'Verkauf',
+    'home.strip.sale_desc': 'Neue, neuwertige und gebrauchte Fahrzeuge, sorgfältig geprüft und garantiert. Zertifizierte Qualität.',
+    'home.strip.consignment': 'Kommissionsverkauf',
+    'home.strip.consignment_desc': 'Vertrauen Sie uns den Verkauf Ihres Fahrzeugs an. Wir kümmern uns um alles.',
+    'home.strip.clean': 'Reinigung & Desinfektion',
+    'home.strip.clean_desc': 'Jedes Fahrzeug wird vor der Übergabe an seinen neuen Besitzer gereinigt und desinfiziert.',
+
+    // Home partners
+    'home.partners': 'Unsere vertrauenswürdigen Partner',
+
+    // Home catalog
+    'home.catalog': 'Katalog',
+    'home.our_models': 'Unsere Modelle',
+    'home.view_all': 'Alle anzeigen',
+    'home.view_catalog': 'Gesamten Katalog ansehen',
+
+    // Home about
+    'home.about_label': 'Über uns',
+    'home.about_title_1': 'Das Automobil,',
+    'home.about_title_2': 'unsere Leidenschaft.',
+    'home.about_desc': 'Greco Autogroup, Ihr vertrauenswürdiger Automobilpartner. Ankauf, Verkauf und Kommissionsverkauf mit massgeschneidertem Service.',
+    'home.about_cta': 'Unsere Geschichte',
+
+    // Home services
+    'home.services': 'Dienstleistungen',
+    'home.services_title_1': 'Wie können wir',
+    'home.services_title_2': 'Ihnen helfen?',
+    'home.services.purchase': 'Ankauf',
+    'home.services.purchase_desc': 'Möchten Sie Ihr Fahrzeug verkaufen? Kostenlose Schätzung, sofortiger Ankauf, sichere Bezahlung.',
+    'home.services.sale': 'Verkauf',
+    'home.services.sale_desc': 'Entdecken Sie unsere Auswahl an geprüften und garantierten Fahrzeugen. Probefahrt möglich.',
+    'home.services.consignment': 'Kommissionsverkauf',
+    'home.services.consignment_desc': 'Vertrauen Sie uns Ihr Fahrzeug an. Profi-Fotos, Veröffentlichung, Verhandlung — wir übernehmen alles.',
+    'home.services.custom_search': 'Individuelle Suche',
+    'home.services.custom_search_desc': 'Sie suchen ein bestimmtes Modell? Wir finden es für Sie dank unserem Partnernetzwerk.',
+    'home.services.mechanics': 'Mechanik & Karosserie',
+    'home.services.mechanics_desc': 'Dank unserer Partner-Mechaniker und Karosseriebauer gewährleisten wir die Wartung und Reparatur Ihres Fahrzeugs.',
+    'home.services.languages': 'Mehrsprachiger Service',
+    'home.services.languages_desc': 'Unser Team empfängt Sie auf Französisch und Italienisch für eine persönliche Betreuung.',
+    'home.learn_more': 'Mehr erfahren',
+
+    // Home CTA
+    'home.cta_title': 'Finden Sie Ihr nächstes Fahrzeug',
+    'home.cta_desc': 'Durchstöbern Sie unseren Katalog oder kontaktieren Sie uns für eine individuelle Suche.',
+    'home.cta_catalog': 'Katalog ansehen',
+    'home.cta_contact': 'Kontaktieren Sie uns',
+
+    // Vehicles page
+    'vehicles.catalog': 'Katalog',
+    'vehicles.all': 'Unsere Fahrzeuge',
+    'vehicles.new': 'Neuwagen',
+    'vehicles.used': 'Gebrauchtwagen',
+    'vehicles.available': 'verfügbar',
+    'vehicles.available_plural': 'verfügbar',
+    'vehicles.vehicle': 'Fahrzeug',
+    'vehicles.vehicles': 'Fahrzeuge',
+    'vehicles.search': 'Suchen...',
+    'vehicles.newest': 'Neueste',
+    'vehicles.price_asc': 'Preis aufsteigend',
+    'vehicles.price_desc': 'Preis absteigend',
+    'vehicles.filters': 'Filter',
+    'vehicles.all_brands': 'Alle Marken',
+    'vehicles.all_fuels': 'Alle Kraftstoffe',
+    'vehicles.all_prices': 'Alle Preise',
+    'vehicles.clear': 'Löschen',
+    'vehicles.no_results': 'Keine Ergebnisse',
+    'vehicles.no_results_desc': 'Ändern Sie Ihre Suchkriterien.',
+    'vehicles.clear_filters': 'Filter löschen',
+    'vehicles.sold': 'Verkauft',
+    'vehicles.reserved': 'Reserviert',
+
+    // History page
+    'history.label': 'Seit 2020',
+    'history.title': 'Unsere Geschichte',
+
+    // Services page
+    'services.label': 'Was wir anbieten',
+    'services.title': 'Unsere Dienstleistungen',
+
+    // Contact page
+    'contact.label': 'Sprechen wir zusammen',
+    'contact.title': 'Kontakt',
+    'contact.info_title': 'Informationen',
+    'contact.form_title': 'Senden Sie uns eine Nachricht',
+    'contact.name': 'Vollständiger Name',
+    'contact.email': 'E-Mail',
+    'contact.phone': 'Telefon',
+    'contact.message': 'Nachricht',
+    'contact.send': 'Nachricht senden',
+    'contact.sending': 'Senden...',
+    'contact.success': 'Nachricht erfolgreich gesendet!',
+    'contact.address': 'Adresse',
+    'contact.schedule': 'Öffnungszeiten',
+    'contact.schedule_detail': 'Mo-Fr: 8-18 Uhr | Sa: nach Vereinbarung',
+
+    // Footer
+    'footer.navigation': 'Navigation',
+    'footer.services': 'Dienstleistungen',
+    'footer.contact': 'Kontakt',
+    'footer.rights': 'Alle Rechte vorbehalten.',
+    'footer.made_by': 'Website erstellt von Swigs SA',
   },
 };
 

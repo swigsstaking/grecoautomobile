@@ -8,6 +8,14 @@ import { Phone, Mail, MapPin, Check, AlertCircle, ArrowRight, Car, Calendar } fr
 
 const BOOKING_URL = 'https://calendar.app.google/XXBtoLywzECtVDKJ8';
 
+// Static fallbacks to prevent flash on refresh
+const STATIC_CONTACT = {
+  phone: '079 191 90 89',
+  phoneLandline: '027 306 90 90',
+  email: 'info@grecoautogroup.ch',
+  address: 'Rue des Aprages 2, 1957 Ardon',
+};
+
 const ContactV3 = () => {
   const siteInfo = useSiteInfo();
   const contactMutation = useContact();
@@ -18,6 +26,14 @@ const ContactV3 = () => {
   const vehiculePrix = searchParams.get('prix');
   const vehiculeAnnee = searchParams.get('annee');
   const vehiculeKm = searchParams.get('km');
+
+  // Use static fallback for contact info to prevent flash
+  const contact = {
+    phone: siteInfo.contact?.phone || STATIC_CONTACT.phone,
+    phoneLandline: siteInfo.contact?.phoneLandline || STATIC_CONTACT.phoneLandline,
+    email: siteInfo.contact?.email || STATIC_CONTACT.email,
+    address: siteInfo.contact?.address || STATIC_CONTACT.address,
+  };
 
   const buildVehicleMessage = () => {
     if (!vehiculeName) return '';
@@ -47,10 +63,40 @@ const ContactV3 = () => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const phoneNumber = siteInfo.contact?.phone || '079 191 90 89';
-  const phoneLandline = siteInfo.contact?.phoneLandline || '027 306 90 90';
-  const email = siteInfo.contact?.email || 'info@grecoautogroup.ch';
-  const address = siteInfo.contact?.address || 'Rue des Aprages 2, 1957 Ardon';
+  const contactItems = [
+    {
+      icon: Phone,
+      label: 'Mobile',
+      value: contact.phone,
+      href: `tel:${contact.phone.replace(/\s/g, '')}`,
+    },
+    {
+      icon: Phone,
+      label: 'Fixe',
+      value: contact.phoneLandline,
+      href: `tel:${contact.phoneLandline.replace(/\s/g, '')}`,
+    },
+    {
+      icon: Mail,
+      label: 'Email',
+      value: contact.email,
+      href: `mailto:${contact.email}`,
+    },
+    {
+      icon: MapPin,
+      label: 'Adresse',
+      value: contact.address,
+      href: 'https://maps.google.com/?q=Greco+Auto+Group+Ardon',
+      external: true,
+    },
+    {
+      icon: Calendar,
+      label: 'Rendez-vous',
+      value: 'Réserver en ligne',
+      href: BOOKING_URL,
+      external: true,
+    },
+  ];
 
   return (
     <>
@@ -70,81 +116,65 @@ const ContactV3 = () => {
         </div>
       </section>
 
-      {/* ═══ MAIN CONTENT ═══ 3 columns: phones | form | map */}
-      <section className="bg-[#0d1117] py-16 md:py-24">
+      {/* ═══ CONTACT INFO ═══ Horizontal strip */}
+      <section className="bg-[#0d1117] border-b border-white/5">
         <div className="max-w-[1920px] mx-auto px-6 md:px-12 lg:px-24">
-          <div className="grid grid-cols-1 lg:grid-cols-[320px_1fr_1fr] gap-12 lg:gap-16">
-
-            {/* ── LEFT SIDEBAR: Contact cards ── */}
-            <div className="space-y-4">
-              {/* Téléphone Mobile */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 divide-y sm:divide-y-0 sm:divide-x divide-white/5">
+            {contactItems.map((item, i) => (
               <a
-                href={`tel:${phoneNumber.replace(/\s/g, '')}`}
-                className="group flex items-center gap-4 p-5 border border-white/10 rounded-lg hover:bg-white/5 hover:border-white/20 transition-all"
+                key={i}
+                href={item.href}
+                target={item.external ? '_blank' : undefined}
+                rel={item.external ? 'noopener noreferrer' : undefined}
+                className="py-8 sm:first:pl-0 sm:pl-8 sm:last:pr-0 sm:pr-8 hover:bg-white/[0.02] transition-colors block"
               >
-                <div className="w-12 h-12 flex items-center justify-center rounded-full bg-green-500/10 border border-green-500/20 flex-shrink-0">
-                  <Phone size={20} className="text-green-400" />
-                </div>
-                <div>
-                  <p className="text-white/30 text-[10px] uppercase tracking-[0.2em] mb-0.5">Mobile</p>
-                  <p className="text-white text-lg font-display font-bold group-hover:text-green-400 transition-colors">{phoneNumber}</p>
-                </div>
+                <item.icon size={16} className="text-white/20 mb-3" />
+                <p className="text-white/30 text-xs uppercase tracking-[0.2em] mb-1">{item.label}</p>
+                <p className="text-white text-sm hover:text-white/70 transition-colors">{item.value}</p>
               </a>
+            ))}
+          </div>
+        </div>
+      </section>
 
-              {/* Téléphone Fixe */}
-              <a
-                href={`tel:${phoneLandline.replace(/\s/g, '')}`}
-                className="group flex items-center gap-4 p-5 border border-white/10 rounded-lg hover:bg-white/5 hover:border-white/20 transition-all"
-              >
-                <div className="w-12 h-12 flex items-center justify-center rounded-full bg-blue-500/10 border border-blue-500/20 flex-shrink-0">
-                  <Phone size={20} className="text-blue-400" />
+      {/* ═══ BOOKING CTA ═══ */}
+      <section className="bg-[#0d1117] border-b border-white/5 py-16 md:py-20">
+        <div className="max-w-[1920px] mx-auto px-6 md:px-12 lg:px-24">
+          <div className="relative overflow-hidden border border-white/10 rounded-lg">
+            <div className="absolute inset-0 bg-gradient-to-br from-[#0a1628] via-[#0d1f3c] to-[#0a1628] opacity-50"></div>
+            <div className="relative grid grid-cols-1 md:grid-cols-[1fr_auto] gap-8 md:gap-12 p-8 md:p-12 items-center">
+              <div>
+                <div className="flex items-center gap-2 mb-4">
+                  <Calendar size={16} className="text-white/40" />
+                  <p className="text-white/40 text-xs uppercase tracking-[0.3em]">Réservation en ligne</p>
                 </div>
-                <div>
-                  <p className="text-white/30 text-[10px] uppercase tracking-[0.2em] mb-0.5">Fixe</p>
-                  <p className="text-white text-lg font-display font-bold group-hover:text-blue-400 transition-colors">{phoneLandline}</p>
-                </div>
-              </a>
-
-              {/* Email */}
-              <a
-                href={`mailto:${email}`}
-                className="group flex items-center gap-4 p-5 border border-white/10 rounded-lg hover:bg-white/5 hover:border-white/20 transition-all"
-              >
-                <Mail size={18} className="text-white/20 flex-shrink-0" />
-                <div>
-                  <p className="text-white/30 text-[10px] uppercase tracking-[0.2em] mb-0.5">Email</p>
-                  <p className="text-white text-sm">{email}</p>
-                </div>
-              </a>
-
-              {/* Adresse */}
-              <a
-                href="https://maps.google.com/?q=Greco+Auto+Group+Ardon"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="group flex items-center gap-4 p-5 border border-white/10 rounded-lg hover:bg-white/5 hover:border-white/20 transition-all"
-              >
-                <MapPin size={18} className="text-white/20 flex-shrink-0" />
-                <div>
-                  <p className="text-white/30 text-[10px] uppercase tracking-[0.2em] mb-0.5">Adresse</p>
-                  <p className="text-white text-sm">{address}</p>
-                </div>
-              </a>
-
-              {/* Rendez-vous */}
+                <h2 className="text-3xl md:text-4xl font-display font-bold text-white leading-[0.95] mb-4">
+                  Prenez rendez-vous<br />en quelques clics
+                </h2>
+                <p className="text-white/50 text-base font-light leading-relaxed max-w-xl">
+                  Choisissez un créneau qui vous convient pour découvrir un véhicule, faire estimer le vôtre ou discuter de votre projet. Confirmation immédiate par email.
+                </p>
+              </div>
               <a
                 href={BOOKING_URL}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group flex items-center gap-3 justify-center w-full px-6 py-4 bg-white text-black text-sm uppercase tracking-[0.15em] font-medium rounded-lg hover:bg-white/90 transition-colors"
+                className="group inline-flex items-center justify-center gap-3 px-8 py-4 bg-white text-black text-sm uppercase tracking-[0.15em] font-medium hover:bg-white/90 transition-colors whitespace-nowrap"
               >
                 <Calendar size={16} />
-                Prendre rendez-vous
+                Réserver un créneau
                 <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
               </a>
             </div>
+          </div>
+        </div>
+      </section>
 
-            {/* ── CENTER: Form ── */}
+      {/* ═══ FORM + MAP ═══ */}
+      <section className="bg-[#0d1117] py-20 md:py-32">
+        <div className="max-w-[1920px] mx-auto px-6 md:px-12 lg:px-24">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-32">
+            {/* Form */}
             <div>
               <p className="text-white/30 text-xs uppercase tracking-[0.3em] mb-4">{t('contact.form_title')}</p>
               <h2 className="text-3xl md:text-4xl font-display font-bold text-white leading-[0.95] mb-10">
@@ -152,7 +182,7 @@ const ContactV3 = () => {
               </h2>
 
               {vehiculeName && !submitted && (
-                <div className="flex items-center gap-3 border border-white/10 rounded-lg p-4 mb-8">
+                <div className="flex items-center gap-3 border border-white/10 p-4 mb-8">
                   <Car size={18} className="text-white/30 flex-shrink-0" />
                   <div>
                     <p className="text-white text-sm font-medium">Demande pour : {vehiculeName}</p>
@@ -162,7 +192,7 @@ const ContactV3 = () => {
               )}
 
               {submitted ? (
-                <div className="border border-white/10 rounded-lg p-12 text-center">
+                <div className="border border-white/10 p-12 text-center">
                   <Check size={32} className="text-green-400 mx-auto mb-6" />
                   <h3 className="text-2xl font-display font-bold text-white mb-3">{t('contact.success')}</h3>
                   <p className="text-white/40 text-sm mb-8">
@@ -254,14 +284,14 @@ const ContactV3 = () => {
               )}
             </div>
 
-            {/* ── RIGHT: Map ── */}
+            {/* Map */}
             <div>
               <p className="text-white/30 text-xs uppercase tracking-[0.3em] mb-4">Localisation</p>
               <h2 className="text-3xl md:text-4xl font-display font-bold text-white leading-[0.95] mb-10">
                 Nous trouver
               </h2>
 
-              <div className="aspect-[4/3] overflow-hidden rounded-lg mb-6">
+              <div className="aspect-[4/3] overflow-hidden mb-8">
                 <iframe
                   src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2745.5!2d7.2686508!3d46.204933!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x478ec5c829a2b641%3A0xfaed480cb0b961a9!2sGreco+Auto+Group!5e0!3m2!1sfr!2sch"
                   width="100%"
@@ -274,10 +304,23 @@ const ContactV3 = () => {
                 />
               </div>
 
-              <div className="border border-white/10 rounded-lg p-6">
-                <p className="text-white font-display font-bold mb-2">Greco Autogroup</p>
-                <p className="text-white/40 text-sm mb-1">{address}</p>
-                <p className="text-white/40 text-sm">Lun-Ven : 8h-18h | Sam : sur RDV</p>
+              {/* Quick contact under map */}
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-px bg-white/5">
+                <a href={`tel:${contact.phone.replace(/\s/g, '')}`} className="bg-[#0d1117] p-6 group block">
+                  <Phone size={16} className="text-white/20 mb-2 group-hover:text-white/40 transition-colors" />
+                  <p className="text-white text-sm font-medium">{contact.phone}</p>
+                  <p className="text-white/30 text-xs mt-1">Mobile</p>
+                </a>
+                <a href={`tel:${contact.phoneLandline.replace(/\s/g, '')}`} className="bg-[#0d1117] p-6 group block">
+                  <Phone size={16} className="text-white/20 mb-2 group-hover:text-white/40 transition-colors" />
+                  <p className="text-white text-sm font-medium">{contact.phoneLandline}</p>
+                  <p className="text-white/30 text-xs mt-1">Fixe</p>
+                </a>
+                <a href={`mailto:${contact.email}`} className="bg-[#0d1117] p-6 group block">
+                  <Mail size={16} className="text-white/20 mb-2 group-hover:text-white/40 transition-colors" />
+                  <p className="text-white text-sm font-medium">{contact.email}</p>
+                  <p className="text-white/30 text-xs mt-1">Écrire</p>
+                </a>
               </div>
             </div>
           </div>

@@ -33,28 +33,12 @@ const HomeV3 = () => {
   // Hero slides — images réelles du garage + véhicules API
   const grecoSlides = [
     {
-      image: 'https://swigs.online/uploads/grecoautogroup/1775542051182-769409253.webp',
+      image: 'https://swigs.online/uploads/grecoautogroup/1777642127743-28853163.webp',
       label: t('home.hero1.label'),
       title: t('home.hero1.title'),
       subtitle: t('home.hero1.subtitle'),
       cta: t('home.hero1.cta'),
       link: '/vehicules',
-    },
-    {
-      image: 'https://swigs.online/uploads/grecoautogroup/1775542049399-58977568.webp',
-      label: t('home.hero2.label'),
-      title: t('home.hero2.title'),
-      subtitle: t('home.hero2.subtitle'),
-      cta: t('home.hero2.cta'),
-      link: '/notre-histoire',
-    },
-    {
-      image: 'https://swigs.online/uploads/grecoautogroup/1775542047236-190922193.webp',
-      label: t('home.hero3.label'),
-      title: t('home.hero3.title'),
-      subtitle: t('home.hero3.subtitle'),
-      cta: t('home.hero3.cta'),
-      link: '/contact',
     },
   ];
   const heroSlides = grecoSlides;
@@ -81,9 +65,10 @@ const HomeV3 = () => {
   }, [currentSlide, heroSlides.length, goToSlide]);
 
   useEffect(() => {
+    if (heroSlides.length <= 1) return;
     const timer = setInterval(nextSlide, 7000);
     return () => clearInterval(timer);
-  }, [nextSlide]);
+  }, [nextSlide, heroSlides.length]);
 
   // Horizontal scroll
   const scrollContainerRef = useRef(null);
@@ -138,7 +123,7 @@ const HomeV3 = () => {
         </div>
 
         {/* Slide counter — right side */}
-        <div className="absolute right-6 md:right-12 lg:right-24 bottom-24 md:bottom-32 z-10 flex flex-col items-end gap-4">
+        <div className={`absolute right-6 md:right-12 lg:right-24 bottom-24 md:bottom-32 z-10 flex flex-col items-end gap-4 ${heroSlides.length <= 1 ? 'hidden' : ''}`}>
           {heroSlides.map((_, i) => (
             <button
               key={i}

@@ -91,7 +91,8 @@ const HomeV3 = () => {
             ) : (
               <div className="w-full h-full bg-gradient-to-br from-[#0a1628] via-[#0d1f3c] to-[#061224]"></div>
             )}
-            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-black/30"></div>
+            <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/55 to-black/40"></div>
+            <div className="absolute inset-0 bg-gradient-to-r from-black/60 via-black/20 to-transparent"></div>
           </div>
         ))}
 
@@ -99,21 +100,21 @@ const HomeV3 = () => {
         <div className="absolute bottom-0 left-0 right-0 z-10 pb-24 md:pb-32">
           <div className="max-w-[1920px] mx-auto px-6 md:px-12 lg:px-24">
             <div className="max-w-3xl">
-              <p className="text-white/50 text-xs uppercase tracking-[0.3em] mb-4 font-sans">
+              <p className="text-white/80 text-xs uppercase tracking-[0.3em] mb-4 font-sans drop-shadow-md">
                 {heroSlides[currentSlide].label}
               </p>
               <h1
-                className="text-6xl md:text-8xl lg:text-[7rem] font-display font-bold text-white leading-[0.9] mb-2 transition-all duration-700"
+                className="text-6xl md:text-8xl lg:text-[7rem] font-display font-bold text-white leading-[0.9] mb-2 transition-all duration-700 drop-shadow-2xl"
                 key={`title-${currentSlide}`}
               >
                 {heroSlides[currentSlide].title}
               </h1>
-              <p className="text-4xl md:text-5xl lg:text-6xl font-display font-light text-white/60 mb-10">
+              <p className="text-4xl md:text-5xl lg:text-6xl font-display font-light text-white/85 mb-10 drop-shadow-xl">
                 {heroSlides[currentSlide].subtitle}
               </p>
               <Link
                 to={heroSlides[currentSlide].link}
-                className="group inline-flex items-center gap-3 text-white text-sm uppercase tracking-[0.2em] font-medium hover:text-white/70 transition-colors"
+                className="group inline-flex items-center gap-3 text-white text-sm uppercase tracking-[0.2em] font-medium hover:text-white/70 transition-colors drop-shadow-md"
               >
                 {heroSlides[currentSlide].cta}
                 <ArrowRight size={16} className="group-hover:translate-x-2 transition-transform duration-300" />

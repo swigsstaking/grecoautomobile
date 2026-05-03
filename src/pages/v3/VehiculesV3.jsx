@@ -5,7 +5,6 @@ import { Helmet } from 'react-helmet-async';
 import SEOHead from '../../components/SEOHead';
 import { Search, X, Car, ArrowRight, SlidersHorizontal, Fuel, Gauge, Calendar } from 'lucide-react';
 import seoData from '../../data/seo.json';
-import mockVehicules from '../../data/mockVehicules';
 import { useTranslation } from '../../i18n/LanguageContext';
 
 const API_URL = import.meta.env.VITE_API_URL || 'https://swigs.online/api';
@@ -36,11 +35,7 @@ const VehiculesV3 = () => {
     staleTime: 1000 * 60 * 5,
   });
 
-  // Only use mock data as fallback if API succeeded but returned empty (dev mode)
-  // During loading, return empty array to avoid flashing wrong vehicles
-  const vehicules = isSuccess
-    ? (vehiculesData && vehiculesData.length > 0 ? vehiculesData : mockVehicules)
-    : [];
+  const vehicules = isSuccess && vehiculesData ? vehiculesData : [];
 
   const brands = useMemo(() => [...new Set(vehicules.map(v => v.brand || v.metadata?.brand).filter(Boolean))].sort(), [vehicules]);
   const fuelTypes = useMemo(() => [...new Set(vehicules.map(v => v.fuelType || v.metadata?.fuelType).filter(Boolean))].sort(), [vehicules]);
@@ -246,12 +241,21 @@ const VehiculesV3 = () => {
           ) : filteredVehicules.length === 0 ? (
             <div className="text-center py-32">
               <Car size={48} className="text-white/10 mx-auto mb-6" />
-              <h3 className="text-xl font-display font-bold text-white mb-2">{t('vehicles.no_results')}</h3>
-              <p className="text-white/40 text-sm mb-6">{t('vehicles.no_results_desc')}</p>
-              {hasActiveFilters && (
-                <button onClick={clearFilters} className="text-white/50 text-sm underline underline-offset-4 hover:text-white cursor-pointer">
-                  {t('vehicles.clear_filters')}
-                </button>
+              {vehicules.length === 0 ? (
+                <>
+                  <h3 className="text-xl font-display font-bold text-white mb-2">{t('vehicles.empty_title')}</h3>
+                  <p className="text-white/40 text-sm mb-6 max-w-md mx-auto">{t('vehicles.empty_desc')}</p>
+                </>
+              ) : (
+                <>
+                  <h3 className="text-xl font-display font-bold text-white mb-2">{t('vehicles.no_results')}</h3>
+                  <p className="text-white/40 text-sm mb-6">{t('vehicles.no_results_desc')}</p>
+                  {hasActiveFilters && (
+                    <button onClick={clearFilters} className="text-white/50 text-sm underline underline-offset-4 hover:text-white cursor-pointer">
+                      {t('vehicles.clear_filters')}
+                    </button>
+                  )}
+                </>
               )}
             </div>
           ) : (

@@ -5,7 +5,6 @@ import { useSiteInfo } from '../../hooks/useSiteInfo';
 import { ArrowRight, ArrowLeft, ChevronRight, Play, ArrowDown, Car } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import seoData from '../../data/seo.json';
-import mockVehicules from '../../data/mockVehicules';
 import { useTranslation } from '../../i18n/LanguageContext';
 
 const API_URL = import.meta.env.VITE_API_URL || 'https://swigs.online/api';
@@ -25,9 +24,7 @@ const HomeV3 = () => {
     staleTime: 1000 * 60 * 5,
   });
 
-  const allVehicules = vehiclesLoaded
-    ? (apiVehicules && apiVehicules.length > 0 ? apiVehicules : mockVehicules)
-    : [];
+  const allVehicules = vehiclesLoaded && apiVehicules ? apiVehicules : [];
   const featuredVehicules = allVehicules.filter(v => v.status === 'available' || v.status !== 'sold');
 
   // Hero slides — images réelles du garage + véhicules API
@@ -243,6 +240,7 @@ const HomeV3 = () => {
       </section>
 
       {/* ═══ VEHICLE SHOWCASE ═══ Cinematic product reveal */}
+      {featuredVehicules.length > 0 && (
       <section className="bg-[#0d1117] border-t border-white/[0.03]">
         <div className="max-w-[1920px] mx-auto px-6 md:px-12 lg:px-24 pt-16 md:pt-20 pb-20 md:pb-32">
           <div className="flex items-end justify-between mb-16">
@@ -310,6 +308,7 @@ const HomeV3 = () => {
           </Link>
         </div>
       </section>
+      )}
 
       {/* ═══ ABOUT TEASER ═══ Full bleed image + text overlay */}
       <section className="relative min-h-[80vh] flex items-center bg-black overflow-hidden">

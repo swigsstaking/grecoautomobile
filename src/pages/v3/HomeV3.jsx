@@ -91,8 +91,8 @@ const HomeV3 = () => {
             ) : (
               <div className="w-full h-full bg-gradient-to-br from-[#0a1628] via-[#0d1f3c] to-[#061224]"></div>
             )}
-            <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/55 to-black/40"></div>
-            <div className="absolute inset-0 bg-gradient-to-r from-black/60 via-black/20 to-transparent"></div>
+            <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/25 to-black/15"></div>
+            <div className="absolute inset-0 bg-gradient-to-r from-black/40 via-black/5 to-transparent"></div>
           </div>
         ))}
 
@@ -100,9 +100,6 @@ const HomeV3 = () => {
         <div className="absolute bottom-0 left-0 right-0 z-10 pb-24 md:pb-32">
           <div className="max-w-[1920px] mx-auto px-6 md:px-12 lg:px-24">
             <div className="max-w-3xl">
-              <p className="text-white/80 text-xs uppercase tracking-[0.3em] mb-4 font-sans drop-shadow-md">
-                {heroSlides[currentSlide].label}
-              </p>
               <h1
                 className="text-6xl md:text-8xl lg:text-[7rem] font-display font-bold text-white leading-[0.9] mb-2 transition-all duration-700 drop-shadow-2xl"
                 key={`title-${currentSlide}`}

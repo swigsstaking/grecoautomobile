@@ -160,13 +160,13 @@ const VehiculeDetail = () => {
 
         {/* Main image */}
         {images.length > 0 ? (
-          <div className="relative h-[50vh] md:h-[65vh] overflow-hidden">
+          <div className="relative h-[50vh] md:h-[65vh] overflow-hidden bg-[#0d1117]">
             <img
               src={images[selectedImage]}
               alt={title}
-              className="w-full h-full object-cover transition-all duration-500"
+              className="w-full h-full object-contain transition-all duration-500"
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-[#0d1117] via-transparent to-transparent"></div>
+            <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-[#0d1117] to-transparent pointer-events-none"></div>
 
             {/* Nav arrows */}
             {images.length > 1 && (

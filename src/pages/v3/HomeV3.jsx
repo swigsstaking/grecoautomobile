@@ -351,7 +351,7 @@ const HomeV3 = () => {
               {
                 title: t('home.services.purchase'),
                 desc: t('home.services.purchase_desc'),
-                image: 'https://swigs.online/uploads/grecoautogroup/1775542049399-58977568.webp',
+                image: 'https://swigs.online/uploads/grecoautogroup/1778591625231-30118875.webp',
                 link: '/services#achat',
               },
               {
@@ -363,7 +363,7 @@ const HomeV3 = () => {
               {
                 title: t('home.services.consignment'),
                 desc: t('home.services.consignment_desc'),
-                image: 'https://swigs.online/uploads/grecoautogroup/1775542048321-636143732.webp',
+                image: 'https://swigs.online/uploads/grecoautogroup/1777645476877-560229356.webp',
                 link: '/services#depot-vente',
               },
               {
@@ -403,7 +403,7 @@ const HomeV3 = () => {
       {/* ═══ CTA ═══ Cinematic final */}
       <section className="relative h-[60vh] min-h-[400px] flex items-center bg-black overflow-hidden">
         <div className="absolute inset-0">
-          <img src="https://swigs.online/uploads/grecoautogroup/1775542048321-636143732.webp" alt="" className="w-full h-full object-cover" style={{ objectPosition: 'center 60%' }} />
+          <img src="https://swigs.online/uploads/grecoautogroup/1777645490978-85830905.webp" alt="" className="w-full h-full object-cover" style={{ objectPosition: 'center 60%' }} />
           <div className="absolute inset-0 bg-[#0a1628]/75"></div>
         </div>
         <div className="max-w-[1920px] mx-auto px-6 md:px-12 lg:px-24 relative z-10 text-center w-full">

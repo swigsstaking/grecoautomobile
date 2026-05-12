@@ -55,7 +55,7 @@ const NotreHistoireV3 = () => {
 
       {/* ═══ FULL BLEED IMAGE ═══ */}
       <section className="relative h-[50vh] min-h-[400px] overflow-hidden">
-        <img src="https://swigs.online/uploads/grecoautogroup/1775542049399-58977568.webp" alt="Greco Autogroup garage" className="w-full h-full object-cover" style={{ objectPosition: 'center 65%' }} />
+        <img src="https://swigs.online/uploads/grecoautogroup/1778591625231-30118875.webp" alt="Greco Autogroup garage" className="w-full h-full object-cover" style={{ objectPosition: 'center 65%' }} />
       </section>
 
       {/* ═══ TIMELINE ═══ Editorial approach */}
@@ -69,7 +69,7 @@ const NotreHistoireV3 = () => {
                 period: 'Les débuts',
                 title: 'La naissance d\'une passion',
                 text: 'Greco Autogroup naît de la passion d\'un homme pour l\'automobile. Ce qui a commencé comme un hobby est rapidement devenu une vocation. Chaque véhicule raconte une histoire, et nous avons voulu être ceux qui la transmettent.',
-                image: 'https://swigs.online/uploads/grecoautogroup/1775542051182-769409253.webp',
+                image: 'https://swigs.online/uploads/grecoautogroup/1778591625848-407262877.webp',
                 align: 'left',
               },
               {

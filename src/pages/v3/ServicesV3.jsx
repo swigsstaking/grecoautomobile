@@ -20,7 +20,7 @@ const ServicesV3 = () => {
   const services = [
     {
       id: 'achat',
-      image: 'https://swigs.online/uploads/grecoautogroup/1775542049399-58977568.webp',
+      image: 'https://swigs.online/uploads/grecoautogroup/1778591625231-30118875.webp',
       title: 'Achat de véhicules',
       subtitle: 'Nous rachetons votre véhicule',
       description: 'Vous souhaitez vendre votre véhicule rapidement et au meilleur prix ? Greco Autogroup vous propose une estimation gratuite et un rachat immédiat, quelle que soit la marque ou le modèle.',
@@ -50,7 +50,7 @@ const ServicesV3 = () => {
     },
     {
       id: 'depot-vente',
-      image: 'https://swigs.online/uploads/grecoautogroup/1775542048321-636143732.webp',
+      image: 'https://swigs.online/uploads/grecoautogroup/1777645476877-560229356.webp',
       title: 'Dépôt-vente',
       subtitle: 'Nous vendons pour vous',
       description: 'Vous manquez de temps ? Confiez-nous la vente de votre véhicule. Photos professionnelles, annonces, négociation — nous gérons l\'intégralité du processus.',

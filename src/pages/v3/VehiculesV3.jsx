@@ -153,36 +153,38 @@ const VehiculesV3 = () => {
             </div>
 
             {/* Search + sort + filters */}
-            <div className="flex items-center gap-2">
-              <div className="relative">
+            <div className="flex flex-col sm:flex-row sm:items-center gap-2">
+              <div className="relative w-full sm:w-auto">
                 <Search size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-white/20" />
                 <input
                   type="text"
                   placeholder={t('vehicles.search')}
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
-                  className="w-48 md:w-56 pl-9 pr-3 py-2 bg-white/5 border border-white/10 rounded-lg text-white placeholder:text-white/20 focus:border-white/20 focus:outline-none transition-colors text-sm"
+                  className="w-full sm:w-56 pl-9 pr-3 py-2 bg-white/5 border border-white/10 rounded-lg text-white placeholder:text-white/20 focus:border-white/20 focus:outline-none transition-colors text-sm"
                 />
               </div>
-              <select
-                value={filters.sortBy}
-                onChange={(e) => setFilters({ ...filters, sortBy: e.target.value })}
-                className="px-3 py-2 bg-white/5 border border-white/10 rounded-lg text-white text-sm focus:border-white/20 focus:outline-none transition-colors cursor-pointer"
-              >
-                <option value="newest">{t('vehicles.newest')}</option>
-                <option value="price-asc">{t('vehicles.price_asc')}</option>
-                <option value="price-desc">{t('vehicles.price_desc')}</option>
-              </select>
-              <button
-                onClick={() => setShowFilters(!showFilters)}
-                className={`flex items-center gap-1.5 px-3 py-2 border rounded-lg text-sm transition-colors cursor-pointer ${
-                  showFilters || hasActiveFilters ? 'bg-white/10 border-white/20 text-white' : 'bg-white/5 border-white/10 text-white/40 hover:text-white'
-                }`}
-              >
-                <SlidersHorizontal size={13} />
-                {t('vehicles.filters')}
-                {hasActiveFilters && <span className="w-1.5 h-1.5 bg-white rounded-full"></span>}
-              </button>
+              <div className="flex items-center gap-2">
+                <select
+                  value={filters.sortBy}
+                  onChange={(e) => setFilters({ ...filters, sortBy: e.target.value })}
+                  className="flex-1 sm:flex-none px-3 py-2 bg-white/5 border border-white/10 rounded-lg text-white text-sm focus:border-white/20 focus:outline-none transition-colors cursor-pointer"
+                >
+                  <option value="newest">{t('vehicles.newest')}</option>
+                  <option value="price-asc">{t('vehicles.price_asc')}</option>
+                  <option value="price-desc">{t('vehicles.price_desc')}</option>
+                </select>
+                <button
+                  onClick={() => setShowFilters(!showFilters)}
+                  className={`flex items-center gap-1.5 px-3 py-2 border rounded-lg text-sm transition-colors cursor-pointer ${
+                    showFilters || hasActiveFilters ? 'bg-white/10 border-white/20 text-white' : 'bg-white/5 border-white/10 text-white/40 hover:text-white'
+                  }`}
+                >
+                  <SlidersHorizontal size={13} />
+                  {t('vehicles.filters')}
+                  {hasActiveFilters && <span className="w-1.5 h-1.5 bg-white rounded-full"></span>}
+                </button>
+              </div>
             </div>
           </div>
 

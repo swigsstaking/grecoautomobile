@@ -82,3 +82,14 @@ html {
 .animate-marquee-slow {
   animation: marquee 45s linear infinite;
 }
+
+/* Sur mobile, les bandeaux paraissent lents : on accélère le défilement.
+   Desktop (>= 768px) inchangé. */
+@media (max-width: 767px) {
+  .animate-marquee {
+    animation-duration: 15s;
+  }
+  .animate-marquee-slow {
+    animation-duration: 22s;
+  }
+}

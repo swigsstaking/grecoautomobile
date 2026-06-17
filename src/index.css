@@ -87,9 +87,9 @@ html {
    Desktop (>= 768px) inchangé. */
 @media (max-width: 767px) {
   .animate-marquee {
-    animation-duration: 15s;
+    animation-duration: 9s;
   }
   .animate-marquee-slow {
-    animation-duration: 22s;
+    animation-duration: 13s;
   }
 }

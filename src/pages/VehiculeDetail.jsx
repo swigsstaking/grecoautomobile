@@ -4,8 +4,8 @@ import { Helmet } from 'react-helmet-async';
 import SEOHead from '../components/SEOHead';
 import { useSiteInfo } from '../hooks/useSiteInfo';
 import { useTranslation } from '../i18n/LanguageContext';
-import { ArrowLeft, Phone, Mail, Calendar, Gauge, Fuel, Car, Cog, Palette, Zap, Shield, Check, CheckCircle, AlertTriangle, XCircle, ExternalLink, Users, ChevronLeft, ChevronRight } from 'lucide-react';
-import { useState } from 'react';
+import { ArrowLeft, Phone, Mail, Calendar, Gauge, Fuel, Car, Cog, Palette, Zap, Shield, Check, CheckCircle, AlertTriangle, XCircle, ExternalLink, Users, ChevronLeft, ChevronRight, Play } from 'lucide-react';
+import { useState, useEffect } from 'react';
 import seoData from '../data/seo.json';
 import mockVehicules from '../data/mockVehicules';
 
@@ -16,6 +16,15 @@ const VehiculeDetail = () => {
   const siteInfo = useSiteInfo();
   const { t } = useTranslation();
   const [selectedImage, setSelectedImage] = useState(0);
+  // La vidéo est masquée si l'appareil est en mode économie de données, ou si
+  // l'autoplay est refusé (mode économie d'énergie) → « ça ne fonctionne pas ».
+  const [videoHidden, setVideoHidden] = useState(false);
+
+  useEffect(() => {
+    if (typeof navigator !== 'undefined' && navigator.connection?.saveData) {
+      setVideoHidden(true);
+    }
+  }, []);
 
   const { data: apiVehicule, isLoading, isError } = useQuery({
     queryKey: ['vehicule', id],
@@ -55,6 +64,14 @@ const VehiculeDetail = () => {
   }
 
   const images = vehicule.images || (vehicule.image ? [vehicule.image] : []);
+  const videos = vehicule.videos || [];
+  const videoUrl = videos[0];
+  // Carousel unifié : la vidéo (si lisible) en 1ʳᵉ slide, puis les photos.
+  const media = [
+    ...(videoUrl && !videoHidden ? [{ type: 'video', src: videoUrl }] : []),
+    ...images.map((src) => ({ type: 'image', src })),
+  ];
+  const current = media[selectedImage] || media[0];
   const brand = vehicule.brand || '';
   const model = vehicule.model || '';
   const year = vehicule.year || '';
@@ -76,8 +93,8 @@ const VehiculeDetail = () => {
     { icon: Shield, label: 'Garantie', value: vehicule.warranty || '' },
   ].filter(s => s.value);
 
-  const nextImage = () => setSelectedImage((prev) => (prev + 1) % images.length);
-  const prevImage = () => setSelectedImage((prev) => (prev - 1 + images.length) % images.length);
+  const nextImage = () => setSelectedImage((prev) => (prev + 1) % media.length);
+  const prevImage = () => setSelectedImage((prev) => (prev - 1 + media.length) % media.length);
 
   const report = vehicule.carVerticalReport;
 
@@ -158,18 +175,34 @@ const VehiculeDetail = () => {
           </div>
         </div>
 
-        {/* Main image */}
-        {images.length > 0 ? (
+        {/* Main media — vidéo (autoplay muet) + photos dans le même carousel */}
+        {media.length > 0 ? (
           <div className="relative h-[50vh] md:h-[65vh] overflow-hidden bg-[#0d1117]">
-            <img
-              src={images[selectedImage]}
-              alt={title}
-              className="w-full h-full object-contain transition-all duration-500"
-            />
+            {current?.type === 'video' ? (
+              <video
+                key={current.src}
+                src={current.src}
+                poster={images[0]}
+                muted
+                loop
+                playsInline
+                autoPlay
+                controls
+                onCanPlay={(e) => { const p = e.currentTarget.play?.(); if (p?.catch) p.catch(() => setVideoHidden(true)); }}
+                onError={() => setVideoHidden(true)}
+                className="w-full h-full object-contain bg-black"
+              />
+            ) : (
+              <img
+                src={current.src}
+                alt={title}
+                className="w-full h-full object-contain transition-all duration-500"
+              />
+            )}
             <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-[#0d1117] to-transparent pointer-events-none"></div>
 
             {/* Nav arrows */}
-            {images.length > 1 && (
+            {media.length > 1 && (
               <>
                 <button onClick={prevImage} className="absolute left-4 top-1/2 -translate-y-1/2 z-10 w-10 h-10 flex items-center justify-center bg-black/40 hover:bg-black/60 text-white rounded-full transition-colors cursor-pointer backdrop-blur-sm">
                   <ChevronLeft size={20} />
@@ -180,12 +213,13 @@ const VehiculeDetail = () => {
               </>
             )}
 
-            {/* Image counter */}
-            {images.length > 1 && (
+            {/* Media counter */}
+            {media.length > 1 && (
               <div className="absolute bottom-6 right-6 z-10 px-3 py-1.5 bg-black/50 backdrop-blur-sm text-white/70 text-xs font-mono rounded-full">
-                {selectedImage + 1} / {images.length}
+                {selectedImage + 1} / {media.length}
               </div>
             )}
+
           </div>
         ) : (
           <div className="h-[40vh] flex items-center justify-center">
@@ -194,19 +228,26 @@ const VehiculeDetail = () => {
         )}
 
         {/* Thumbnails strip */}
-        {images.length > 1 && (
+        {media.length > 1 && (
           <div className="bg-[#0d1117] border-t border-white/5">
             <div className="max-w-[1920px] mx-auto px-6 md:px-12 lg:px-24 py-4">
               <div className="flex gap-2 overflow-x-auto" style={{ scrollbarWidth: 'none' }}>
-                {images.map((img, i) => (
+                {media.map((m, i) => (
                   <button
                     key={i}
                     onClick={() => setSelectedImage(i)}
-                    className={`flex-shrink-0 w-20 h-14 md:w-24 md:h-16 rounded overflow-hidden border-2 transition-all cursor-pointer ${
+                    className={`relative flex-shrink-0 w-20 h-14 md:w-24 md:h-16 rounded overflow-hidden border-2 transition-all cursor-pointer ${
                       selectedImage === i ? 'border-white opacity-100' : 'border-transparent opacity-40 hover:opacity-70'
                     }`}
                   >
-                    <img src={img} alt="" className="w-full h-full object-cover" />
+                    <img src={m.type === 'video' ? images[0] : m.src} alt="" className="w-full h-full object-cover" />
+                    {m.type === 'video' && (
+                      <span className="absolute inset-0 flex items-center justify-center bg-black/40">
+                        <span className="flex items-center justify-center w-7 h-7 rounded-full bg-white/90 text-black">
+                          <Play size={12} className="ml-0.5" fill="currentColor" />
+                        </span>
+                      </span>
+                    )}
                   </button>
                 ))}
               </div>
